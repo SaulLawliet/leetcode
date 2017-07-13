@@ -8,6 +8,7 @@
 #include <stdlib.h>  /* malloc() */
 #include <string.h>  /* strlen(), strncpy() */
 #include "../test.h"
+#include "../data-structures/array.h"
 
 char* longestCommonPrefix(char** strs, int strsSize) {
   int i = 0;
@@ -29,16 +30,19 @@ END: {}
   return rt;
 }
 
-void test(const char* expect, char** strs, int strsSize) {
+void test(const char* expect, const char* s) {
+  size_t strsSize;
+  char** strs = sarrayNewByStr(s, &strsSize);
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, longestCommonPrefix(strs, strsSize));
+
+  array2DFree((void**)strs, strsSize);
 }
 
 int main(void) {
-  test("", NULL, 0);
+  test("", "");
 
-  char* p[] = {"a", "ac"};
-  test("a", p, 1);
-  test("a", p, 2);
+  test("a", "[a]");
+  test("a", "[a, ac]");
 
   return testOutput();
 }

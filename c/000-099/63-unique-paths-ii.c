@@ -33,7 +33,7 @@ void test(int expect, const char* s) {
   int** obstacleGrid = array2DNewByStr(s, &obstacleGridRowSize, &obstacleGridColSize);
   EXPECT_EQ_INT(expect, uniquePathsWithObstacles(obstacleGrid, obstacleGridRowSize, obstacleGridColSize));
 
-  array2DFree(obstacleGrid, obstacleGridRowSize);
+  array2DFree((void**)obstacleGrid, obstacleGridRowSize);
 }
 
 int main(void) {
