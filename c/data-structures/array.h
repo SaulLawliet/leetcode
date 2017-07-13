@@ -8,13 +8,19 @@
 
 #include <stddef.h>  /* size_t */
 
-/* STRING FORMAT: [%d, %d, %d] */
+/* FORMAT: [%d, %d, %d] */
 int* arrayNewByStr(const char* str, size_t* size);
 char* arrayToString(const int* array, size_t size);
 int* arrayCopy(const int* array, size_t size);
 
-/** TODO: 单元测试 */
+void array2DFree(void** array, size_t row);
+
+/* FORMAT: [[%d, %d, %d], [%d, %d, %]] */
 int** array2DNewByStr(const char* str, size_t* row, size_t* col);
-void array2DFree(int** array, size_t row);
+char* array2DToString(int** arrays, size_t row, size_t col);
+/* FORMAT: [%s, %s, %s] */
+char** sarrayNewByStr(const char* str, size_t* size);
+char* sarrayToString(char** strs, size_t size);
+
 
 #endif  /* __DATA_STRUCTURES_ARRAY_H */
