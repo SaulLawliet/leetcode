@@ -7,6 +7,7 @@
 #include <stdlib.h>  /* malloc(), free() */
 #include <stdio.h>   /* snprintf() */
 #include "../test.h"
+#include "../data-structures/array.h"
 
 /**
  * Return an array of size *returnSize.
@@ -24,36 +25,17 @@ char** fizzBuzz(int n, int* returnSize) {
   return rt;
 }
 
-void test(char** expect, int n) {
+void test(const char* expect, int n) {
   int size;
   char** actual = fizzBuzz(n, &size);
   EXPECT_EQ_INT(n, size);
-  for (int i = 0; i < n; ++i) {
-    EXPECT_EQ_STRING(expect[i], actual[i]);
-    free(actual[i]);
-  }
-  free(actual);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, sarrayToString(actual, size));
+
+  array2DFree((void**)actual, size);
 }
 
 int main(void){
-  char* expect[] = {
-    "1",
-    "2",
-    "Fizz",
-    "4",
-    "Buzz",
-    "Fizz",
-    "7",
-    "8",
-    "Fizz",
-    "Buzz",
-    "11",
-    "Fizz",
-    "13",
-    "14",
-    "FizzBuzz"
-  };
-  test(expect, 15);
+  test("[1, 2, Fizz, 4, Buzz, Fizz, 7, 8, Fizz, Buzz, 11, Fizz, 13, 14, FizzBuzz, 16]", 16);
 
   return testOutput();
 }
