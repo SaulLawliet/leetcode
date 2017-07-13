@@ -38,5 +38,9 @@ for id in ${ids[@]}; do
     fi
 
     excute=${file:0:${#file}-2}
-    gcc $file $lib -lm -o $excute && $valgrind $excute && rm $excute
+    gcc $file $lib -lm -o $excute
+    if [[ !$? ]]; then
+        $valgrind $excute
+        rm $excute
+    fi
 done
