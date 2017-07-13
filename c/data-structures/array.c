@@ -126,7 +126,6 @@ char** sarrayNewByStr(const char* str, size_t* size) {
       str--;
       len--;
     }
-    if (len == 0) continue;  /* 忽略空串 */
 
     strncpy((p = malloc(sizeof(char) * (len+1))), tmp, len);
     p[len] = '\0';
