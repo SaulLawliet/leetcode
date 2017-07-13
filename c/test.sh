@@ -1,16 +1,22 @@
 #!/bin/bash
 
-# type valgrind >/dev/null 2>&1 || { echo >&2 "You need to install valgrind."; exit 1; }
-type valgrind >/dev/null 2>&1
-if (( $? == 0 )); then valgrind="valgrind"; fi
+ids=()
+for value in $@; do
+    if [[ ${value:0:1} == "-" ]]; then
+        type valgrind >/dev/null 2>&1 || { echo >&2 "You need to install valgrind."; exit 1; }
+        valgrind="valgrind"
+    else
+      id=$(($value))
+      if (( $id != 0 )); then
+          ids+=($id)
+      fi
+    fi
+done
 
-function usage() {
-    echo "You must specify a number."
+
+if (( ${#ids[@]} == 0 )); then
+    echo -e "You must specify numbers. \nAlso you can add '-' to enable memcheck."
     exit 1
-}
-
-if (( $# != 1 ));then
-    usage
 fi
 
 lib_dir=("algorithms data-structures tools")
@@ -21,20 +27,16 @@ for dir in ${lib_dir[@]}; do
     done
 done
 
-n="$(($@))"
-dir="$((n/100))00-$((n/100))99"
+for id in ${ids[@]}; do
+    dir="$((id/100))00-$((id/100))99"
 
-file=$n
-if (($n < 10)); then file="0$n"; fi
+    if (( $id < 10 )); then id="0$id"; fi
+    file=`ls $dir/*.c |grep "/$id"`
+    if [ -z $file ]; then
+        echo "No.$id not found."
+        continue
+    fi
 
-file=`ls $dir/*.c |grep "/$file"`
-if [ -z $file ]; then
-    echo "No.$n not found."
-    exit 1
-fi
-
-excute=${file:0:${#file}-2}
-
-# echo "gcc $file $lib -o $excute && valgrind $excute && rm $excute"
-gcc $file $lib -lm -o $excute && $valgrind $excute && rm $excute
-
+    excute=${file:0:${#file}-2}
+    gcc $file $lib -lm -o $excute && $valgrind $excute && rm $excute
+done
