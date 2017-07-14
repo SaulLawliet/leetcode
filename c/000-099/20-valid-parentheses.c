@@ -24,6 +24,11 @@ stack createEmptyStack(int len) {
   return s;
 }
 
+void freeStack(stack s) {
+  free(s->array);
+  free(s);
+}
+
 void push(stack s, char v) {
   s->array[++s->top] = v;
 }
@@ -54,8 +59,7 @@ bool isValid(char* s) {
   }
 
   if (rt) rt = isEmpty(stack);
-  free(stack->array);
-  free(stack);
+  freeStack(stack);
   return rt;
 }
 
