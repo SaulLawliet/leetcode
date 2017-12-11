@@ -50,7 +50,7 @@ void test(const char* expect, int n) {
 }
 
 int main(void) {
-  test("[((())), (()()), (())(), ()(()), ()()()]", 3);
+  test("[((())),(()()),(())(),()(()),()()()]", 3);
 
   return testOutput();
 }

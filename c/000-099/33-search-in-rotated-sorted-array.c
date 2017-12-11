@@ -41,7 +41,7 @@ void test(const char* before, const char* after, int target, int result) {
 }
 
 int main(void) {
-  test("[0, 1, 2, 4, 5, 6, 7]", "[4, 5, 6, 7, 0, 1, 2]", 4, 3);
+  test("[0,1,2,4,5,6,7]", "[4,5,6,7,0,1,2]", 4, 3);
 
   return testOutput();
 }

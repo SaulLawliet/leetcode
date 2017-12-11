@@ -52,8 +52,8 @@ void test(const char* expect, const char* s, int target) {
   return [3, 4].
  */
 int main(void) {
-  test("[3, 4]", "[5, 7, 7, 8, 8, 10]", 8);
-  test("[-1, -1]", "[]", 0);
+  test("[3,4]", "[5,7,7,8,8,10]", 8);
+  test("[-1,-1]", "[]", 0);
 
   return testOutput();
 }

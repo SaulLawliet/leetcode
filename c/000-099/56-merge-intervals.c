@@ -86,7 +86,7 @@ void test(const char* given, const char* expect) {
 }
 
 int main(void) {
-  test("[1,3],[2,6],[8,10],[15,18]", "[[1, 6], [8, 10], [15, 18]]");
+  test("[1,3],[2,6],[8,10],[15,18]", "[[1,6],[8,10],[15,18]]");
 
   return testOutput();
 }

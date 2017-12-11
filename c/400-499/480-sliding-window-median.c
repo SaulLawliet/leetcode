@@ -88,9 +88,9 @@ void test(const char* str, int k, const char* expect) {
 }
 
 int main(void) {
-  test("[1, 3, -1, -3, 5, 3, 6, 7]",
+  test("[1,3,-1,-3,5,3,6,7]",
        3,
-       "[1.0, -1.0, -1.0, 3.0, 5.0, 6.0]");
+       "[1.0,-1.0,-1.0,3.0,5.0,6.0]");
 
   return testOutput();
 }

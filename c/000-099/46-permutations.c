@@ -60,7 +60,7 @@ void test(const char* s, int expectSize, const char* expect) {
 }
 
 int main(void) {
-  test("[1, 2, 3]", 6, "[[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 2, 1], [3, 1, 2]]");
+  test("[1,2,3]", 6, "[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,2,1],[3,1,2]]");
 
   return testOutput();
 }

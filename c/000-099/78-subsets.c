@@ -53,8 +53,8 @@ void test(const char* str, const char* expect) {
 }
 
 int main(void) {
-  test("[1, 2, 3]",
-       "[[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]");
+  test("[1,2,3]",
+       "[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]");
 
   return testOutput();
 }

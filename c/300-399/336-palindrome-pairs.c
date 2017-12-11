@@ -66,9 +66,9 @@ void test(const char* expect, const char* s) {
 }
 
 int main(void) {
-  test("[[0, 1], [1, 0]]", "[bat, tab, cat]");
-  test("[[0, 1], [1, 0], [2, 4], [3, 2]]", "[abcd, dcba, lls, s, sssll]");
-  test("[[0, 3], [2, 3], [3, 0], [3, 2]]", "[a, abc, aba, ]");
+  test("[[0,1],[1,0]]", "[bat,tab,cat]");
+  test("[[0,1],[1,0],[2,4],[3,2]]", "[abcd,dcba,lls,s,sssll]");
+  test("[[0,3],[2,3],[3,0],[3,2]]", "[a,abc,aba,]");
 
   return testOutput();
 }

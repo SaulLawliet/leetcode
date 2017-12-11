@@ -38,7 +38,7 @@ char* arrayToString(const int* array, int size) {
   int len;
   PUTC(&c, '[');
   for (int i = 0; i < size; ++i) {
-    if (i > 0) PUTS(&c, ", ", 2);
+    if (i > 0) PUTC(&c, ',');
     /* INT32_MIN = -2147483648, len = 11 */
     len = sprintf(stackPush(&c, 11), "%d", array[i]);
     c.top -= 11 - len;
@@ -89,7 +89,7 @@ char* array2DToString(int** arrays, int row, int* cols) {
   PUTC(&c, '[');
   char *buffer;
   for (int i = 0; i < row; ++i) {
-    if (i > 0) PUTS(&c, ", ", 2);
+    if (i > 0) PUTC(&c, ',');
     buffer = arrayToString(arrays[i], cols[i]);
     PUTS(&c, buffer, strlen(buffer));
     free(buffer);
@@ -156,7 +156,7 @@ char* sarrayToString(char** strs, int size) {
 
   PUTC(&c, '[');
   for (int i = 0; i < size; ++i) {
-    if (i > 0) PUTS(&c, ", ", 2);
+    if (i > 0) PUTC(&c, ',');
     PUTS(&c, strs[i], strlen(strs[i]));
   }
   PUTC(&c, ']');
@@ -189,7 +189,7 @@ char* darrayToString(const double* array, int size, int precision) {
   int len;
   PUTC(&c, '[');
   for (int i = 0; i < size; ++i) {
-    if (i > 0) PUTS(&c, ", ", 2);
+    if (i > 0) PUTC(&c, ',');
     /* 假设最长是100 */
     len = sprintf(stackPush(&c, 100), "%.*f", precision, array[i]);
     c.top -= 100 - len;

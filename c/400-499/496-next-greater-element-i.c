@@ -40,7 +40,7 @@ void test(const char* str1, const char* str2, const char* expect) {
 }
 
 int main(void) {
-  test("[4, 1, 2]", "[1, 3, 4, 2]", "[-1, 3, -1]");
-  test("[2, 4]", "[1, 2, 3, 4]", "[3, -1]");
+  test("[4,1,2]", "[1,3,4,2]", "[-1,3,-1]");
+  test("[2,4]", "[1,2,3,4]", "[3,-1]");
   return testOutput();
 }
