@@ -14,7 +14,7 @@ int removeElement(int* nums, int numsSize, int val) {
 }
 
 void test(const char* expect, const char* actual, int val) {
-  size_t expectNumsSize, actualNumsSize;
+  int expectNumsSize, actualNumsSize;
   int* expectNums = arrayNewByStr(expect, &expectNumsSize);
   int* actualNums = arrayNewByStr(actual, &actualNumsSize);
 

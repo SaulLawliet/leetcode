@@ -31,7 +31,7 @@ END: {}
 }
 
 void test(const char* expect, const char* s) {
-  size_t strsSize;
+  int strsSize;
   char** strs = sarrayNewByStr(s, &strsSize);
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, longestCommonPrefix(strs, strsSize));
 

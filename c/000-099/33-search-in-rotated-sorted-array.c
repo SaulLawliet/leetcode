@@ -31,7 +31,7 @@ int search(int* nums, int numsSize, int target) {
 }
 
 void test(const char* before, const char* after, int target, int result) {
-  size_t numsSize;
+  int numsSize;
   int* nums = arrayNewByStr(before, &numsSize);
 
   EXPECT_EQ_INT(result, search(nums, numsSize, target));

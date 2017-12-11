@@ -25,7 +25,7 @@ bool validUtf8(int* data, int dataSize) {
 }
 
 void test(bool expect, const char* s) {
-  size_t dataSize;
+  int dataSize;
   int* data = arrayNewByStr(s, &dataSize);
   EXPECT_EQ_INT(expect, validUtf8(data, dataSize));
 

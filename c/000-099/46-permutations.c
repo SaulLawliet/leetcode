@@ -46,14 +46,14 @@ int** permute(int* nums, int numsSize, int* returnSize) {
 }
 
 void test(const char* s, int expectSize, const char* expect) {
-  size_t numsSize;
+  int numsSize;
   int* nums = arrayNewByStr(s, &numsSize);
 
   int returnSize;
   int** rt = permute(nums, numsSize, &returnSize);
 
   EXPECT_EQ_INT(expectSize, returnSize);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, array2DToString(rt, returnSize, numsSize));
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, array2DToStringSameCol(rt, returnSize, numsSize));
 
   array2DFree((void**)rt, returnSize);
   free(nums);

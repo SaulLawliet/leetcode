@@ -5,10 +5,13 @@
  * 先将数组排序, 在求解时会方便一些, 这样更容易跳过重复的数据
  */
 
-#include <stdlib.h>  /* malloc() */
+#include <stdlib.h>  /* malloc(), qsort() */
 #include "../test.h"
-#include "../algorithms/sort.h"
 #include "../data-structures/array.h"
+
+int compare_ints(const void* a, const void* b) {
+  return  *(const int*)a - *(const int*)b;
+}
 
 /**
  * Return an array of arrays of size *returnSize.
@@ -20,7 +23,7 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
     return NULL;
   }
 
-  sortQuick(nums, numsSize);
+  qsort(nums, numsSize, sizeof(int), compare_ints);
 
   /* 组合 Cn3 => n! / ((n-3)! * 3!) */
   int **rt = malloc(sizeof(int *) *
@@ -55,19 +58,22 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
 }
 
 void test(const char* s1, const char* s2) {
-  size_t row, col, numsSize;
-  int **expect = array2DNewByStr(s1, &row, &col);
-  int *nums = arrayNewByStr(s2, &numsSize);
-  int actualSize;
-  int** actual = threeSum(nums, numsSize, &actualSize);
+  int numsSize;
+  int *nums = arrayNewByStr(s1, &numsSize);
 
-  EXPECT_EQ_INT(row, actualSize);
-  for (int i = 0; i < actualSize; ++i)
-    EXPECT_EQ_STRING_AND_FREE(arrayToString(expect[i], col), arrayToString(actual[i], col));
+  int returnSize;
+  int** rtn = threeSum(nums, numsSize, &returnSize);
 
+  int row, col;
+  int **expect = array2DNewByStrSameCol(s2, &row, &col);
+
+  EXPECT_EQ_INT(row, returnSize);
+  for (int i = 0; i < returnSize; ++i)
+    EXPECT_EQ_STRING_AND_FREE(arrayToString(expect[i], col), arrayToString(rtn[i], col));
+
+  array2DFree((void**)expect, row);
+  array2DFree((void**)rtn, returnSize);
   free(nums);
-  array2DFree(expect, row);
-  array2DFree(actual, actualSize);
 }
 
 /*
@@ -80,7 +86,7 @@ void test(const char* s1, const char* s2) {
   ]
 */
 int main() {
-  test("[[-1, -1, 2], [-1, 0, 1]]", "[-1, 0, 1, 2, -1, -4]");
+  test("[-1, 0, 1, 2, -1, -4]", "[[-1, -1, 2], [-1, 0, 1]]");
 
   return testOutput();
 }

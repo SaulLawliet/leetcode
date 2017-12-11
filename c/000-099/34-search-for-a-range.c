@@ -36,7 +36,7 @@ int* searchRange(int* nums, int numsSize, int target, int* returnSize) {
 }
 
 void test(const char* expect, const char* s, int target) {
-  size_t numsSize;
+  int numsSize;
   int* nums = arrayNewByStr(s, &numsSize);
 
   int returnSize;

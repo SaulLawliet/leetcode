@@ -11,7 +11,7 @@
 #include "array.h"
 #include "../tools/stack.h"
 
-int* arrayNewByStr(const char* str, size_t* size) {
+int* arrayNewByStr(const char* str, int* size) {
   /* 依次从字符串中解析出整数 */
   context c = stackMake();
 
@@ -31,13 +31,13 @@ int* arrayNewByStr(const char* str, size_t* size) {
   return (int*)c.stack;
 }
 
-char* arrayToString(const int* array, size_t size) {
-  if (size > 0) assert(array != NULL);
+char* arrayToString(const int* array, int size) {
+  // if (size > 0) assert(array != NULL);
   context c = stackMake();
 
   int len;
   PUTC(&c, '[');
-  for (size_t i = 0; i != size; ++i) {
+  for (int i = 0; i < size; ++i) {
     if (i > 0) PUTS(&c, ", ", 2);
     /* INT32_MIN = -2147483648, len = 11 */
     len = sprintf(stackPush(&c, 11), "%d", array[i]);
@@ -48,31 +48,28 @@ char* arrayToString(const int* array, size_t size) {
   return c.stack;
 }
 
-int* arrayCopy(const int* array, size_t size) {
+int* arrayCopy(const int* array, int size) {
   if (array == NULL || size == 0) return NULL;
   return memcpy(malloc(sizeof(int) * size), array, sizeof(int) * size);
 }
 
-void array2DFree(void** array, size_t row) {
-  for (size_t i = 0; i != row; ++i) free(array[i]);
+void array2DFree(void** array, int row) {
+  for (int i = 0; i < row; ++i) free(array[i]);
   free(array);
 }
 
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
-int** array2DNewByStr(const char* str, size_t* row, size_t* col) {
+int** array2DNewByStr(const char* str, int* row, int** cols) {
   /* 以 ']' 为界, 分割成二维数组, col取最小的一个 */
   context c = stackMake();
+  context c2 = stackMake();
 
   int* p;
   char* pos;
-  size_t size, rtCol = 0;  /* max */
+  int size;
   while (*str != '\0') {
     p = arrayNewByStr(str, &size);
-    if (size > 0) {  /* 忽略空的 */
-      PUTIP(&c, &p);
-      if (rtCol == 0) rtCol = size;
-      else rtCol = MIN(rtCol, size);
-    }
+    PUTIP(&c, &p);
+    PUTI(&c2, &size);
 
     pos = strstr(str, "]");
     if (pos == NULL) break;
@@ -81,19 +78,19 @@ int** array2DNewByStr(const char* str, size_t* row, size_t* col) {
   }
 
   *row = c.top / sizeof(int*);
-  *col = rtCol;
+  *cols = (int*)c2.stack;
   return (int**)c.stack;
 }
 
-char* array2DToString(int** arrays, size_t row, size_t col) {
+char* array2DToString(int** arrays, int row, int* cols) {
   if (row > 0) assert(arrays != NULL);
   context c = stackMake();
 
   PUTC(&c, '[');
   char *buffer;
-  for (size_t i = 0; i != row; ++i) {
+  for (int i = 0; i < row; ++i) {
     if (i > 0) PUTS(&c, ", ", 2);
-    buffer = arrayToString(arrays[i], col);
+    buffer = arrayToString(arrays[i], cols[i]);
     PUTS(&c, buffer, strlen(buffer));
     free(buffer);
   }
@@ -102,8 +99,25 @@ char* array2DToString(int** arrays, size_t row, size_t col) {
   return c.stack;
 }
 
+int** array2DNewByStrSameCol(const char* str, int* row, int* col) {
+  int* cols;
+  int** rtn = array2DNewByStr(str, row, &cols);
+  *col = row > 0 ? cols[0] : 0;
+  free(cols);
+  return rtn;
+}
+
+char* array2DToStringSameCol(int** arrays, int row, int col) {
+  assert(row > 0);
+  int* cols = malloc(sizeof(int) * row);
+  for (int i = 0; i < row; ++i) cols[i] = col;
+  char* rtn = array2DToString(arrays, row, cols);
+  free(cols);
+  return rtn;
+}
+
 /* TODO: 写的比较恶心, 待优化 */
-char** sarrayNewByStr(const char* str, size_t* size) {
+char** sarrayNewByStr(const char* str, int* size) {
   /* [Hello World, abcdefg, 0123456789] */
   while (*str == '[' || *str == ' ')  str++;
 
@@ -136,14 +150,49 @@ char** sarrayNewByStr(const char* str, size_t* size) {
   return (char**)c.stack;
 }
 
-char* sarrayToString(char** strs, size_t size) {
+char* sarrayToString(char** strs, int size) {
   if (size > 0) assert(strs != NULL);
   context c = stackMake();
 
   PUTC(&c, '[');
-  for (size_t i = 0; i != size; ++i) {
+  for (int i = 0; i < size; ++i) {
     if (i > 0) PUTS(&c, ", ", 2);
     PUTS(&c, strs[i], strlen(strs[i]));
+  }
+  PUTC(&c, ']');
+  PUTC(&c, '\0');
+  return c.stack;
+}
+
+double* darrayNewByStr(const char* str, int* size) {
+  context c = stackMake();
+
+  double v;
+  char *end;
+  while (*str != '\0' && *str != ']') {
+    if (isdigit(*str) || (*str == '-' && isdigit(*(str+1)))) {
+      v = strtod(str, &end);
+      PUTD(&c, &v);
+      str = end;
+    } else {
+      str++;
+    }
+  }
+
+  *size = c.top / sizeof(double);
+  return (double*)c.stack;
+}
+
+char* darrayToString(const double* array, int size, int precision) {
+  context c = stackMake();
+
+  int len;
+  PUTC(&c, '[');
+  for (int i = 0; i < size; ++i) {
+    if (i > 0) PUTS(&c, ", ", 2);
+    /* 假设最长是100 */
+    len = sprintf(stackPush(&c, 100), "%.*f", precision, array[i]);
+    c.top -= 100 - len;
   }
   PUTC(&c, ']');
   PUTC(&c, '\0');

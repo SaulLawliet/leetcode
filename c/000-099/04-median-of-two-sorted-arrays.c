@@ -51,7 +51,7 @@ double findMedianSortedArrays(int* nums1, int nums1Size,
 }
 
 void test(double expect, const char* s1, const char* s2) {
-  size_t nums1Size, nums2Size;
+  int nums1Size, nums2Size;
   int *nums1 = arrayNewByStr(s1, &nums1Size);
   int *nums2 = arrayNewByStr(s2, &nums2Size);
 

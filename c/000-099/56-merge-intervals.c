@@ -7,6 +7,7 @@
 
 #include <stdlib.h>  /* qsort(), malloc() */
 #include "../test.h"
+#include "../data-structures/array.h"
 
 struct Interval {
   int start;
@@ -47,10 +48,45 @@ struct Interval* merge(struct Interval* intervals, int intervalsSize, int* retur
   return rt;
 }
 
-void test() {
-  // TODO: test
+struct Interval* arrayToInterval(int** array, int row) {
+  struct Interval* rtn = malloc(sizeof(struct Interval) * row);
+  for (int i = 0; i < row; ++i) {
+    rtn[i].start = array[i][0];
+    rtn[i].end = array[i][1];
+  }
+  return rtn;
+}
+
+int** intervalToArray(struct Interval* intervals, int size) {
+  int** rtn = malloc(sizeof(int*) * size);
+  for (int i = 0; i < size; ++i) {
+    rtn[i] = malloc(sizeof(int) * 2);
+    rtn[i][0] = intervals[i].start;
+    rtn[i][1] = intervals[i].end;
+  }
+  return rtn;
+}
+
+void test(const char* given, const char* expect) {
+  int row, col;
+  int** givenArray = array2DNewByStrSameCol(given, &row, &col);
+  EXPECT_EQ_INT(2, col);
+
+  struct Interval* intervals = arrayToInterval(givenArray, row);
+  int rtnSize;
+  struct Interval* rtn = merge(intervals, row, &rtnSize);
+
+  int** rtnArray = intervalToArray(rtn, rtnSize);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, array2DToStringSameCol(rtnArray, rtnSize, col));
+
+  array2DFree((void**)rtnArray, rtnSize);
+  array2DFree((void**)givenArray, row);
+  free(intervals);
+  free(rtn);
 }
 
 int main(void) {
+  test("[1,3],[2,6],[8,10],[15,18]", "[[1, 6], [8, 10], [15, 18]]");
+
   return testOutput();
 }

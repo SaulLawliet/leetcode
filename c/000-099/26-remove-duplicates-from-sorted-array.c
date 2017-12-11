@@ -16,7 +16,7 @@ int removeDuplicates(int* nums, int numsSize) {
 }
 
 void test(const char* expect, const char* actual) {
-  size_t expectNumsSize, actualNumsSize;
+  int expectNumsSize, actualNumsSize;
   int* expectNums = arrayNewByStr(expect, &expectNumsSize);
   int* actualNums = arrayNewByStr(actual, &actualNumsSize);
 

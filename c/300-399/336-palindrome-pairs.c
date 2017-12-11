@@ -49,7 +49,7 @@ int** palindromePairs(char** words, int wordsSize, int** columnSizes, int* retur
 }
 
 void test(const char* expect, const char* s) {
-  size_t wordsSize;
+  int wordsSize;
   char** words = sarrayNewByStr(s, &wordsSize);
 
   int *columnSizes;
@@ -58,7 +58,7 @@ void test(const char* expect, const char* s) {
 
   for (int i = 0; i < actualSize; i++)
     EXPECT_EQ_INT(2, columnSizes[i]);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, array2DToString(actual, actualSize, 2));
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, array2DToStringSameCol(actual, actualSize, 2));
 
   free(columnSizes);
   array2DFree((void**)actual, actualSize);

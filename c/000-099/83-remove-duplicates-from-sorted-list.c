@@ -5,7 +5,6 @@
  * 经过了 21 和 24 之后, 算是学会了 'pointer-pointer' 的写法
  */
 
-#include <stdlib.h>  /* free() */
 #include "../test.h"
 #include "../data-structures/linked-list.h"
 

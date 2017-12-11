@@ -29,8 +29,8 @@ int uniquePathsWithObstacles(int** obstacleGrid, int obstacleGridRowSize, int ob
 }
 
 void test(int expect, const char* s) {
-  size_t obstacleGridRowSize, obstacleGridColSize;
-  int** obstacleGrid = array2DNewByStr(s, &obstacleGridRowSize, &obstacleGridColSize);
+  int obstacleGridRowSize, obstacleGridColSize;
+  int** obstacleGrid = array2DNewByStrSameCol(s, &obstacleGridRowSize, &obstacleGridColSize);
   EXPECT_EQ_INT(expect, uniquePathsWithObstacles(obstacleGrid, obstacleGridRowSize, obstacleGridColSize));
 
   array2DFree((void**)obstacleGrid, obstacleGridRowSize);

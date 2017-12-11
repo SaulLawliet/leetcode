@@ -25,7 +25,7 @@ int maxArea(int* height, int heightSize) {
 }
 
 void test(int expect, const char* s) {
-  size_t size;
+  int size;
   int *height = arrayNewByStr(s, &size);
   EXPECT_EQ_INT(expect, maxArea(height, size));
 

@@ -9,6 +9,7 @@
 
 #include <stdlib.h>  /* malloc(), qsort() */
 #include "../test.h"
+#include "../data-structures/array.h"
 
 void popAndPush(int* nums, int numsSize, int pop, int push) {
   if (pop == push) return;
@@ -74,11 +75,22 @@ double* medianSlidingWindow(int* nums, int numsSize, int k, int* returnSize) {
   return rtn;
 }
 
+void test(const char* str, int k, const char* expect) {
+  int numsSize;
+  int* nums = arrayNewByStr(str, &numsSize);
 
-void test() {
-  // TODO: double 数组与字符串的转换
+  int returnSize;
+  double *rtn = medianSlidingWindow(nums, numsSize, k, &returnSize);
+
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, darrayToString(rtn, returnSize, 1));
+  free(rtn);
+  free(nums);
 }
 
 int main(void) {
+  test("[1, 3, -1, -3, 5, 3, 6, 7]",
+       3,
+       "[1.0, -1.0, -1.0, 3.0, 5.0, 6.0]");
+
   return testOutput();
 }

@@ -17,6 +17,7 @@
 #define PUTS(c, s, len)  do { if (len > 0) memcpy(stackPush(c, len), s, len); } while (0)
 #define PUTI(c, i)       memcpy(stackPush(c, sizeof(int)), i, sizeof(int))
 #define PUTIP(c, p)      memcpy(stackPush(c, sizeof(int*)), p, sizeof(int*))
+#define PUTD(c, i)       memcpy(stackPush(c, sizeof(double)), i, sizeof(double))
 
 typedef struct {
   char *stack;

@@ -46,7 +46,7 @@ int findMinDifference(char** timePoints, int timePointsSize) {
 }
 
 void test(const char* str, int expect) {
-  size_t timePointsSize;
+  int timePointsSize;
   char** timePoints = sarrayNewByStr(str, &timePointsSize);
   EXPECT_EQ_INT(expect, findMinDifference(timePoints, timePointsSize));
 

@@ -27,7 +27,7 @@ int trap(int* height, int heightSize) {
 }
 
 void test(const char* str, int except) {
-  size_t heightSize;
+  int heightSize;
   int* height = arrayNewByStr(str, &heightSize);
 
   EXPECT_EQ_INT(except, trap(height, heightSize));

@@ -28,7 +28,7 @@ int* twoSum(int* nums, int numsSize, int target) {
 }
 
 void test(const char* s, int target) {
-  size_t numsSize;
+  int numsSize;
   int *nums = arrayNewByStr(s, &numsSize);
   int *answer = twoSum(nums, numsSize, target);
 
