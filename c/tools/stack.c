@@ -7,7 +7,7 @@
 #include <stdlib.h>  /* realloc() */
 #include "stack.h"
 
-context stackMake() {
+context stackMake(void) {
   context c;
   c.stack = NULL;
   c.size = c.top = 0;

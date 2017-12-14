@@ -28,6 +28,6 @@ typedef struct {
 } context;
 
 context stackMake(void);
-void* stackPush(context* c, size_t size);
+void *stackPush(context *c, size_t size);
 
 #endif  /* __STACK_H */
