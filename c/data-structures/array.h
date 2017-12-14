@@ -39,7 +39,7 @@ void arraySetSize(arrayEntry *entry, int size);
 void arraySetPrecision(arrayEntry *entry, int precision);
 
 int arrayRow(arrayEntry *entry);
-int arrayCol(arrayEntry *entry);
 int *arrayCols(arrayEntry *entry);
+int arrayCol(arrayEntry *entry);
 
 #endif  /* __DATA_STRUCTURES_ARRAY_H */

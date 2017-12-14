@@ -241,12 +241,14 @@ char *arrayToString1D(void *v, int size, arrayType type) {
   arrayFree(e);
   return rt;
 }
+
 char *arrayToString2D(void *v, int row, int *cols, arrayType type) {
   arrayEntry *e = arrayFrom2D(v, row, cols, type);
   char *rt = arrayToString(e);
   arrayFree(e);
   return rt;
 }
+
 char *arrayToString2DSameCol(void *v, int row, int col, arrayType type) {
   arrayEntry *e = arrayFrom2DSameCol(v, row, col, type);
   char *rt = arrayToString(e);
@@ -262,5 +264,8 @@ void arraySetSize(arrayEntry *entry, int size) { entry->size = size; }
 void arraySetPrecision(arrayEntry *entry, int precision) { entry->precision = precision; }
 
 int arrayRow(arrayEntry *entry) { return entry->size; }
-int arrayCol(arrayEntry *entry) { assert(entry->cols != NULL && entry->size > 0); return entry->cols[0]; }
-int *arrayCols(arrayEntry *entry) { assert(entry->cols != NULL); return entry->cols; }
+int *arrayCols(arrayEntry *entry) { return entry->cols; }
+int arrayCol(arrayEntry *entry) {
+  if (entry->cols != NULL && entry->size > 0) return entry->cols[0];
+  else return 0;
+}
