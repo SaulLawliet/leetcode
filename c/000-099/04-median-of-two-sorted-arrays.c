@@ -19,8 +19,8 @@ double findMedianInArray(int *nums, int size) {
   return (nums[index] + nums[index - 1]) / 2.0;
 }
 
-double findMedianSortedArrays(int* nums1, int nums1Size,
-                              int* nums2, int nums2Size) {
+double findMedianSortedArrays(int *nums1, int nums1Size,
+                              int *nums2, int nums2Size) {
   if (nums1Size == 0) return findMedianInArray(nums2, nums2Size);
   if (nums2Size == 0) return findMedianInArray(nums1, nums1Size);
   int *begin1 = nums1,
@@ -50,15 +50,15 @@ double findMedianSortedArrays(int* nums1, int nums1Size,
   return (*begin1 + *begin2) / 2.0;
 }
 
-void test(double expect, const char* s1, const char* s2) {
-  int nums1Size, nums2Size;
-  int *nums1 = arrayNewByStr(s1, &nums1Size);
-  int *nums2 = arrayNewByStr(s2, &nums2Size);
+void test(double expect, const char *str1, const char *str2) {
+  arrayEntry *e1 = arrayParse(str1, ARRAY_INT);
+  arrayEntry *e2 = arrayParse(str2, ARRAY_INT);
 
-  EXPECT_EQ_DOUBLE(expect, findMedianSortedArrays(nums1, nums1Size, nums2, nums2Size));
+  EXPECT_EQ_DOUBLE(expect, findMedianSortedArrays(arrayValue(e1), arraySize(e1),
+                                                  arrayValue(e2), arraySize(e2)));
 
-  free(nums1);
-  free(nums2);
+  arrayFree(e1);
+  arrayFree(e2);
 }
 
 /*

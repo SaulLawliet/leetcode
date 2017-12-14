@@ -9,7 +9,7 @@
 #include <string.h>  /* strlen(), strncpy() */
 #include "../test.h"
 
-int expandAroundCenter(char* s, int l, size_t r) {
+int expandAroundCenter(char *s, int l, size_t r) {
   while (l >=0 && r < strlen(s) && s[l] == s[r]) {
     l--;
     r++;
@@ -18,7 +18,7 @@ int expandAroundCenter(char* s, int l, size_t r) {
 }
 
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
-char* longestPalindrome(char* s) {
+char *longestPalindrome(char *s) {
   int begin = 0, end = 0;
   size_t i;
 
@@ -37,7 +37,7 @@ char* longestPalindrome(char* s) {
   return strncpy(rt, &s[begin], size);
 }
 
-void test(const char* expect, char* s) {
+void test(const char *expect, char *s) {
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, longestPalindrome(s));
 }
 

@@ -7,14 +7,14 @@
 #include <stdlib.h>  /* realloc() */
 #include "stack.h"
 
-context stackMake(void) {
+context stackMake() {
   context c;
   c.stack = NULL;
   c.size = c.top = 0;
   return c;
 }
 
-void* stackPush(context* c, size_t size) {
+void *stackPush(context *c, size_t size) {
   void* ret;
   assert(size > 0);
   if (c->top + size >= c->size) {

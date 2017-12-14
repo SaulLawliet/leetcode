@@ -20,7 +20,7 @@ int doMath(int count) {
   return count * (count - 1) / 2;
 }
 
-int numberOfArithmeticSlices(int* A, int ASize) {
+int numberOfArithmeticSlices(int *A, int ASize) {
   if (ASize < 3) return 0;
 
   int rt = 0, count = 1;
@@ -38,16 +38,16 @@ int numberOfArithmeticSlices(int* A, int ASize) {
   return rt + doMath(count);
 }
 
-void test(int expect, const char* s) {
-  int Asize;
-  int* A = arrayNewByStr(s, &Asize);
-  EXPECT_EQ_INT(expect, numberOfArithmeticSlices(A, Asize));
+void test(int expect, const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
 
-  free(A);
+  EXPECT_EQ_INT(expect, numberOfArithmeticSlices(arrayValue(e), arraySize(e)));
+
+  arrayFree(e);
 }
 
 int main(void) {
-  test(3, "[1, 2, 3, 4]");
+  test(3, "[1,2,3,4]");
 
   return testOutput();
 }

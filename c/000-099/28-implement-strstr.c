@@ -8,7 +8,7 @@
 #include <string.h>  /* strlen(), strstr() */
 #include "../test.h"
 
-int strStr(char* haystack, char* needle) {
+int strStr(char *haystack, char *needle) {
   int len1 = strlen(haystack),
       len2 = strlen(needle);
   if (len2 > len1) return -1;
@@ -21,7 +21,7 @@ int strStr(char* haystack, char* needle) {
   return -1;
 }
 
-void test(char* haystack, char* needle) {
+void test(char *haystack, char *needle) {
   int expect = -1;
   char* pos = strstr(haystack, needle);
   if (pos) expect = pos - haystack;
@@ -32,5 +32,6 @@ void test(char* haystack, char* needle) {
 int main(void) {
   test("Hello World.", "World");
   test("Hello World.", "Word");
+
   return testOutput();
 }

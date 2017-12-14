@@ -9,7 +9,7 @@
 #include "../test.h"
 #include "../data-structures/array.h"
 
-int trap(int* height, int heightSize) {
+int trap(int *height, int heightSize) {
   int rtn = 0,
     left_max = 0, right_max = 0,
     left = 0, right = heightSize - 1;
@@ -26,16 +26,16 @@ int trap(int* height, int heightSize) {
   return rtn;
 }
 
-void test(const char* str, int except) {
-  int heightSize;
-  int* height = arrayNewByStr(str, &heightSize);
+void test(int expect, const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
 
-  EXPECT_EQ_INT(except, trap(height, heightSize));
-  free(height);
+  EXPECT_EQ_INT(expect, trap(arrayValue(e), (arraySize(e))));
+
+  arrayFree(e);
 }
 
 int main(void) {
-  test("[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]", 6);
+  test(6, "[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]");
 
   return testOutput();
 }

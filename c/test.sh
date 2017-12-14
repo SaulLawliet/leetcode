@@ -33,7 +33,7 @@ for id in ${ids[@]}; do
     if (( $id < 10 )); then id="0$id"; fi
     file=`ls $dir/*.c |grep "/$id"`
     if [ -z $file ]; then
-        echo "No.$id not found."
+        # echo "No.$id not found."
         continue
     fi
 

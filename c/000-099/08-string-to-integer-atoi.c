@@ -13,7 +13,7 @@
 #include <limits.h>  /* INT_MAX, INT_MIN */
 #include "../test.h"
 
-int myAtoi(char* str) {
+int myAtoi(char *str) {
   char *p = str;
   while (*p == ' ') p++;  /* 处理之前的空格 */
 
@@ -33,7 +33,7 @@ int myAtoi(char* str) {
   return rt * sign;
 }
 
-void test(int expect, char* str) {
+void test(int expect, char *str) {
   EXPECT_EQ_INT(expect, myAtoi(str));
 }
 

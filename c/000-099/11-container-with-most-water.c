@@ -11,7 +11,7 @@
 
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
-int maxArea(int* height, int heightSize) {
+int maxArea(int *height, int heightSize) {
   int i = 0,
       j = heightSize - 1,
      rt = 0;
@@ -24,12 +24,12 @@ int maxArea(int* height, int heightSize) {
   return rt;
 }
 
-void test(int expect, const char* s) {
-  int size;
-  int *height = arrayNewByStr(s, &size);
-  EXPECT_EQ_INT(expect, maxArea(height, size));
+void test(int expect, const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
 
-  free(height);
+  EXPECT_EQ_INT(expect, maxArea(arrayValue(e), arraySize(e)));
+
+  arrayFree(e);
 }
 
 int main(void) {

@@ -8,7 +8,7 @@
 #include "../test.h"
 #include "../data-structures/array.h"
 
-int uniquePathsWithObstacles(int** obstacleGrid, int obstacleGridRowSize, int obstacleGridColSize) {
+int uniquePathsWithObstacles(int **obstacleGrid, int obstacleGridRowSize, int obstacleGridColSize) {
   //       m    n
   int grid[100][100];  /* 题目已说上限, 就不动态创建了 */
   if (obstacleGrid[0][0] == 1) return 0;
@@ -28,12 +28,12 @@ int uniquePathsWithObstacles(int** obstacleGrid, int obstacleGridRowSize, int ob
   return grid[obstacleGridRowSize-1][obstacleGridColSize-1];
 }
 
-void test(int expect, const char* s) {
-  int obstacleGridRowSize, obstacleGridColSize;
-  int** obstacleGrid = array2DNewByStrSameCol(s, &obstacleGridRowSize, &obstacleGridColSize);
-  EXPECT_EQ_INT(expect, uniquePathsWithObstacles(obstacleGrid, obstacleGridRowSize, obstacleGridColSize));
+void test(int expect, const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
 
-  array2DFree((void**)obstacleGrid, obstacleGridRowSize);
+  EXPECT_EQ_INT(expect, uniquePathsWithObstacles(arrayValue(e), arrayRow(e), arrayCol(e)));
+
+  arrayFree(e);
 }
 
 int main(void) {

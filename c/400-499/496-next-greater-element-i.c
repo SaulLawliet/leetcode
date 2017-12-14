@@ -10,7 +10,7 @@
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int* nextGreaterElement(int* findNums, int findNumsSize, int* nums, int numsSize, int* returnSize) {
+int *nextGreaterElement(int *findNums, int findNumsSize, int *nums, int numsSize, int *returnSize) {
   int* rtn = malloc(sizeof(int) * findNumsSize);
   for (int i = 0; i < findNumsSize; ++i) {
     int j = 0;
@@ -28,19 +28,20 @@ int* nextGreaterElement(int* findNums, int findNumsSize, int* nums, int numsSize
   return rtn;
 }
 
-void test(const char* str1, const char* str2, const char* expect) {
-  int findNumsSize, numsSize, returnSize;
-  int *findNums = arrayNewByStr(str1, &findNumsSize),
-           *nums = arrayNewByStr(str2, &numsSize),
-            *rtn = nextGreaterElement(findNums, findNumsSize, nums, numsSize, &returnSize);
+void test(const char* expect, const char* str1, const char* str2) {
+  arrayEntry *e1 = arrayParse(str1, ARRAY_INT);
+  arrayEntry *e2 = arrayParse(str2, ARRAY_INT);
+  int returnSize;
+  int *a = nextGreaterElement(arrayValue(e1), arraySize(e1), arrayValue(e2), arraySize(e2), &returnSize);
 
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString(rtn, returnSize));
-  free(nums);
-  free(findNums);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString1D(a, returnSize, ARRAY_INT));
+
+  arrayFree(e1);
+  arrayFree(e2);
 }
 
 int main(void) {
-  test("[4,1,2]", "[1,3,4,2]", "[-1,3,-1]");
-  test("[2,4]", "[1,2,3,4]", "[3,-1]");
+  test("[-1,3,-1]", "[4,1,2]", "[1,3,4,2]");
+  test("[3,-1]", "[2,4]", "[1,2,3,4]");
   return testOutput();
 }

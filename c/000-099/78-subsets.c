@@ -16,9 +16,9 @@
  * The sizes of the arrays are returned as *columnSizes array.
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
-int** subsets(int* nums, int numsSize, int** columnSizes, int* returnSize) {
+int **subsets(int *nums, int numsSize, int **columnSizes, int *returnSize) {
   *returnSize = pow(2, numsSize);
-  int** rtn = malloc(sizeof(int*) * *returnSize);
+  int **rtn = malloc(sizeof(int*) * *returnSize);
   *columnSizes = malloc(sizeof(int) * *returnSize);
 
   int rtnSize = 1;
@@ -38,23 +38,20 @@ int** subsets(int* nums, int numsSize, int** columnSizes, int* returnSize) {
   return rtn;
 }
 
-void test(const char* str, const char* expect) {
-  int numsSize;
-  int* nums = arrayNewByStr(str, &numsSize);
-
+void test(const char* expect, const char* str) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  int *columnSizes;
   int returnSize;
-  int* columnSizes;
-  int** rtn = subsets(nums, numsSize, &columnSizes, &returnSize);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, array2DToString(rtn, returnSize, columnSizes));
+  int **a = subsets(arrayValue(e), arraySize(e), &columnSizes, &returnSize);
 
-  array2DFree((void**)rtn, returnSize);
-  free(columnSizes);
-  free(nums);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString2D(a, returnSize, columnSizes, ARRAY_INT));
+
+  arrayFree(e);
 }
 
 int main(void) {
-  test("[1,2,3]",
-       "[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]");
+  test("[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]",
+       "[1,2,3]");
 
   return testOutput();
 }

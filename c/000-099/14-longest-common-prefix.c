@@ -10,7 +10,7 @@
 #include "../test.h"
 #include "../data-structures/array.h"
 
-char* longestCommonPrefix(char** strs, int strsSize) {
+char *longestCommonPrefix(char **strs, int strsSize) {
   int i = 0;
 
   if (strsSize > 0) {
@@ -30,16 +30,16 @@ END: {}
   return rt;
 }
 
-void test(const char* expect, const char* s) {
-  int strsSize;
-  char** strs = sarrayNewByStr(s, &strsSize);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, longestCommonPrefix(strs, strsSize));
+void test(const char* expect, const char* str) {
+  arrayEntry *e = arrayParse(str, ARRAY_STRING);
 
-  array2DFree((void**)strs, strsSize);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, longestCommonPrefix(arrayValue(e), arraySize(e)));
+
+  arrayFree(e);
 }
 
 int main(void) {
-  test("", "");
+  test("", "[]");
 
   test("a", "[a]");
   test("a", "[a, ac]");

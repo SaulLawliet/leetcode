@@ -17,7 +17,7 @@
 #include <stdbool.h>
 #include "../test.h"
 
-char* convert_v1(char* s, int numRows) {
+char *convert_v1(char *s, int numRows) {
   if (numRows == 1) return s;
 
   int len = strlen(s);
@@ -42,7 +42,7 @@ char* convert_v1(char* s, int numRows) {
 
 
 const char DEFAULT = 0;
-char* convert_v2(char* s, int numRows) {
+char *convert_v2(char *s, int numRows) {
   if (numRows <= 1) return s;
 
   int i, j;
@@ -73,7 +73,7 @@ char* convert_v2(char* s, int numRows) {
     }
   }
 
-  char *rt = malloc(sizeof(char) * len + 1);
+  char *rt = malloc(sizeof(char) * (len + 1));
   p = rt;
 
   for (i = 0; i != numRows; ++i) {
@@ -90,7 +90,7 @@ char* convert_v2(char* s, int numRows) {
   return rt;
 }
 
-void test(const char* expect, char* s, int numRows) {
+void test(const char *expect, char *s, int numRows) {
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, convert_v1(s, numRows));
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, convert_v2(s, numRows));
 }

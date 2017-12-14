@@ -7,7 +7,7 @@
 #include "../test.h"
 #include "../data-structures/array.h"
 
-int removeDuplicates(int* nums, int numsSize) {
+int removeDuplicates(int *nums, int numsSize) {
   if (numsSize == 0) return 0;
   int i = 0, j = 1;
   for (; j < numsSize; j++)
@@ -15,21 +15,17 @@ int removeDuplicates(int* nums, int numsSize) {
   return i + 1;
 }
 
-void test(const char* expect, const char* actual) {
-  int expectNumsSize, actualNumsSize;
-  int* expectNums = arrayNewByStr(expect, &expectNumsSize);
-  int* actualNums = arrayNewByStr(actual, &actualNumsSize);
+void test(const char *expect, const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arraySetSize(e, removeDuplicates(arrayValue(e), arraySize(e)));
 
-  EXPECT_EQ_INT((int)expectNumsSize, removeDuplicates(actualNums, actualNumsSize));
-  EXPECT_EQ_STRING_AND_FREE(arrayToString(expectNums, expectNumsSize),
-                            arrayToString(actualNums, expectNumsSize));
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString(e));
 
-  free(expectNums);
-  free(actualNums);
+  arrayFree(e);
 }
 
 int main(void) {
-  test("[1, 2]", "[1, 1, 2]");
+  test("[1,2]", "[1,1,2]");
 
   return testOutput();
 }

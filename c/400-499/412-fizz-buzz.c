@@ -13,25 +13,23 @@
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
  */
-char** fizzBuzz(int n, int* returnSize) {
+char **fizzBuzz(int n, int *returnSize) {
   *returnSize = n;
-  char** rt = malloc(sizeof(char*) * n);
+  char **rtn = malloc(sizeof(char*) * n);
   for (int i = 1; i <= n; i++) {  /* sizeof(char) == 1 */
-    if (i % 15 == 0)     memcpy(rt[i-1] = malloc(9), "FizzBuzz", 9);
-    else if (i % 3 == 0) memcpy(rt[i-1] = malloc(5), "Fizz", 5);
-    else if (i % 5 == 0) memcpy(rt[i-1] = malloc(5), "Buzz", 5);
-    else                 snprintf(rt[i-1] = malloc(i/10+2), i/10+2, "%d", i);
+    if (i % 15 == 0)     memcpy(rtn[i-1] = malloc(9), "FizzBuzz", 9);
+    else if (i % 3 == 0) memcpy(rtn[i-1] = malloc(5), "Fizz", 5);
+    else if (i % 5 == 0) memcpy(rtn[i-1] = malloc(5), "Buzz", 5);
+    else                 snprintf(rtn[i-1] = malloc(i/10+2), i/10+2, "%d", i);
   }
-  return rt;
+  return rtn;
 }
 
-void test(const char* expect, int n) {
-  int size;
-  char** actual = fizzBuzz(n, &size);
-  EXPECT_EQ_INT(n, size);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, sarrayToString(actual, size));
+void test(const char *expect, int n) {
+  int returnSize;
+  char **a = fizzBuzz(n, &returnSize);
 
-  array2DFree((void**)actual, size);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString1D(a, returnSize, ARRAY_STRING));
 }
 
 int main(void){

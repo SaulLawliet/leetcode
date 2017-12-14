@@ -3,198 +3,264 @@
  * All rights reserved.
  */
 
-#include <stdlib.h>  /* malloc() */
-#include <stdio.h>   /* sprintf() */
 #include <assert.h>  /* assert() */
-#include <string.h>  /* strtol(), strstr(), strncpy() */
-#include <ctype.h>   /* isdigit() */
+#include <stdlib.h>  /* malloc(), strtol(), strtod() */
+#include <string.h>  /* strncpy() */
+#include <stdio.h>   /* sprintf() */
+#include <stdbool.h>
 #include "array.h"
 #include "../tools/stack.h"
 
-int* arrayNewByStr(const char* str, int* size) {
-  /* 依次从字符串中解析出整数 */
-  context c = stackMake();
+#define EXPECT(str, c)  do { assert(**str == (c)); (*str)++; } while(0)
 
-  int v;
-  char *end;
-  while (*str != '\0' && *str != ']') {
-    if (isdigit(*str) || (*str == '-' && isdigit(*(str+1)))) {
-      v = strtol(str, &end, 10);
-      PUTI(&c, &v);
-      str = end;
-    } else {
-      str++;
-    }
-  }
-
-  *size = c.top / sizeof(int);
-  return (int*)c.stack;
-}
-
-char* arrayToString(const int* array, int size) {
-  // if (size > 0) assert(array != NULL);
-  context c = stackMake();
-
-  int len;
-  PUTC(&c, '[');
-  for (int i = 0; i < size; ++i) {
-    if (i > 0) PUTC(&c, ',');
-    /* INT32_MIN = -2147483648, len = 11 */
-    len = sprintf(stackPush(&c, 11), "%d", array[i]);
-    c.top -= 11 - len;
-  }
-  PUTC(&c, ']');
-  PUTC(&c, '\0');
-  return c.stack;
-}
-
-int* arrayCopy(const int* array, int size) {
-  if (array == NULL || size == 0) return NULL;
-  return memcpy(malloc(sizeof(int) * size), array, sizeof(int) * size);
-}
-
-void array2DFree(void** array, int row) {
-  for (int i = 0; i < row; ++i) free(array[i]);
-  free(array);
-}
-
-int** array2DNewByStr(const char* str, int* row, int** cols) {
-  /* 以 ']' 为界, 分割成二维数组, col取最小的一个 */
-  context c = stackMake();
-  context c2 = stackMake();
-
-  int* p;
-  char* pos;
+struct arrayEntry {
+  arrayType type;
   int size;
-  while (*str != '\0') {
-    p = arrayNewByStr(str, &size);
-    PUTIP(&c, &p);
-    PUTI(&c2, &size);
-
-    pos = strstr(str, "]");
-    if (pos == NULL) break;
-    str += pos-str+1;
-    while (*str == ']') str++;  /* 忽略连续的 ']' */
-  }
-
-  *row = c.top / sizeof(int*);
-  *cols = (int*)c2.stack;
-  return (int**)c.stack;
-}
-
-char* array2DToString(int** arrays, int row, int* cols) {
-  if (row > 0) assert(arrays != NULL);
-  context c = stackMake();
-
-  PUTC(&c, '[');
-  char *buffer;
-  for (int i = 0; i < row; ++i) {
-    if (i > 0) PUTC(&c, ',');
-    buffer = arrayToString(arrays[i], cols[i]);
-    PUTS(&c, buffer, strlen(buffer));
-    free(buffer);
-  }
-  PUTC(&c, ']');
-  PUTC(&c, '\0');
-  return c.stack;
-}
-
-int** array2DNewByStrSameCol(const char* str, int* row, int* col) {
+  void *v;
   int* cols;
-  int** rtn = array2DNewByStr(str, row, &cols);
-  *col = row > 0 ? cols[0] : 0;
-  free(cols);
-  return rtn;
+  int precision; /* printf: float precision */
+};
+
+arrayEntry *arrayNew(arrayType type) {
+  arrayEntry *e = malloc(sizeof(arrayEntry));;
+  e->type = type;
+  e->v = NULL;
+  e->size = 0;
+  e->cols = NULL;
+  e->precision = 0;
+  return e;
 }
 
-char* array2DToStringSameCol(int** arrays, int row, int col) {
-  assert(row > 0);
+void parseWhitespace(const char **str) {
+  const char *p = *str;
+  while (*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r')
+    p++;
+  *str = p;
+}
+
+void parseChar(const char **str, context *c) {
+  PUTC(c, **str);
+  (*str)++;
+}
+
+void parseInt(const char **str, context *c) {
+  PUTI(c, strtol(*str, (char**)str, 10));
+}
+
+void parseDouble(const char **str, context *c) {
+  PUTD(c, strtod(*str, (char**)str));
+}
+
+void parseString(const char **str, context *c) {
+  const char *p = *str;
+  int len = 0;
+  while (*p != ',' && *p != ']' && *p != '\0') { p++; len++; }
+  while (len > 0 && *(p-1) == ' ') { p--; len--; }
+
+  char *buf = malloc(sizeof(char) * (len+1));
+  strncpy(buf, *str, len);
+  buf[len] = '\0';
+  PUTCP(c, buf);
+
+  *str = p;
+}
+
+context parseArray(const char **str, arrayType type, int dimensional) {
+  EXPECT(str, '[');
+  parseWhitespace(str);
+
+  context c = stackMake();
+  if (**str != ']') {
+    for(;;) {
+      if (dimensional > 1) {
+        PUT(&c, parseArray(str, type, dimensional-1));
+      } else {
+        switch (type) {
+        case ARRAY_CHAR: parseChar(str, &c); break;
+        case ARRAY_INT: parseInt(str, &c); break;
+        case ARRAY_DOUBLE: parseDouble(str, &c); break;
+        case ARRAY_STRING: parseString(str, &c); break;
+        }
+      }
+      parseWhitespace(str);
+
+      if (**str == ',') {
+        (*str)++;
+        parseWhitespace(str);
+      } else if (**str == ']') {
+        (*str)++;
+        break;
+      } else {
+        /* miss ',' or ']' */
+        assert(false);
+      }
+    }
+  }
+
+  return c;
+}
+
+int sizeOf(arrayType type) {
+  switch (type) {
+  case ARRAY_CHAR: return sizeof(char);
+  case ARRAY_INT: return sizeof(int);
+  case ARRAY_DOUBLE: return sizeof(double);
+  case ARRAY_STRING: return sizeof(char*);
+  }
+}
+
+arrayEntry *arrayParse(const char *str, arrayType type) {
+  const char *p = str;
+  parseWhitespace(&p);
+  if (*p == '[') {
+    p++;
+    parseWhitespace(&p);
+    if (*p == '[') {
+      return arrayParse2D(str, type);
+    }
+  }
+  return arrayParse1D(str, type);
+}
+
+arrayEntry *arrayParse1D(const char *str, arrayType type) {
+  parseWhitespace(&str);
+  context c = parseArray(&str, type, 1);
+  arrayEntry *e = arrayNew(type);
+  e->size = c.top / sizeOf(type);
+  e->v = c.stack;
+  return e;
+}
+
+arrayEntry *arrayParse2D(const char *str, arrayType type) {
+  parseWhitespace(&str);
+  context c = parseArray(&str, type, 2);
+
+  arrayEntry *e = arrayNew(type);
+  e->size = c.top / sizeof(context);
+  e->cols = malloc(sizeof(int) * e->size);
+
+  void** v = malloc(sizeof(void*) * e->size);
+  for (int i = 0; i < e->size; ++i) {
+    v[i] = ((context*)c.stack)[i].stack;
+    e->cols[i] = ((context*)c.stack)[i].top / sizeOf(type);
+  }
+  e->v = v;
+
+  free(c.stack);
+  return e;
+}
+
+void free2D(void** v, int size) {
+  for (int i = 0; i < size; ++i) free(v[i]);
+  free(v);
+}
+
+void arrayFree(arrayEntry* entry) {
+  if (entry->cols == NULL) {
+    if (entry->type == ARRAY_STRING)
+      free2D((void**)entry->v, entry->size);
+    else
+      free(entry->v);
+  } else {
+    if (entry->type == ARRAY_STRING) {
+      for (int i = 0; i < entry->size; ++i)
+        free2D(((void**)entry->v)[i], entry->cols[i]);
+      free(entry->v);
+    } else
+      free2D((void**)entry->v, entry->size);
+
+    free(entry->cols);
+  }
+  free(entry);
+}
+
+arrayEntry *arrayFrom1D(void *v, int size, arrayType type) {
+  arrayEntry *e = arrayNew(type);
+  e->v = v;
+  e->size = size;
+  return e;
+}
+
+arrayEntry *arrayFrom2D(void *v, int row, int *cols, arrayType type) {
+  arrayEntry *e = arrayNew(type);
+  e->v = v;
+  e->size = row;
+  e->cols = cols;
+  return e;
+}
+
+arrayEntry *arrayFrom2DSameCol(void *v, int row, int col, arrayType type) {
   int* cols = malloc(sizeof(int) * row);
-  for (int i = 0; i < row; ++i) cols[i] = col;
-  char* rtn = array2DToString(arrays, row, cols);
-  free(cols);
-  return rtn;
-}
+  for (int i =0; i < row; ++i) cols[i] = col;
+  return arrayFrom2D(v, row, cols, type);
+};
 
-/* TODO: 写的比较恶心, 待优化 */
-char** sarrayNewByStr(const char* str, int* size) {
-  /* [Hello World, abcdefg, 0123456789] */
-  while (*str == '[' || *str == ' ')  str++;
-
-  context c = stackMake();
-
-  int len;
-  const char* tmp;
-  char* p;
-  while (*str != '\0' && *str != ']') {  /* 遇到 ']' 终止 */
-    while (*str == ',' || *str == ' ') str++;  /* 移除首部空格和用来分割的',' */
-
-    len = 0;
-    tmp = str;
-
-    while (*str != ',' && *str != ']' && *str != '\0') {  /* 计算长度 */
-      str++;
-      len++;
-    }
-    while (len > 0 && *(str-1) == ' ') {  /* 移除尾部空格 */
-      str--;
-      len--;
-    }
-
-    strncpy((p = malloc(sizeof(char) * (len+1))), tmp, len);
-    p[len] = '\0';
-    PUTCP(&c, &p);
-  }
-
-  *size = c.top / sizeof(char*);
-  return (char**)c.stack;
-}
-
-char* sarrayToString(char** strs, int size) {
-  if (size > 0) assert(strs != NULL);
-  context c = stackMake();
-
-  PUTC(&c, '[');
+void toString(context *c, char *v, int size, arrayType type, int precision) {
+  PUTC(c, '[');
   for (int i = 0; i < size; ++i) {
-    if (i > 0) PUTC(&c, ',');
-    PUTS(&c, strs[i], strlen(strs[i]));
+    if (i > 0) PUTC(c, ',');
+    switch (type) {
+    case ARRAY_CHAR:
+      PUTC(c, v[i]);
+      break;
+    case ARRAY_INT:
+      c->top -= 32 - sprintf(stackPush(c, 32), "%d", ((int*)v)[i]);
+      break;
+    case ARRAY_DOUBLE:
+      assert(precision != 0);
+      c->top -= 32 - sprintf(stackPush(c, 32), "%.*f", precision, ((double*)v)[i]);
+      break;
+    case ARRAY_STRING:
+      PUTS(c, ((char**)v)[i], strlen(((char**)v)[i]));
+      break;
+    }
   }
-  PUTC(&c, ']');
+  PUTC(c, ']');
+}
+
+char *arrayToString(arrayEntry *entry) {
+  context c = stackMake();
+  if (entry->cols == NULL) {
+    toString(&c, entry->v, entry->size, entry->type, entry->precision);
+  } else {
+    PUTC(&c, '[');
+    for (int i = 0; i < entry->size; ++i) {
+      if (i > 0) PUTC(&c, ',');
+      toString(&c, ((void**)entry->v)[i], entry->cols[i], entry->type, entry->precision);
+    }
+    PUTC(&c, ']');
+  }
+
   PUTC(&c, '\0');
   return c.stack;
 }
 
-double* darrayNewByStr(const char* str, int* size) {
-  context c = stackMake();
-
-  double v;
-  char *end;
-  while (*str != '\0' && *str != ']') {
-    if (isdigit(*str) || (*str == '-' && isdigit(*(str+1)))) {
-      v = strtod(str, &end);
-      PUTD(&c, &v);
-      str = end;
-    } else {
-      str++;
-    }
-  }
-
-  *size = c.top / sizeof(double);
-  return (double*)c.stack;
+char *arrayToString1D(void *v, int size, arrayType type) {
+  arrayEntry *e = arrayFrom1D(v, size, type);
+  char *rt = arrayToString(e);
+  arrayFree(e);
+  return rt;
+}
+char *arrayToString2D(void *v, int row, int *cols, arrayType type) {
+  arrayEntry *e = arrayFrom2D(v, row, cols, type);
+  char *rt = arrayToString(e);
+  arrayFree(e);
+  return rt;
+}
+char *arrayToString2DSameCol(void *v, int row, int col, arrayType type) {
+  arrayEntry *e = arrayFrom2DSameCol(v, row, col, type);
+  char *rt = arrayToString(e);
+  arrayFree(e);
+  return rt;
 }
 
-char* darrayToString(const double* array, int size, int precision) {
-  context c = stackMake();
 
-  int len;
-  PUTC(&c, '[');
-  for (int i = 0; i < size; ++i) {
-    if (i > 0) PUTC(&c, ',');
-    /* 假设最长是100 */
-    len = sprintf(stackPush(&c, 100), "%.*f", precision, array[i]);
-    c.top -= 100 - len;
-  }
-  PUTC(&c, ']');
-  PUTC(&c, '\0');
-  return c.stack;
-}
+void* arrayValue(arrayEntry *entry) { return entry->v; }
+int arraySize(arrayEntry *entry) { return entry->size; }
+void arraySetSize(arrayEntry *entry, int size) { entry->size = size; }
+
+void arraySetPrecision(arrayEntry *entry, int precision) { entry->precision = precision; }
+
+int arrayRow(arrayEntry *entry) { return entry->size; }
+int arrayCol(arrayEntry *entry) { assert(entry->cols != NULL && entry->size > 0); return entry->cols[0]; }
+int *arrayCols(arrayEntry *entry) { assert(entry->cols != NULL); return entry->cols; }

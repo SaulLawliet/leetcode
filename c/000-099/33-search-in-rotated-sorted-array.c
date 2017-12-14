@@ -9,13 +9,13 @@
 #include "../test.h"
 #include "../data-structures/array.h"
 
-void swap(int* a, int *b) {
+void swap(int *a, int *b) {
   int tmp = *a;
   *a = *b;
   *b = tmp;
 }
 
-int search(int* nums, int numsSize, int target) {
+int search(int *nums, int numsSize, int target) {
   int index = -1;
   for (int i = 0; i != numsSize; i++) {
     if (index == -1 && nums[i] == target) {
@@ -30,18 +30,17 @@ int search(int* nums, int numsSize, int target) {
   return index;
 }
 
-void test(const char* before, const char* after, int target, int result) {
-  int numsSize;
-  int* nums = arrayNewByStr(before, &numsSize);
+void test(const char *expect, int result, const char *str, int target) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
 
-  EXPECT_EQ_INT(result, search(nums, numsSize, target));
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(after, arrayToString(nums, numsSize));
+  EXPECT_EQ_INT(result, search(arrayValue(e), arraySize(e), target));
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString(e));
 
-  free(nums);
+  arrayFree(e);
 }
 
 int main(void) {
-  test("[0,1,2,4,5,6,7]", "[4,5,6,7,0,1,2]", 4, 3);
+  test("[4,5,6,7,0,1,2]", 3, "[0,1,2,4,5,6,7]", 4);
 
   return testOutput();
 }

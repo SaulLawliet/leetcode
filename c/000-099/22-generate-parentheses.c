@@ -10,7 +10,7 @@
 #include "../test.h"
 #include "../data-structures/array.h"
 
-void generate(char** rt, int* returnSize, int l, int r, char* tmp, int index) {
+void generate(char **rt, int *returnSize, int l, int r, char *tmp, int index) {
   if (l == 0 && r == 0) {
     tmp[index] = '\0';
     strcpy(rt[(*returnSize)++] = malloc(sizeof(char) * (index + 1)), tmp);
@@ -32,9 +32,9 @@ void generate(char** rt, int* returnSize, int l, int r, char* tmp, int index) {
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
  */
-char** generateParenthesis(int n, int* returnSize) {
-  char** rt = malloc(sizeof(char*) * 5000);  /* TODO: 如何根据N计算出最大容量 */
-  char* tmp = malloc(sizeof(char) * (2*n+1));
+char **generateParenthesis(int n, int *returnSize) {
+  char **rt = malloc(sizeof(char*) * 5000);  /* TODO: 如何根据N计算出最大容量 */
+  char *tmp = malloc(sizeof(char) * (2*n+1));
   *returnSize = 0;
   generate(rt, returnSize, n, n, tmp, 0);
   free(tmp);
@@ -42,11 +42,10 @@ char** generateParenthesis(int n, int* returnSize) {
 }
 
 void test(const char* expect, int n) {
-  int size;
-  char** actual = generateParenthesis(n, &size);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, sarrayToString(actual, size));
+  int returnSize;
+  char** actual = generateParenthesis(n, &returnSize);
 
-  array2DFree((void**)actual, size);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString1D(actual, returnSize, ARRAY_STRING));
 }
 
 int main(void) {

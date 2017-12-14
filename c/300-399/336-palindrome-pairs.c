@@ -3,7 +3,6 @@
  * All rights reserved.
  *
  * 暴力计算, 比较耗时
- * TODO: 换个算法
  */
 
 #include <string.h>  /* strlen() */
@@ -11,7 +10,7 @@
 #include "../test.h"
 #include "../data-structures/array.h"
 
-bool isPalindrome(const char* s1, const char* s2) {
+bool isPalindrome(const char *s1, const char *s2) {
   int l1 = strlen(s1), l2 = strlen(s2);
   for (int i = 0; i < (l1+l2)/2; ++i)
     if ((i < l1 ? s1[i] : s2[i-l1]) != (i < l2 ? s2[l2-i-1] : s1[l1-i+l2-1]))
@@ -25,44 +24,36 @@ bool isPalindrome(const char* s1, const char* s2) {
  * The sizes of the arrays are returned as *columnSizes array.
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
-int** palindromePairs(char** words, int wordsSize, int** columnSizes, int* returnSize) {
-  int** rt = malloc(sizeof(int*) * wordsSize * (wordsSize - 1));  /* 最多可能有 P(wordsSize, 2) 个 */
+int **palindromePairs(char **words, int wordsSize, int **columnSizes, int *returnSize) {
+  int **rtn = malloc(sizeof(int*) * wordsSize * (wordsSize - 1));  /* 最多可能有 P(wordsSize, 2) 个 */
 
   int i, j, size = 0;
   for (i = 0; i < wordsSize; i++) {
     for (j = 0; j < wordsSize; j++) {
       if (i == j) continue;
       if (isPalindrome(words[i], words[j])) {
-        rt[size] = malloc(sizeof(int) * 2);
-        rt[size][0] = i;
-        rt[size][1] = j;
+        rtn[size] = malloc(sizeof(int) * 2);
+        rtn[size][0] = i;
+        rtn[size][1] = j;
         size++;
       }
     }
   }
   *returnSize = size;
-  int *a = malloc(sizeof(int) * size);
-  for(i = 0; i < size; i++)
-    a[i] = 2;
-  *columnSizes = a;
-  return rt;
+  *columnSizes = malloc(sizeof(int) * size);
+  for(i = 0; i < size; i++) (*columnSizes)[i] = 2;
+  return rtn;
 }
 
-void test(const char* expect, const char* s) {
-  int wordsSize;
-  char** words = sarrayNewByStr(s, &wordsSize);
-
+void test(const char *expect, const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_STRING);
   int *columnSizes;
-  int actualSize;
-  int** actual = palindromePairs(words, wordsSize, &columnSizes, &actualSize);
+  int returnSize;
+  int **a = palindromePairs(arrayValue(e), arraySize(e), &columnSizes, &returnSize);
 
-  for (int i = 0; i < actualSize; i++)
-    EXPECT_EQ_INT(2, columnSizes[i]);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, array2DToStringSameCol(actual, actualSize, 2));
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString2D(a, returnSize, columnSizes, ARRAY_INT));
 
-  free(columnSizes);
-  array2DFree((void**)actual, actualSize);
-  array2DFree((void**)words, wordsSize);
+  arrayFree(e);
 }
 
 int main(void) {

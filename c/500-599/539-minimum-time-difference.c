@@ -10,7 +10,7 @@
 #include "../test.h"
 #include "../data-structures/array.h"
 
-int findMinDifference(char** timePoints, int timePointsSize) {
+int findMinDifference(char **timePoints, int timePointsSize) {
   int size = 24 * 60;
   bool flag[size];
   memset(flag, 0, sizeof(bool) * size);
@@ -45,17 +45,17 @@ int findMinDifference(char** timePoints, int timePointsSize) {
   return rtn;
 }
 
-void test(const char* str, int expect) {
-  int timePointsSize;
-  char** timePoints = sarrayNewByStr(str, &timePointsSize);
-  EXPECT_EQ_INT(expect, findMinDifference(timePoints, timePointsSize));
+void test(int expect, const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_STRING);
 
-  array2DFree((void**)timePoints, timePointsSize);
+  EXPECT_EQ_INT(expect, findMinDifference(arrayValue(e), arraySize(e)));
+
+  arrayFree(e);
 }
 
 int main(void) {
-  test("[23:59, 00:00]", 1);
-  test("[00:00, 23:59, 00:00]", 0);
+  test(1, "[23:59, 00:00]");
+  test(0, "[00:00, 23:59, 00:00]");
 
   return testOutput();
 }

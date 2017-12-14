@@ -6,28 +6,24 @@
 #include "../test.h"
 #include "../data-structures/array.h"
 
-int removeElement(int* nums, int numsSize, int val) {
+int removeElement(int *nums, int numsSize, int val) {
   int i = 0, j = 0;
   for (; j < numsSize; j++)
     if (nums[j] != val) nums[i++] = nums[j];
   return i;
 }
 
-void test(const char* expect, const char* actual, int val) {
-  int expectNumsSize, actualNumsSize;
-  int* expectNums = arrayNewByStr(expect, &expectNumsSize);
-  int* actualNums = arrayNewByStr(actual, &actualNumsSize);
+void test(const char* expect, const char* str, int val) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arraySetSize(e, removeElement(arrayValue(e), arraySize(e), val));
 
-  EXPECT_EQ_INT((int)expectNumsSize, removeElement(actualNums, actualNumsSize, val));
-  EXPECT_EQ_STRING_AND_FREE(arrayToString(expectNums, expectNumsSize),
-                            arrayToString(actualNums, expectNumsSize));
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString(e));
 
-  free(expectNums);
-  free(actualNums);
+  arrayFree(e);
 }
 
 int main(void) {
-  test("[2, 2]", "[3, 2, 2, 3]", 3);
+  test("[2,2]", "[3,2,2,3]", 3);
 
   return testOutput();
 }

@@ -14,7 +14,7 @@
 
 #include "../test.h"
 
-int romanToInt(char* s) {
+int romanToInt(char *s) {
   int rt = 0;
   char *p = s;
   while (*p) {
@@ -47,7 +47,7 @@ int romanToInt(char* s) {
   return rt;
 }
 
-void test(int expect, char* s) {
+void test(int expect, char *s) {
   EXPECT_EQ_INT(expect, romanToInt(s));
 }
 

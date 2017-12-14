@@ -48,11 +48,11 @@ int compare_ints(const void* a, const void* b) {
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
  */
-double* medianSlidingWindow(int* nums, int numsSize, int k, int* returnSize) {
+double *medianSlidingWindow(int *nums, int numsSize, int k, int *returnSize) {
   *returnSize = numsSize - k + 1;
-  double* rtn = malloc(sizeof(double) * *returnSize);
+  double *rtn = malloc(sizeof(double) * *returnSize);
 
-  int* tmp = malloc(sizeof(int) * k);
+  int *tmp = malloc(sizeof(int) * k);
   memcpy(tmp, nums, sizeof(int) * k);
 
   qsort(tmp, k, sizeof(int), compare_ints);
@@ -75,22 +75,23 @@ double* medianSlidingWindow(int* nums, int numsSize, int k, int* returnSize) {
   return rtn;
 }
 
-void test(const char* str, int k, const char* expect) {
-  int numsSize;
-  int* nums = arrayNewByStr(str, &numsSize);
-
+void test(const char* expect, const char *str, int k) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
   int returnSize;
-  double *rtn = medianSlidingWindow(nums, numsSize, k, &returnSize);
+  double *a = medianSlidingWindow(arrayValue(e), arraySize(e), k, &returnSize);
+  arrayEntry *rtn = arrayFrom1D(a, returnSize, ARRAY_DOUBLE);
+  arraySetPrecision(rtn, 1);
 
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, darrayToString(rtn, returnSize, 1));
-  free(rtn);
-  free(nums);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString(rtn));
+
+  arrayFree(e);
+  arrayFree(rtn);
 }
 
 int main(void) {
-  test("[1,3,-1,-3,5,3,6,7]",
-       3,
-       "[1.0,-1.0,-1.0,3.0,5.0,6.0]");
+  test("[1.0,-1.0,-1.0,3.0,5.0,6.0]",
+       "[1,3,-1,-3,5,3,6,7]",
+       3);
 
   return testOutput();
 }

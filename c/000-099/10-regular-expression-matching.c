@@ -8,11 +8,11 @@
 #include <stdbool.h>
 #include "../test.h"
 
-bool matchFirst(char* s, char* p) {
+bool matchFirst(char *s, char *p) {
   return (*p == '.' && *s != '\0') || *s == *p;
 }
 
-bool isMatch(char* s, char* p) {
+bool isMatch(char *s, char *p) {
   if (*p == '\0') return *s == '\0';
 
   if (*(p+1) != '*') {
@@ -26,7 +26,7 @@ bool isMatch(char* s, char* p) {
   }
 }
 
-void test(bool expect, char* s, char* p) {
+void test(bool expect, char *s, char *p) {
   EXPECT_EQ_INT(expect, isMatch(s, p));
 }
 

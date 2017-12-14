@@ -10,14 +10,14 @@
 #include "../data-structures/array.h"
 
 /* start with '2' */
-char* buttons[] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tvu", "wxyz"};
+char *buttons[] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tvu", "wxyz"};
 int buttonLens[] = {3, 3, 3, 3, 3, 4, 3, 4};
 
 /**
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
  */
-char** letterCombinations(char* digits, int* returnSize) {
+char **letterCombinations(char *digits, int* returnSize) {
   int len = strlen(digits);
   if (len == 0) {
     *returnSize = 0;
@@ -35,7 +35,7 @@ char** letterCombinations(char* digits, int* returnSize) {
   if (startIndex == *returnSize) startIndex = 0;
   else startIndex = *returnSize - startIndex % *returnSize;
 
-  char** rt = malloc(sizeof(char*) * *returnSize);
+  char **rt = malloc(sizeof(char*) * *returnSize);
   for (int i = 0; i < *returnSize; i++)
     memset(rt[i] = malloc(sizeof(char) * (len + 1)), '\0', len + 1);
 
@@ -66,9 +66,8 @@ char** letterCombinations(char* digits, int* returnSize) {
 void test(const char* expect, char* digits) {
   int actualSize;
   char** actual = letterCombinations(digits, &actualSize);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, sarrayToString(actual, actualSize));
 
-  array2DFree((void**)actual, actualSize);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString1D(actual, actualSize, ARRAY_STRING));
 }
 
 int main(void) {

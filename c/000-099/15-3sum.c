@@ -10,14 +10,14 @@
 #include "../data-structures/array.h"
 
 int compare_ints(const void* a, const void* b) {
-  return  *(const int*)a - *(const int*)b;
+  return *(const int*)a - *(const int*)b;
 }
 
 /**
  * Return an array of arrays of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int** threeSum(int* nums, int numsSize, int* returnSize) {
+int **threeSum(int *nums, int numsSize, int* returnSize) {
   if (numsSize < 3) {
     *returnSize = 0;
     return NULL;
@@ -57,23 +57,14 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
   return rt;
 }
 
-void test(const char* s1, const char* s2) {
-  int numsSize;
-  int *nums = arrayNewByStr(s1, &numsSize);
-
+void test(const char *expect, const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
   int returnSize;
-  int** rtn = threeSum(nums, numsSize, &returnSize);
+  int **a = threeSum(arrayValue(e), arraySize(e), &returnSize);
 
-  int row, col;
-  int **expect = array2DNewByStrSameCol(s2, &row, &col);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString2DSameCol(a, returnSize, 3, ARRAY_INT));
 
-  EXPECT_EQ_INT(row, returnSize);
-  for (int i = 0; i < returnSize; ++i)
-    EXPECT_EQ_STRING_AND_FREE(arrayToString(expect[i], col), arrayToString(rtn[i], col));
-
-  array2DFree((void**)expect, row);
-  array2DFree((void**)rtn, returnSize);
-  free(nums);
+  arrayFree(e);
 }
 
 /*
@@ -86,7 +77,7 @@ void test(const char* s1, const char* s2) {
   ]
 */
 int main() {
-  test("[-1, 0, 1, 2, -1, -4]", "[[-1, -1, 2], [-1, 0, 1]]");
+  test("[[-1,-1,2],[-1,0,1]]", "[-1, 0, 1, 2, -1, -4]");
 
   return testOutput();
 }

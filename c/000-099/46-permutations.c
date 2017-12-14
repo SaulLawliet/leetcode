@@ -21,7 +21,7 @@ void swap(int *a, int *b) {
   *b = tmp;
 }
 
-void permutations(int** rt, int* rtSize, int* nums, int start, int length) {
+void permutations(int **rt, int *rtSize, int *nums, int start, int length) {
   if (start == length - 1) {
     memcpy(rt[(*rtSize)++] = malloc(sizeof(int) * length), nums, sizeof(int) * length);
   } else {
@@ -37,30 +37,26 @@ void permutations(int** rt, int* rtSize, int* nums, int start, int length) {
  * Return an array of arrays of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int** permute(int* nums, int numsSize, int* returnSize) {
-  int** rt = malloc(sizeof(int *) * factorial(numsSize));
+int **permute(int *nums, int numsSize, int *returnSize) {
+  int **rt = malloc(sizeof(int*) * factorial(numsSize));
   *returnSize = 0;
 
   permutations(rt, returnSize, nums, 0, numsSize);
   return rt;
 }
 
-void test(const char* s, int expectSize, const char* expect) {
-  int numsSize;
-  int* nums = arrayNewByStr(s, &numsSize);
-
+void test(const char* expect, const char* str) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
   int returnSize;
-  int** rt = permute(nums, numsSize, &returnSize);
+  int **a = permute(arrayValue(e), arraySize(e), &returnSize);
 
-  EXPECT_EQ_INT(expectSize, returnSize);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, array2DToStringSameCol(rt, returnSize, numsSize));
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString2DSameCol(a, returnSize, arraySize(e), ARRAY_INT));
 
-  array2DFree((void**)rt, returnSize);
-  free(nums);
+  arrayFree(e);
 }
 
 int main(void) {
-  test("[1,2,3]", 6, "[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,2,1],[3,1,2]]");
+  test("[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,2,1],[3,1,2]]", "[1,2,3]");
 
   return testOutput();
 }

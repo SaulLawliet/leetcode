@@ -14,7 +14,7 @@
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int* searchRange(int* nums, int numsSize, int target, int* returnSize) {
+int* searchRange(int *nums, int numsSize, int target, int *returnSize) {
   *returnSize = 2;
   int x = -1, y = -1;
   int a = 0, b = numsSize - 1, i;
@@ -35,16 +35,14 @@ int* searchRange(int* nums, int numsSize, int target, int* returnSize) {
   return rtn;
 }
 
-void test(const char* expect, const char* s, int target) {
-  int numsSize;
-  int* nums = arrayNewByStr(s, &numsSize);
-
+void test(const char *expect, const char *str, int target) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
   int returnSize;
-  int* actual = searchRange(nums, numsSize, target, &returnSize);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString(actual, returnSize));
+  int* a = searchRange(arrayValue(e), arraySize(e), target, &returnSize);
 
-  if (numsSize > 0) free(nums);
-  if (returnSize > 0) free(actual);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString1D(a, returnSize, ARRAY_INT));
+
+  arrayFree(e);
 }
 
 /*

@@ -6,25 +6,40 @@
 #ifndef __DATA_STRUCTURES_ARRAY_H
 #define __DATA_STRUCTURES_ARRAY_H
 
-/* FORMAT: [%d,%d,%d] */
-int* arrayNewByStr(const char* str, int* size);
-char* arrayToString(const int* array, int size);
-int* arrayCopy(const int* array, int size);
+typedef struct arrayEntry arrayEntry;
 
-void array2DFree(void** array, int row);
+typedef enum {
+  ARRAY_INT,
+  ARRAY_CHAR,
+  ARRAY_DOUBLE,
+  ARRAY_STRING,
+} arrayType;
 
-/* FORMAT: [[%d,%d,%d],[%d,%d,%d]] */
-int** array2DNewByStr(const char* str, int* row, int** cols);
-char* array2DToString(int** arrays, int row, int* cols);
-int** array2DNewByStrSameCol(const char* str, int* row, int* col);
-char* array2DToStringSameCol(int** arrays, int row, int col);
+arrayEntry *arrayNew(arrayType type);
+arrayEntry *arrayParse(const char *str, arrayType type);
+arrayEntry *arrayParse1D(const char *str, arrayType type);
+arrayEntry *arrayParse2D(const char *str, arrayType type);
 
-/* FORMAT: [%s,%s,%s] */
-char** sarrayNewByStr(const char* str, int* size);
-char* sarrayToString(char** strs, int size);
+arrayEntry *arrayFrom1D(void *v, int size, arrayType type);
+arrayEntry *arrayFrom2D(void *v, int row, int *cols, arrayType type);
+arrayEntry *arrayFrom2DSameCol(void *v, int row, int col, arrayType type);
 
-/* FORMAT: [%f,%f,%f] */
-double* darrayNewByStr(const char* str, int* size);
-char* darrayToString(const double* array, int size, int precision);
+void arrayFree(arrayEntry *entry);
+
+char *arrayToString(arrayEntry *entry);
+char *arrayToString1D(void *v, int size, arrayType type);
+char *arrayToString2D(void *v, int row, int *cols, arrayType type);
+char *arrayToString2DSameCol(void *v, int row, int col, arrayType type);
+
+/* getter, setter */
+void* arrayValue(arrayEntry *entry);
+int arraySize(arrayEntry *entry);
+void arraySetSize(arrayEntry *entry, int size);
+
+void arraySetPrecision(arrayEntry *entry, int precision);
+
+int arrayRow(arrayEntry *entry);
+int arrayCol(arrayEntry *entry);
+int *arrayCols(arrayEntry *entry);
 
 #endif  /* __DATA_STRUCTURES_ARRAY_H */

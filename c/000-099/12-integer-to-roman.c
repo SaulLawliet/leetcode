@@ -20,7 +20,7 @@ const char T[4][3] = {
   {'I', 'V', 'X'}   /* one */
 };
 
-char* intToRoman(int num) {
+char *intToRoman(int num) {
   /* 在3999内, 最长的结果是 3888(MMMDCCCLXXXVIII) */
   char *rt = malloc(sizeof(char) * 16);  /* 15 + 1 */
   char *p = rt;
@@ -50,7 +50,7 @@ char* intToRoman(int num) {
   return rt;
 }
 
-void test(const char* expect, int num) {
+void test(const char *expect, int num) {
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, intToRoman(num));
 }
 

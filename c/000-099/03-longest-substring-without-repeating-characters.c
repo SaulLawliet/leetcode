@@ -12,7 +12,7 @@
 #include <stdlib.h>  /* malloc(), free(), memset() */
 #include "../test.h"
 
-int lengthOfLongestSubstring_v1(char* s) {
+int lengthOfLongestSubstring_v1(char *s) {
   int length = strlen(s);
   int i, j, len;
 

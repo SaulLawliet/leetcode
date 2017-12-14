@@ -12,7 +12,7 @@
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int* twoSum(int* nums, int numsSize, int target) {
+int* twoSum(int *nums, int numsSize, int target) {
   int i, j;
   for (i = 0; i != numsSize - 1; ++i) {
     for (j = i + 1; j != numsSize; ++j) {
@@ -27,15 +27,15 @@ int* twoSum(int* nums, int numsSize, int target) {
   return NULL;
 }
 
-void test(const char* s, int target) {
-  int numsSize;
-  int *nums = arrayNewByStr(s, &numsSize);
-  int *answer = twoSum(nums, numsSize, target);
+void test(const char *str, int target) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  int *nums = arrayValue(e);
+  int *answer = twoSum(nums, arraySize(e), target);
 
   EXPECT_EQ_INT(target, nums[answer[0]] + nums[answer[1]]);
 
-  free(nums);
   free(answer);
+  arrayFree(e);
 }
 
 /*

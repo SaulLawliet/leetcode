@@ -7,7 +7,7 @@
 #include "../test.h"
 #include "../data-structures/array.h"
 
-bool validUtf8(int* data, int dataSize) {
+bool validUtf8(int *data, int dataSize) {
   int count = 0;
   for (int i = 0; i < dataSize; ++i) {
     if (count == 0) {
@@ -24,12 +24,12 @@ bool validUtf8(int* data, int dataSize) {
   return count == 0;
 }
 
-void test(bool expect, const char* s) {
-  int dataSize;
-  int* data = arrayNewByStr(s, &dataSize);
-  EXPECT_EQ_INT(expect, validUtf8(data, dataSize));
+void test(bool expect, const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
 
-  free(data);
+  EXPECT_EQ_INT(expect, validUtf8(arrayValue(e), arraySize(e)));
+
+  arrayFree(e);
 }
 
 /*
