@@ -27,38 +27,29 @@ static int test_pass = 0;
     }                                                               \
   } while (0)
 
-#define EXPECT_EQ_INT(expect, actual)           \
-  do {                                          \
-    int n1 = expect, n2 = actual;               \
-    EXPECT_EQ_BASE(n1 == n2, n1, n2, "%d");     \
-  } while (0)
 
-#define EXPECT_EQ_DOUBLE(expect, actual)        \
-  do {                                          \
-    double n1 = expect, n2 = actual;            \
-    EXPECT_EQ_BASE(n1 == n2, n1, n2, "%.17g");  \
-  } while (0)
+void EXPECT_EQ_INT(int expect, int actual) {
+  EXPECT_EQ_BASE(expect == actual, expect, actual, "%d");
+}
 
-#define EXPECT_EQ_STRING(expect, actual)                \
-  do {                                                  \
-    char *s1 = expect, *s2 = actual;                    \
-    EXPECT_EQ_BASE(strcmp(s1, s2) == 0, s1, s2, "%s");  \
-  } while (0)
+void EXPECT_EQ_DOUBLE(double expect, double actual) {
+  EXPECT_EQ_BASE(expect == actual, expect, actual, "%.17g");
+}
 
-#define EXPECT_EQ_STRING_AND_FREE(expect, actual)       \
-  do {                                                  \
-    char *s1 = expect, *s2 = actual;                    \
-    EXPECT_EQ_BASE(strcmp(s1, s2) == 0, s1, s2, "%s");  \
-    free(s1); free(s2);                                 \
-  } while (0)
+void EXPECT_EQ_STRING(const char *expect, const char *actual) {
+  EXPECT_EQ_BASE(strcmp(expect, actual) == 0, expect, actual, "%s");
+}
 
-#define EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, actual)  \
-  do {                                                    \
-    const char *s1 = expect;                              \
-    char *s2 = actual;                                    \
-    EXPECT_EQ_BASE(strcmp(s1, s2) == 0, s1, s2, "%s");    \
-    free(s2);                                             \
-  } while (0)
+void EXPECT_EQ_STRING_AND_FREE(char *expect, char *actual) {
+  EXPECT_EQ_STRING(expect, actual);
+  free(expect);
+  free(actual);
+}
+
+void EXPECT_EQ_STRING_AND_FREE_ACTUAL(const char *expect, char *actual) {
+  EXPECT_EQ_STRING(expect, actual);
+  free(actual);
+}
 
 int testOutput(void) {
   printf("%d/%d (%3.2f%%) passed\n", test_pass, test_count,
