@@ -5,7 +5,7 @@
  * 两个指针, 往中间查找
  */
 
-#include <stdbool.h>
+#include <string.h>  /* strlen() */
 #include "../test.h"
 
 void swap(char *a, char *b) {
@@ -15,10 +15,8 @@ void swap(char *a, char *b) {
 char *reverseVowels(char *s) {
   const char *vowels = "aeiouAEIOU";
 
-  char *rtn = malloc(sizeof(char) * (strlen(s) + 1));
-  strcpy(rtn, s);
-  char *p1 = rtn,
-       *p2 = rtn+strlen(s)- 1;
+  char *p1 = s,
+       *p2 = s+strlen(s)- 1;
 
   while (p1 < p2) {
     if (!strchr(vowels, *p1)) {
@@ -30,11 +28,15 @@ char *reverseVowels(char *s) {
     swap(p1++, p2--);
   }
 
-  return rtn;
+  return s;
 }
 
-void test(const char *expect, char *s) {
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, reverseVowels(s));
+void test(const char *expect, char *str) {
+  char *s = malloc(sizeof(char) * (strlen(str) + 1));
+  strcpy(s, str);
+  s = reverseVowels(s);
+
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, s);
 }
 
 int main(void) {
