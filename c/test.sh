@@ -1,5 +1,8 @@
 #!/bin/bash
 
+cd $(dirname $(readlink -f $0))
+export C_INCLUDE_PATH=$C_INCLUDE_PATH:`pwd`/../
+
 ids=()
 for value in $@; do
     if [[ ${value:0:1} == "-" ]]; then
@@ -19,10 +22,10 @@ if (( ${#ids[@]} == 0 )); then
     exit 1
 fi
 
-lib_dir=("algorithms data-structures tools")
+lib_dir=`ls -d */ |grep -v "^[0-9]"`
 lib=""
 for dir in ${lib_dir[@]}; do
-    for file in `ls $dir/*.c |grep -v "\-test.c"`; do
+    for file in `ls ${dir}*.c |grep -v "\-test.c"`; do
         lib="$lib $file"
     done
 done

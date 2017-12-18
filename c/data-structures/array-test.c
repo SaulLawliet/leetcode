@@ -1,5 +1,10 @@
-#include "array.h"
-#include "../test.h"
+/*
+ * Copyright (C) 2017, Saul Lawliet <october dot sunbathe at gmail dot com>
+ * All rights reserved.
+ */
+
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 int type;
 int precision = 0;

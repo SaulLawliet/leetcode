@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef __DATA_STRUCTURES_ARRAY_H
-#define __DATA_STRUCTURES_ARRAY_H
+#ifndef C_DATA_STRUCTURES_ARRAY_H_
+#define C_DATA_STRUCTURES_ARRAY_H_
 
 typedef struct arrayEntry arrayEntry;
 
@@ -32,7 +32,7 @@ char *arrayToString2D(void *v, int row, int *cols, arrayType type);
 char *arrayToString2DSameCol(void *v, int row, int col, arrayType type);
 
 /* getter, setter */
-void* arrayValue(arrayEntry *entry);
+void *arrayValue(arrayEntry *entry);
 int arraySize(arrayEntry *entry);
 void arraySetSize(arrayEntry *entry, int size);
 
@@ -42,4 +42,4 @@ int arrayRow(arrayEntry *entry);
 int *arrayCols(arrayEntry *entry);
 int arrayCol(arrayEntry *entry);
 
-#endif  /* __DATA_STRUCTURES_ARRAY_H */
+#endif /* C_DATA_STRUCTURES_ARRAY_H_ */

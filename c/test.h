@@ -3,12 +3,12 @@
  * All rights reserved.
  */
 
-#ifndef __TEST_H
-#define __TEST_H
+#ifndef C_TEST_H_
+#define C_TEST_H_
 
-#include <stdio.h>   /* printf(), fprintf() */
-#include <string.h>  /* strcmp() */
-#include <stdlib.h>  /* free() */
+#include <stdio.h>  /* printf(), fprintf() */
+#include <stdlib.h> /* free() */
+#include <string.h> /* strcmp() */
 
 static int test_main_ret = 0;
 static int test_count = 0;
@@ -26,7 +26,6 @@ static int test_pass = 0;
       test_main_ret = 1;                                            \
     }                                                               \
   } while (0)
-
 
 void EXPECT_EQ_INT(int expect, int actual) {
   EXPECT_EQ_BASE(expect == actual, expect, actual, "%d");
@@ -57,4 +56,4 @@ int testOutput(void) {
   return test_main_ret;
 }
 
-#endif /* __TEST_H */
+#endif /* C_TEST_H_ */
