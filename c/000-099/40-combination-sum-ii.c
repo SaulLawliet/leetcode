@@ -2,7 +2,7 @@
  * Copyright (C) 2017, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
  *
- * 递归解即可
+ * 在 39 的基础上改动即可
  */
 
 #include <stdlib.h> /* malloc(), free(), sort() */
@@ -24,9 +24,10 @@ void dfs(int ***rtn, int **columnSizes, int *returnSize,
   }
   for (int i = order; i < candidatesSize; ++i) {
     if (candidateds[i] > target) return;
+    if (i > order && candidateds[i] == candidateds[i - 1]) continue;
     nums[numsSize] = candidateds[i];
     dfs(rtn, columnSizes, returnSize,
-        candidateds, candidatesSize, target - candidateds[i], nums, numsSize + 1, i);
+        candidateds, candidatesSize, target - candidateds[i], nums, numsSize + 1, i + 1);
   }
 }
 
@@ -43,7 +44,7 @@ int compare_ints(const void *a, const void *b) {
  * The sizes of the arrays are returned as *columnSizes array.
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
-int **combinationSum(int *candidates, int candidatesSize, int target, int **columnSizes, int *returnSize) {
+int **combinationSum2(int *candidates, int candidatesSize, int target, int **columnSizes, int *returnSize) {
   qsort(candidates, candidatesSize, sizeof(int), compare_ints);
   *returnSize = 0;
   int **rtn = malloc(sizeof(int *) * MAX_ROW_SIZE);
@@ -59,7 +60,7 @@ void test(const char *expect, const char *str, int target) {
   arrayEntry *e = arrayParse(str, ARRAY_INT);
   int *columnSizes;
   int returnSize;
-  int **a = combinationSum(arrayValue(e), arraySize(e), target, &columnSizes, &returnSize);
+  int **a = combinationSum2(arrayValue(e), arraySize(e), target, &columnSizes, &returnSize);
 
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString2D(a, returnSize, columnSizes, ARRAY_INT));
 
@@ -67,7 +68,9 @@ void test(const char *expect, const char *str, int target) {
 }
 
 int main(void) {
-  test("[[2,2,3],[7]]", "[2, 3, 6, 7]", 7);
+  test("[[1,1,6],[1,2,5],[1,7],[2,6]]", "[10,1,2,7,6,1,5]", 8);
+  test("[[2,2]]", "[2,2,2]", 4);
+  test("[[1,1,1,5],[1,1,3,3],[3,5]]", "[3,1,3,5,1,1]", 8);
 
   testOutput();
 }
