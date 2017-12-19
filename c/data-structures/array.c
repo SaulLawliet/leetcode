@@ -205,11 +205,11 @@ void toString(context *c, char *v, int size, arrayType type, int precision) {
         PUTC(c, v[i]);
         break;
       case ARRAY_INT:
-        c->top -= 32 - snprintf(stackPush(c, 32), sizeof(int), "%d", ((int *)v)[i]);
+        c->top -= 32 - snprintf(stackPush(c, 32), 32, "%d", ((int *)v)[i]);
         break;
       case ARRAY_DOUBLE:
         assert(precision != 0);
-        c->top -= 32 - snprintf(stackPush(c, 32), sizeof(double), "%.*f", precision, ((double *)v)[i]);
+        c->top -= 32 - snprintf(stackPush(c, 32), 32, "%.*f", precision, ((double *)v)[i]);
         break;
       case ARRAY_STRING:
         PUTS(c, ((char **)v)[i], strlen(((char **)v)[i]));
