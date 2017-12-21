@@ -16,11 +16,9 @@ int loop(int *nums, int numsSize, int target, int *tmp) {
     return tmp[target];
 
   int rtn = 0;
-  for (int i = 0; i < numsSize; ++i) {
-    if (target >= nums[i]) {
+  for (int i = 0; i < numsSize; ++i)
+    if (target >= nums[i])
       rtn += loop(nums, numsSize, target - nums[i], tmp);
-    }
-  }
   tmp[target] = rtn;
   return rtn;
 }
