@@ -1,6 +1,15 @@
 #!/bin/bash
 
-cd $(dirname $(readlink -f $0))
+readlink="readlink"
+if [[ `uname` == "Darwin" ]]; then
+    type greadlink >/dev/null 2>&1 || {
+        echo >&2 "You need to install greadlink. (brew install coreutils)"
+        echo >&2 "See https://stackoverflow.com/a/4031502"
+        exit 1;
+    }
+    readlink="greadlink"
+fi
+cd $(dirname $($readlink -f $0))
 export C_INCLUDE_PATH=$C_INCLUDE_PATH:`pwd`/../
 
 ids=()

@@ -20,8 +20,8 @@ static int test_pass = 0;
     if (equality) {                                                 \
       test_pass++;                                                  \
     } else {                                                        \
-      fprintf(stderr, "%s:%s:%d:\t", __FILE__, __func__, __LINE__); \
-      fprintf(stderr, "expect: " format " actual: " format "\n",    \
+      fprintf(stderr, "%s:%s:%d:\n", __FILE__, __func__, __LINE__); \
+      fprintf(stderr, "expect: " format "\nactual: " format "\n",   \
               expect, actual);                                      \
       test_main_ret = 1;                                            \
     }                                                               \
