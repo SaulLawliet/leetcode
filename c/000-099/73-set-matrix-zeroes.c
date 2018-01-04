@@ -1,6 +1,8 @@
 /*
  * Copyright (C) 2017, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
+ *
+ * 将相关数据存到第一行, 第一列中
  */
 
 #include <stdbool.h>

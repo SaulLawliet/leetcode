@@ -14,17 +14,17 @@ static int test_main_ret = 0;
 static int test_count = 0;
 static int test_pass = 0;
 
-#define EXPECT_EQ_BASE(equality, expect, actual, format)            \
-  do {                                                              \
-    test_count++;                                                   \
-    if (equality) {                                                 \
-      test_pass++;                                                  \
-    } else {                                                        \
-      fprintf(stderr, "%s:%s:%d:\n", __FILE__, __func__, __LINE__); \
-      fprintf(stderr, "expect: " format "\nactual: " format "\n",   \
-              expect, actual);                                      \
-      test_main_ret = 1;                                            \
-    }                                                               \
+#define EXPECT_EQ_BASE(equality, expect, actual, format)             \
+  do {                                                               \
+    test_count++;                                                    \
+    if (equality) {                                                  \
+      test_pass++;                                                   \
+    } else {                                                         \
+      fprintf(stderr, "%s:%d: ", __func__, __LINE__);                \
+      fprintf(stderr, "expect: '" format "' actual: '" format "'\n", \
+              expect, actual);                                       \
+      test_main_ret = 1;                                             \
+    }                                                                \
   } while (0)
 
 void EXPECT_EQ_INT(int expect, int actual) {
