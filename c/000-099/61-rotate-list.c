@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017, Saul Lawliet <october dot sunbathe at gmail dot com>
+ * Copyright (C) 2017-2018, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
  *
  * 第一次提交的时候, 以为 k > 0 && k < len(head)
@@ -7,8 +7,9 @@
  */
 
 #include <stdlib.h> /* NULL */
-#include "../test.h"
-#include "../data-structures/linked-list.h"
+
+#include "c/data-structures/linked-list.h"
+#include "c/test.h"
 
 /**
  * Definition for singly-linked list.
@@ -17,7 +18,7 @@
  *     struct ListNode *next;
  * };
  */
-struct ListNode* rotateRight(struct ListNode* head, int k) {
+struct ListNode *rotateRight(struct ListNode *head, int k) {
   if (!k || !head) return head;
   struct ListNode *b = head;
   int i = k;
@@ -44,18 +45,17 @@ struct ListNode* rotateRight(struct ListNode* head, int k) {
   return rt;
 }
 
-void test(const char* expect, const char* s, int k) {
-  struct ListNode* head = linkedlistNewByStr(s);
-  head = rotateRight(head, k);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, linkedlistToString(head));
+void test(const char *expect, const char *s, int k) {
+  struct ListNode *list = rotateRight(linkedlistParse(s), k);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, linkedlistToString(list));
 
-  linkedlistFree(head);
+  linkedlistFree(list);
 }
 
 int main(void) {
-  test("4 -> 5 -> 1 -> 2 -> 3", "1 -> 2 -> 3 -> 4 -> 5", 2);
-  test("4 -> 5 -> 1 -> 2 -> 3", "1 -> 2 -> 3 -> 4 -> 5", 12);
-  test("2 -> 3 -> 4 -> 5 -> 1", "1 -> 2 -> 3 -> 4 -> 5", 4);
+  test("[4,5,1,2,3]", "[1,2,3,4,5]", 2);
+  test("[4,5,1,2,3]", "[1,2,3,4,5]", 12);
+  test("[2,3,4,5,1]", "[1,2,3,4,5]", 4);
 
   return testOutput();
 }

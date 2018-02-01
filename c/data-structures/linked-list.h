@@ -1,19 +1,20 @@
 /*
- * Copyright (C) 2017, Saul Lawliet <october dot sunbathe at gmail dot com>
+ * Copyright (C) 2017-2018, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
  */
 
-#ifndef __LINKED_LIST_H
-#define __LINKED_LIST_H
+#ifndef C_DATA_STRUCTURES_LINKED_LIST_H_
+#define C_DATA_STRUCTURES_LINKED_LIST_H_
 
 struct ListNode {
   int val;
   struct ListNode *next;
 };
 
-/* STRING FORMAT: %d -> %d -> %d */
-struct ListNode* linkedlistNewByStr(const char* str);
-char * linkedlistToString(struct ListNode *node);
-void linkedlistFree(struct ListNode *node);
+struct ListNode *linkedlistParse(const char *str);
+char *linkedlistToString(struct ListNode *list);
+void linkedlistFree(struct ListNode *list);
 
-#endif  /* __LINKED_LIST_H */
+int linkedlistLength(struct ListNode *list);
+
+#endif /* C_DATA_STRUCTURES_LINKED_LIST_H_ */

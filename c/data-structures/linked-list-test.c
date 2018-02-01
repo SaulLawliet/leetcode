@@ -1,14 +1,24 @@
-#include "linked-list.h"
-#include "../test.h"
+/*
+ * Copyright (C) 2017-2018, Saul Lawliet <october dot sunbathe at gmail dot com>
+ * All rights reserved.
+ */
+
+#include "c/data-structures/linked-list.h"
+#include "c/test.h"
+
+void testLinkedListRoundTrip(const char *str, int expectLength) {
+  struct ListNode *list = linkedlistParse(str);
+
+  EXPECT_EQ_INT(expectLength, linkedlistLength(list));
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(str, linkedlistToString(list));
+
+  linkedlistFree(list);
+}
 
 int main(void) {
-  char *str = "2147483647 -> 0 -> -2147483648";
+  testLinkedListRoundTrip("[]", 0);
+  testLinkedListRoundTrip("[0]", 1);
+  testLinkedListRoundTrip("[-2147483648,0,2147483647]", 3);
 
-  struct ListNode* node = linkedlistNewByStr(str);
-  char *node_str = linkedlistToString(node);
-  EXPECT_EQ_STRING(str, node_str);
-
-  free(node_str);
-  linkedlistFree(node);
   return testOutput();
 }

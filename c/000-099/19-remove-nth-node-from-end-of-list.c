@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017, Saul Lawliet <october dot sunbathe at gmail dot com>
+ * Copyright (C) 2017-2018, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
 
  * v1: 先计算链表的长度, 把问题变成删除从头开始的第n个节点
@@ -9,18 +9,10 @@
  *     直到 fast 为空时, slow 就是要删除的节点
  */
 
-#include <stdlib.h>  /* free() */
-#include "../test.h"
-#include "../data-structures/linked-list.h"
+#include <stdlib.h> /* free() */
 
-int getLenght(struct ListNode* head) {
-  int len = 0;
-  while (head) {
-    len++;
-    head = head->next;
-  }
-  return len;
-}
+#include "c/data-structures/linked-list.h"
+#include "c/test.h"
 
 /**
  * Definition for singly-linked list.
@@ -29,9 +21,9 @@ int getLenght(struct ListNode* head) {
  *     struct ListNode *next;
  * };
  */
-struct ListNode* removeNthFromEnd_v1(struct ListNode* head, int n) {
+struct ListNode *removeNthFromEnd_v1(struct ListNode *head, int n) {
   struct ListNode *p = head;
-  int index = getLenght(head) - n - 1;  /* 要获取删除节点的上一个 */
+  int index = linkedlistLength(head) - n - 1; /* 要获取删除节点的上一个 */
   if (index == -1) {  /* 此时删除头节点 */
     head = head->next;
     free(p);
@@ -46,7 +38,7 @@ struct ListNode* removeNthFromEnd_v1(struct ListNode* head, int n) {
   return head;
 }
 
-struct ListNode* removeNthFromEnd_v2(struct ListNode* head, int n) {
+struct ListNode *removeNthFromEnd_v2(struct ListNode *head, int n) {
   struct ListNode *slow = head, *fast = head;
   while (n--) {
     fast = fast->next;
@@ -68,24 +60,24 @@ struct ListNode* removeNthFromEnd_v2(struct ListNode* head, int n) {
   return head;
 }
 
-void test(const char* expect, const char* s, int n) {
-  struct ListNode * head = NULL;
+void test(const char *expect, const char *s, int n) {
+  struct ListNode *list;
 
-  head = removeNthFromEnd_v1(linkedlistNewByStr(s), n);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, linkedlistToString(head));
-  linkedlistFree(head);
+  list = removeNthFromEnd_v1(linkedlistParse(s), n);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, linkedlistToString(list));
+  linkedlistFree(list);
 
-  head = removeNthFromEnd_v2(linkedlistNewByStr(s), n);
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, linkedlistToString(head));
-  linkedlistFree(head);
+  list = removeNthFromEnd_v2(linkedlistParse(s), n);
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, linkedlistToString(list));
+  linkedlistFree(list);
 }
 
 int main(void) {
-  test("1 -> 2 -> 3 -> 4", "1 -> 2 -> 3 -> 4 -> 5", 1);
-  test("1 -> 2 -> 3 -> 5", "1 -> 2 -> 3 -> 4 -> 5", 2);
-  test("1 -> 2 -> 4 -> 5", "1 -> 2 -> 3 -> 4 -> 5", 3);
-  test("1 -> 3 -> 4 -> 5", "1 -> 2 -> 3 -> 4 -> 5", 4);
-  test("2 -> 3 -> 4 -> 5", "1 -> 2 -> 3 -> 4 -> 5", 5);
+  test("[1,2,3,4]", "[1,2,3,4,5]", 1);
+  test("[1,2,3,5]", "[1,2,3,4,5]", 2);
+  test("[1,2,4,5]", "[1,2,3,4,5]", 3);
+  test("[1,3,4,5]", "[1,2,3,4,5]", 4);
+  test("[2,3,4,5]", "[1,2,3,4,5]", 5);
 
   return testOutput();
 }

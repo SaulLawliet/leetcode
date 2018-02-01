@@ -1,67 +1,54 @@
 /*
- * Copyright (C) 2017, Saul Lawliet <october dot sunbathe at gmail dot com>
+ * Copyright (C) 2017-2018, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
  */
 
-#include <stdlib.h>  /* NULL, free() */
-#include <ctype.h>   /* isdigit() */
-#include <stdio.h>   /* sprintf() */
-#include "linked-list.h"
-#include "../tools/stack.h"
+#include "c/data-structures/linked-list.h"
 
-struct ListNode* linkedlistNewByStr(const char* str) {
-  struct ListNode* head = NULL;
-  struct ListNode* node = NULL;
+#include <stdlib.h> /* NULL, malloc(), free() */
 
-  char *end;
-  while (*str != '\0') {
-    if (node == NULL) {
-      node = malloc(sizeof(struct ListNode));
-      head = node;
-    } else {
-      node->next = malloc(sizeof(struct ListNode));
-      node = node->next;
-    }
-    node->val = strtol(str, &end, 10);
-    node->next = NULL;
+#include "c/data-structures/array.h"
 
-    str = end;
-    while (*str != '\0') {
-      if (isdigit(*str) || (*str == '-' && isdigit(*(str+1)))) {
-        break;
-      }
-      str++;
-    }
-  }
+struct ListNode *linkedlistMakeByIndex(arrayEntry *e, int index) {
+  int size = arraySize(e);
+  if (index >= size) return NULL;
 
-  return head;
+  struct ListNode *list = malloc(sizeof(struct ListNode));
+  list->val = ((int *)arrayValue(e))[index];
+  list->next = linkedlistMakeByIndex(e, index + 1);
 }
 
-char * linkedlistToString(struct ListNode *node) {
-  context c = stackMake();
-  if (node == NULL) {
-    PUTC(&c, '\0');
-    return c.stack;
-  }
-
-  int len;
-  while (node != NULL) {
-    /* INT32_MIN = -2147483648, len = 11
-     * len(" -> ") = 4, total = 15 */
-    len = sprintf(stackPush(&c, 15), "%d -> ", node->val);
-    c.top -= 15 - len;
-    node = node->next;
-  }
-
-  c.stack[c.top - 4] = '\0';
-  return c.stack;
+struct ListNode *linkedlistParse(const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  struct ListNode *list = linkedlistMakeByIndex(e, 0);
+  arrayFree(e);
+  return list;
 }
 
-void linkedlistFree(struct ListNode *node) {
+char *linkedlistToString(struct ListNode *list) {
+  int len = linkedlistLength(list);
+  int *array = malloc(sizeof(int) * len);
+
+  for (int i = 0; i < len; ++i, list = list->next)
+    array[i] = list->val;
+
+  return arrayToString1D(array, len, ARRAY_INT);
+}
+
+void linkedlistFree(struct ListNode *list) {
   struct ListNode *tmp;
-  while (node != NULL) {
-    tmp = node->next;
-    free(node);
-    node = tmp;
+  while (list) {
+    tmp = list;
+    list = list->next;
+    free(tmp);
   }
+}
+
+int linkedlistLength(struct ListNode *list) {
+  int length = 0;
+  while (list != NULL) {
+    list = list->next;
+    ++length;
+  }
+  return length;
 }

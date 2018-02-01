@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017, Saul Lawliet <october dot sunbathe at gmail dot com>
+ * Copyright (C) 2017-2018, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
  *
  * 题目就是两个正整数相加, 链表的顺序是数字的低位到高位.
@@ -9,8 +9,9 @@
  */
 
 #include <stdlib.h>  /* NULL, malloc() */
-#include "../test.h"
-#include "../data-structures/linked-list.h"
+
+#include "c/data-structures/linked-list.h"
+#include "c/test.h"
 
 /**
  * Definition for singly-linked list.
@@ -19,7 +20,7 @@
  *     struct ListNode *next;
  * };
  */
-struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2) {
   struct ListNode *r = NULL, *lastNode = NULL;
   int carry = 0;
   while (l1 || l2) {
@@ -60,9 +61,9 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
   return r;
 }
 
-void test(const char* s1, const char* s2, const char* expect) {
-  struct ListNode* l1 = linkedlistNewByStr(s1);
-  struct ListNode* l2 = linkedlistNewByStr(s2);
+void test(const char *expect, const char *s1, const char *s2) {
+  struct ListNode* l1 = linkedlistParse(s1);
+  struct ListNode* l2 = linkedlistParse(s2);
   struct ListNode* actual = addTwoNumbers(l1, l2);
 
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, linkedlistToString(actual));
@@ -77,7 +78,7 @@ void test(const char* s1, const char* s2, const char* expect) {
   Output: 7 -> 0 -> 8
  */
 int main(void) {
-  test("2 -> 4 -> 3", "5 -> 6 -> 4", "7 -> 0 -> 8");
+  test("[7,0,8]", "[2,4,3]", "[5,6,4]");
 
   return testOutput();
 }
