@@ -16,6 +16,7 @@ struct ListNode *linkedlistMakeByIndex(arrayEntry *e, int index) {
   struct ListNode *list = malloc(sizeof(struct ListNode));
   list->val = ((int *)arrayValue(e))[index];
   list->next = linkedlistMakeByIndex(e, index + 1);
+  return list;
 }
 
 struct ListNode *linkedlistParse(const char *str) {
