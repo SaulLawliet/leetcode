@@ -107,6 +107,7 @@ int sizeOf(arrayType type) {
     case ARRAY_DOUBLE: return sizeof(double);
     case ARRAY_STRING: return sizeof(char *);
   }
+  return 0;
 }
 
 arrayEntry *arrayParse(const char *str, arrayType type) {

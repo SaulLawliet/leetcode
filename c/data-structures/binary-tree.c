@@ -5,26 +5,51 @@
 
 #include "c/data-structures/binary-tree.h"
 
+#include <math.h>   /* pow() */
+#include <stdio.h>  /* snprintf() */
 #include <stdlib.h> /* NULL, atoi(), malloc(), free() */
 #include <string.h> /* strcmp(), strlen(), strncpy() */
-#include <stdio.h>  /* snprintf() */
-#include <math.h>   /* pow() */
 
 #include "c/data-structures/array.h"
+#include "c/tools/queue.h"
 
 #define TREE_NODE_NULL "null"
 
-struct TreeNode *treeMakeByIndex(arrayEntry *e, int index) {
-  int size = arraySize(e);
-  if (index >= size) return NULL;
+struct TreeNode *makeTreeNode(int val) {
+  struct TreeNode *node = malloc(sizeof(struct TreeNode));
+  node->val = val;
+  node->left = node->right = NULL;
+  return node;
+}
 
-  char *str = ((char **)arrayValue(e))[index];
+struct TreeNode *treeBuildByArray(char **a, int size) {
+  if (size == 0) return NULL;
+
+  int index = 0;
+  char *str = a[index++];
   if (strcmp(str, TREE_NODE_NULL) == 0) return NULL;
 
-  struct TreeNode *tree = malloc(sizeof(struct TreeNode));
-  tree->val = atoi(str);
-  tree->left = treeMakeByIndex(e, index * 2 + 1);
-  tree->right = treeMakeByIndex(e, index * 2 + 2);
+  /** 存储按层级遍历的节点 */
+  struct Queue *queue = queueMake();
+
+  struct TreeNode *tree = makeTreeNode(atoi(str));
+  queueOffer(queue, tree);
+
+  while (index < size) {
+    struct TreeNode *node = queuePoll(queue);
+    for (int i = 0; i < 2; ++i)
+      if (index < size && strcmp((str = a[index++]), TREE_NODE_NULL) != 0)
+        queueOffer(queue, i == 0 ? (node->left = makeTreeNode(atoi(str))) : (node->right = makeTreeNode(atoi(str))));
+  }
+
+  queueFree(queue);
+  return tree;
+}
+
+struct TreeNode *treeParse(const char *str) {
+  arrayEntry *e = arrayParse(str, ARRAY_STRING);
+  struct TreeNode *tree = treeBuildByArray(arrayValue(e), arraySize(e));
+  arrayFree(e);
   return tree;
 }
 
@@ -36,26 +61,37 @@ void treeToArray(struct TreeNode *tree, char **array, int index) {
   treeToArray(tree->right, array, index * 2 + 2);
 }
 
-struct TreeNode *treeParse(const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_STRING);
-  struct TreeNode *tree = treeMakeByIndex(e, 0);
-  arrayFree(e);
-  return tree;
-}
-
 char *treeToString(struct TreeNode *tree) {
-  int len = pow(2, treeHeight(tree)) - 1;
+  int height = treeHeight(tree);
+  if (height > 10) height = 10;
+
+  int len = pow(2, height) - 1;
+  if (len == 0) return arrayToString1D(NULL, 0, ARRAY_STRING);
+
   char **array = malloc(sizeof(char *) * len);
   for (int i = 0; i < len; ++i) array[i] = NULL;
 
-  treeToArray(tree, array, 0);
+  int index = 0, nullLen = strlen(TREE_NODE_NULL) + 1;
 
-  while (array[len-1] == NULL) len--;
+  /** 存储按层级遍历的节点 */
+  struct Queue *queue = queueMake();
+  queueOffer(queue, tree);
 
-  int nullLen = strlen(TREE_NODE_NULL) + 1;
-  for (int i = 0; i < len; ++i)
-    if (array[i] == NULL)
-      strncpy((array[i] = malloc(nullLen)), TREE_NODE_NULL, nullLen);
+  while (!queueIsEmpty(queue) && index < len) {
+    struct TreeNode *node = (struct TreeNode *)queuePoll(queue);
+    if (node != NULL) {
+      int size = snprintf(NULL, 0, "%d", node->val) + 1;
+      snprintf((array[index++] = malloc(size)), size, "%d", node->val);
+      queueOffer(queue, node->left);
+      queueOffer(queue, node->right);
+    } else {
+      strncpy((array[index++] = malloc(nullLen)), TREE_NODE_NULL, nullLen);
+    }
+  }
+  queueFree(queue);
+
+  while (!array[len-1]) len--;
+  while (!strcmp(array[len-1], TREE_NODE_NULL)) free(array[--len]);
 
   return arrayToString1D(array, len, ARRAY_STRING);
 }
