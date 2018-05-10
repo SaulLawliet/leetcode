@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#include "c/data-structures/linked-list.h"
-#include "c/test.h"
+#include "data-structures/linked-list.h"
+#include "test/test.h"
 
 void testLinkedListRoundTrip(const char *str, int expectLength) {
   struct ListNode *list = linkedlistParse(str);

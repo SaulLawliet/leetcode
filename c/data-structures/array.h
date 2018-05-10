@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef C_DATA_STRUCTURES_ARRAY_H_
-#define C_DATA_STRUCTURES_ARRAY_H_
+#ifndef DATA_STRUCTURES_ARRAY_H_
+#define DATA_STRUCTURES_ARRAY_H_
 
 typedef struct arrayEntry arrayEntry;
 
@@ -42,4 +42,4 @@ int arrayRow(arrayEntry *entry);
 int *arrayCols(arrayEntry *entry);
 int arrayCol(arrayEntry *entry);
 
-#endif /* C_DATA_STRUCTURES_ARRAY_H_ */
+#endif /* DATA_STRUCTURES_ARRAY_H_ */

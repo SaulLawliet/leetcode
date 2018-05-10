@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef C_TOOLS_QUEUE_H_
-#define C_TOOLS_QUEUE_H_
+#ifndef TOOLS_QUEUE_H_
+#define TOOLS_QUEUE_H_
 
 #include <stdbool.h>
 
@@ -24,4 +24,4 @@ bool queueIsEmpty(struct Queue *q);
 void queueOffer(struct Queue *q, void *e);
 void *queuePoll(struct Queue *q);
 
-#endif /* C_TOOLS_QUEUE_H_ */
+#endif /* TOOLS_QUEUE_H_ */

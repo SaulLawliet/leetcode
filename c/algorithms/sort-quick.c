@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-#include "sort.h"
+#include "algorithms/sort.h"
 
 static void exchange(int *a, int *b) {
   int tmp = *a;
@@ -23,7 +23,7 @@ static int partition(int *a, int p, int r) {
   return i+1;
 }
 
-void sort(int *a, int p, int r) {
+static void sort(int *a, int p, int r) {
   if (p >= r) return;
   int q = partition(a, p, r);
   sort(a, p, q-1);

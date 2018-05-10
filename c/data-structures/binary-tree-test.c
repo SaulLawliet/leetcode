@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#include "c/data-structures/binary-tree.h"
-#include "c/test.h"
+#include "data-structures/binary-tree.h"
+#include "test/test.h"
 
 void testBinaryTreeRoundTrip(const char *str, int height) {
   struct TreeNode *tree = treeParse(str);
@@ -17,9 +17,9 @@ void testBinaryTreeRoundTrip(const char *str, int height) {
 
 int main(void) {
   testBinaryTreeRoundTrip("[]", 0);
-  testBinaryTreeRoundTrip("[1]", 1);
-  testBinaryTreeRoundTrip("[1,2,3,null,5,6]", 3);
-  testBinaryTreeRoundTrip("[1,null,3,null,null,null,7]", 3);
+  testBinaryTreeRoundTrip("[1,2,3]", 2);
+  testBinaryTreeRoundTrip("[1,null,2,3]", 3);
+  testBinaryTreeRoundTrip("[5,4,7,3,null,2,null,-1,null,9]", 4);
 
   return testOutput();
 }

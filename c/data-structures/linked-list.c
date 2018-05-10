@@ -3,25 +3,25 @@
  * All rights reserved.
  */
 
-#include "c/data-structures/linked-list.h"
+#include "data-structures/linked-list.h"
 
 #include <stdlib.h> /* NULL, malloc(), free() */
 
-#include "c/data-structures/array.h"
+#include "data-structures/array.h"
 
-struct ListNode *linkedlistMakeByIndex(arrayEntry *e, int index) {
+static struct ListNode *makeByIndex(arrayEntry *e, int index) {
   int size = arraySize(e);
   if (index >= size) return NULL;
 
   struct ListNode *list = malloc(sizeof(struct ListNode));
   list->val = ((int *)arrayValue(e))[index];
-  list->next = linkedlistMakeByIndex(e, index + 1);
+  list->next = makeByIndex(e, index + 1);
   return list;
 }
 
 struct ListNode *linkedlistParse(const char *str) {
   arrayEntry *e = arrayParse(str, ARRAY_INT);
-  struct ListNode *list = linkedlistMakeByIndex(e, 0);
+  struct ListNode *list = makeByIndex(e, 0);
   arrayFree(e);
   return list;
 }

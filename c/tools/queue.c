@@ -2,15 +2,11 @@
  * Copyright (C) 2018, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
  */
-#include "c/tools/queue.h"
+
+#include "tools/queue.h"
 
 #include <assert.h> /* assert() */
-#include <stdbool.h>
 #include <stdlib.h> /* malloc(), free(), realloc() */
-#include <stdio.h>
-
-#include "c/data-structures/binary-tree.h"
-
 
 struct Queue *queueMake() {
   struct Queue *q = malloc(sizeof(struct Queue));
@@ -29,8 +25,7 @@ bool queueIsEmpty(struct Queue *q) {
   return q->rear == q->front;
 }
 
-
-void reverse(void *R[], int from, int to) {
+static void reverse(void *R[], int from, int to) {
   void *temp;
   for (int i = 0; i < (to - from + 1) / 2; ++i) {
     temp = R[from + i];
@@ -39,7 +34,7 @@ void reverse(void *R[], int from, int to) {
   }
 }
 
-void repair(struct Queue *q) {
+static void repair(struct Queue *q) {
   if (q->front == 0) return;
   reverse(q->array, 0, q->front-1);
   reverse(q->array, q->front, q->size-1);
@@ -48,7 +43,7 @@ void repair(struct Queue *q) {
   q->rear = q->size - 1;
 }
 
-bool isFull(struct Queue *q) {
+static bool isFull(struct Queue *q) {
   return (q->rear + 1) % q->size == q->front;
 }
 

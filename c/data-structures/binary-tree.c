@@ -3,15 +3,15 @@
  * All rights reserved.
  */
 
-#include "c/data-structures/binary-tree.h"
+#include "data-structures/binary-tree.h"
 
 #include <math.h>   /* pow() */
 #include <stdio.h>  /* snprintf() */
 #include <stdlib.h> /* NULL, atoi(), malloc(), free() */
 #include <string.h> /* strcmp(), strlen(), strncpy() */
 
-#include "c/data-structures/array.h"
-#include "c/tools/queue.h"
+#include "data-structures/array.h"
+#include "tools/queue.h"
 
 #define TREE_NODE_NULL "null"
 
@@ -22,7 +22,7 @@ struct TreeNode *makeTreeNode(int val) {
   return node;
 }
 
-struct TreeNode *treeBuildByArray(char **a, int size) {
+static struct TreeNode *buildByArray(char **a, int size) {
   if (size == 0) return NULL;
 
   int index = 0;
@@ -48,17 +48,9 @@ struct TreeNode *treeBuildByArray(char **a, int size) {
 
 struct TreeNode *treeParse(const char *str) {
   arrayEntry *e = arrayParse(str, ARRAY_STRING);
-  struct TreeNode *tree = treeBuildByArray(arrayValue(e), arraySize(e));
+  struct TreeNode *tree = buildByArray(arrayValue(e), arraySize(e));
   arrayFree(e);
   return tree;
-}
-
-void treeToArray(struct TreeNode *tree, char **array, int index) {
-  if (tree == NULL) return;
-  int size = snprintf(NULL, 0, "%d", tree->val) + 1;
-  snprintf((array[index] = malloc(size)), size, "%d", tree->val);
-  treeToArray(tree->left, array, index * 2 + 1);
-  treeToArray(tree->right, array, index * 2 + 2);
 }
 
 char *treeToString(struct TreeNode *tree) {

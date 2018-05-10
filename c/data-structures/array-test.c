@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#include "c/data-structures/array.h"
-#include "c/test.h"
+#include "data-structures/array.h"
+#include "test/test.h"
 
 int type;
 int precision = 0;

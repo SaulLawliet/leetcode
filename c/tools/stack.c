@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-#include "c/tools/stack.h"
+#include "tools/stack.h"
 
 #include <assert.h> /* assert() */
 #include <stdlib.h> /* realloc() */

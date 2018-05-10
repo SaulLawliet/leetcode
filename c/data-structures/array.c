@@ -3,15 +3,13 @@
  * All rights reserved.
  */
 
-#include "c/data-structures/array.h"
-
+#include "data-structures/array.h"
 #include <assert.h> /* assert() */
 #include <stdbool.h>
-#include <stdio.h>  /* sprintf() */
+#include <stdio.h>  /* snprintf() */
 #include <stdlib.h> /* malloc(), strtol(), strtod() */
 #include <string.h> /* strncpy() */
-
-#include "c/tools/stack.h"
+#include "tools/stack.h"
 
 #define EXPECT(str, c)  do { assert(**str == (c)); (*str)++; } while (0)
 
@@ -33,26 +31,26 @@ arrayEntry *arrayNew(arrayType type) {
   return e;
 }
 
-void parseWhitespace(const char **str) {
+static void parseWhitespace(const char **str) {
   const char *p = *str;
   while (*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r') p++;
   *str = p;
 }
 
-void parseChar(const char **str, context *c) {
+static void parseChar(const char **str, context *c) {
   PUTC(c, **str);
   (*str)++;
 }
 
-void parseInt(const char **str, context *c) {
+static void parseInt(const char **str, context *c) {
   PUTI(c, strtol(*str, (char **)str, 10));
 }
 
-void parseDouble(const char **str, context *c) {
+static void parseDouble(const char **str, context *c) {
   PUTD(c, strtod(*str, (char **)str));
 }
 
-void parseString(const char **str, context *c) {
+static void parseString(const char **str, context *c) {
   const char *p = *str;
   int len = 0;
   while (*p != ',' && *p != ']' && *p != '\0') { p++; len++; }
@@ -66,7 +64,7 @@ void parseString(const char **str, context *c) {
   *str = p;
 }
 
-context parseArray(const char **str, arrayType type, int dimensional) {
+static context parseArray(const char **str, arrayType type, int dimensional) {
   EXPECT(str, '[');
   parseWhitespace(str);
 
@@ -100,7 +98,7 @@ context parseArray(const char **str, arrayType type, int dimensional) {
   return c;
 }
 
-int sizeOf(arrayType type) {
+static int sizeOf(arrayType type) {
   switch (type) {
     case ARRAY_CHAR: return sizeof(char);
     case ARRAY_INT: return sizeof(int);
@@ -151,7 +149,7 @@ arrayEntry *arrayParse2D(const char *str, arrayType type) {
   return e;
 }
 
-void free2D(void **v, int size) {
+static void free2D(void **v, int size) {
   for (int i = 0; i < size; ++i) free(v[i]);
   free(v);
 }

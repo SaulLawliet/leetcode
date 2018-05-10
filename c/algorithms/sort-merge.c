@@ -3,9 +3,10 @@
  * All rights reserved.
  */
 
-#include <stdlib.h>  /* malloc(), free() */
-#include <stdint.h>  /* INT32_MAX */
-#include "sort.h"
+#include "algorithms/sort.h"
+
+#include <stdint.h> /* INT32_MAX */
+#include <stdlib.h> /* malloc(), free() */
 
 static void merge(int *a, int p, int q, int r) {
   int i, j, k;
