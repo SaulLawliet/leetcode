@@ -5,11 +5,11 @@
  * 先初始化一个空的子集, 然后将每个元素依次放入之前的每个子集的后面
  */
 
-#include <math.h>    /* pow() */
-#include <stdlib.h>  /* NULL, malloc() */
-#include <string.h>  /* memcpy() */
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <math.h>   /* pow() */
+#include <stdlib.h> /* malloc() */
+#include <string.h> /* memcpy() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 /**
  * Return an array of arrays of size *returnSize.

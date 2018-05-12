@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-#include "algorithms/sort.h"
+#include "c/algorithms/sort.h"
 
 #include <stdint.h> /* INT32_MAX */
 #include <stdlib.h> /* malloc(), free() */

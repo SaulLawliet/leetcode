@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-#include "algorithms/sort.h"
+#include "c/algorithms/sort.h"
 
 static void exchange(int *a, int *b) {
   int tmp = *a;

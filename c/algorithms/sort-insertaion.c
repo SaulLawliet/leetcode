@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-#include "algorithms/sort.h"
+#include "c/algorithms/sort.h"
 
 void sortInsertion(int *a, int len) {
   int i, j, key;

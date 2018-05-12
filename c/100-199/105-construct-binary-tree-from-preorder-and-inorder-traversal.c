@@ -10,7 +10,6 @@
 
 #include <assert.h> /* assert() */
 #include <stdlib.h> /* malloc() */
-
 #include "c/data-structures/array.h"
 #include "c/data-structures/binary-tree.h"
 #include "c/test.h"

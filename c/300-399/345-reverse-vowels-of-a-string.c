@@ -5,8 +5,9 @@
  * 两个指针, 往中间查找
  */
 
-#include <string.h>  /* strlen() */
-#include "../test.h"
+#include <stdlib.h> /* malloc() */
+#include <string.h> /* strlen(), strchr() */
+#include "c/test.h"
 
 void swap(char *a, char *b) {
   char tmp = *a; *a = *b; *b = tmp;
@@ -32,8 +33,9 @@ char *reverseVowels(char *s) {
 }
 
 void test(const char *expect, char *str) {
-  char *s = malloc(sizeof(char) * (strlen(str) + 1));
-  strcpy(s, str);
+  int sz = strlen(str);
+  char *s = malloc(sz + 1);
+  strncpy(s, str, sz + 1);
   s = reverseVowels(s);
 
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, s);

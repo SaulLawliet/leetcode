@@ -5,12 +5,12 @@
  * 画圆
  */
 
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 void rotate(int **matrix, int matrixRowSize, int matrixColSize) {
   int tmp;
-  for (int i = 0; i < matrixRowSize / 2; ++i ) {
+  for (int i = 0; i < matrixRowSize / 2; ++i) {
     for (int j = i; j < matrixRowSize-1-i; ++j) {
       tmp = matrix[i][j];
       matrix[i][j] = matrix[matrixRowSize-1-j][i];

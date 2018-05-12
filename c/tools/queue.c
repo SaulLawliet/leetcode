@@ -3,8 +3,7 @@
  * All rights reserved.
  */
 
-#include "tools/queue.h"
-
+#include "c/tools/queue.h"
 #include <assert.h> /* assert() */
 #include <stdlib.h> /* malloc(), free(), realloc() */
 

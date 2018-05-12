@@ -5,11 +5,11 @@
  * 使用 stack, 即可轻松解决
  */
 
-#include <stdlib.h>  /* malloc(), free() */
-#include <string.h>  /* strlen() */
-#include <assert.h>  /* assert() */
+#include <assert.h> /* assert() */
 #include <stdbool.h>
-#include "../test.h"
+#include <stdlib.h> /* malloc(), free() */
+#include <string.h> /* strlen() */
+#include "c/test.h"
 
 struct StackRecord{
   int top;

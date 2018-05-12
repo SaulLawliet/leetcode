@@ -5,9 +5,9 @@
  * https://leetcode.com/articles/longest-palindromic-substring/#approach-4-expand-around-center-accepted
  */
 
-#include <stdlib.h>  /* malloc() */
-#include <string.h>  /* strlen(), strncpy() */
-#include "../test.h"
+#include <stdlib.h> /* malloc() */
+#include <string.h> /* strlen(), strncpy() */
+#include "c/test.h"
 
 int expandAroundCenter(char *s, int l, size_t r) {
   while (l >=0 && r < strlen(s) && s[l] == s[r]) {

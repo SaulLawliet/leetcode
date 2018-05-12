@@ -5,10 +5,10 @@
  * 全排列的递归解法, 依次交换数据
  */
 
-#include <stdlib.h>  /* malloc() */
-#include <string.h>  /* memcpy() */
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdlib.h> /* malloc() */
+#include <string.h> /* memcpy() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 int factorial(int n) {
   if (n <= 1) return 1;

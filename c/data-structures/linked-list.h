@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef DATA_STRUCTURES_LINKED_LIST_H_
-#define DATA_STRUCTURES_LINKED_LIST_H_
+#ifndef C_DATA_STRUCTURES_LINKED_LIST_H_
+#define C_DATA_STRUCTURES_LINKED_LIST_H_
 
 struct ListNode {
   int val;
@@ -17,4 +17,4 @@ void linkedlistFree(struct ListNode *list);
 
 int linkedlistLength(struct ListNode *list);
 
-#endif /* DATA_STRUCTURES_LINKED_LIST_H_ */
+#endif /* C_DATA_STRUCTURES_LINKED_LIST_H_ */

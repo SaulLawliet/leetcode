@@ -9,8 +9,9 @@
  *     当字符的 Index 更改的时候, 计算出差值, 最大的一个差值就是结果.
  */
 
-#include <stdlib.h>  /* malloc(), free(), memset() */
-#include "../test.h"
+#include <stdlib.h> /* malloc(), free() */
+#include <string.h> /* strlen(), memset() */
+#include "c/test.h"
 
 int lengthOfLongestSubstring_v1(char *s) {
   int length = strlen(s);

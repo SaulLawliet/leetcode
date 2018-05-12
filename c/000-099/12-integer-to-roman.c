@@ -8,9 +8,9 @@
  * 然后根据给定的数字从高位到低位依次转换并拼接起来
  */
 
-#include <stdlib.h>  /* malloc() */
-#include <math.h>    /* pow() */
-#include "../test.h"
+#include <math.h>   /* pow() */
+#include <stdlib.h> /* malloc() */
+#include "c/test.h"
 
 const char T[4][3] = {
   /*1    5    10 */

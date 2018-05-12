@@ -5,8 +5,8 @@
  * 先找到' ' 和 '\0' 的位置, 然后开始逆转
  */
 
+#include <stdlib.h> /* malloc() */
 #include <string.h> /* strchr(), strlen(s) */
-
 #include "c/test.h"
 
 void swap(char *a, char *b) {

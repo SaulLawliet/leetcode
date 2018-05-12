@@ -12,10 +12,10 @@
  *     朴素方法, 先画从上到下的竖线, 再画从下到上的斜线
  */
 
-#include <string.h>  /* strlen() */
-#include <stdlib.h>  /* malloc(), memset() */
 #include <stdbool.h>
-#include "../test.h"
+#include <stdlib.h> /* malloc(), free() */
+#include <string.h> /* strlen(), memset() */
+#include "c/test.h"
 
 char *convert_v1(char *s, int numRows) {
   if (numRows == 1) return s;

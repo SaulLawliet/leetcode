@@ -9,9 +9,9 @@
  *   4. 整型溢出时, 取 MAX/MIN
  */
 
-#include <ctype.h>   /* isdigit() */
-#include <limits.h>  /* INT_MAX, INT_MIN */
-#include "../test.h"
+#include <ctype.h>  /* isdigit() */
+#include <limits.h> /* INT_MAX, INT_MIN */
+#include "c/test.h"
 
 int myAtoi(char *str) {
   char *p = str;

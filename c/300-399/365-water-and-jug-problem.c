@@ -7,7 +7,7 @@
  */
 
 #include <stdbool.h>
-#include "../test.h"
+#include "c/test.h"
 
 int gcd(int a, int b) {
   if (b == 0) return a;

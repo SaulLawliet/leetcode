@@ -6,9 +6,9 @@
  * 测试数据里有 n == INT_MIN, 所以当 n < 0 时, 需要转换了一下.
  */
 
-#include <math.h>    /* pow() */
-#include <limits.h>  /* INT_MIN */
-#include "../test.h"
+#include <limits.h> /* INT_MIN, INT_MAX */
+#include <math.h>   /* pow() */
+#include "c/test.h"
 
 double myPow(double x, int n) {
   if (n == 0) return 1;

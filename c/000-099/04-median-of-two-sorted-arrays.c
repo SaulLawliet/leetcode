@@ -8,8 +8,8 @@
  */
 
 #include <stdbool.h>
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 /* 处理只有一个数组的情况 */
 double findMedianInArray(int *nums, int size) {

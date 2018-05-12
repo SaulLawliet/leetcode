@@ -6,8 +6,8 @@
  * v2: 动态规划 (打印递归结果, 就很容易看出如何写)
  */
 
-#include <stdlib.h> /* malloc(), free(), qsort() */
-
+#include <stdlib.h> /* malloc(), free() */
+#include <string.h> /* memset() */
 #include "c/data-structures/array.h"
 #include "c/test.h"
 

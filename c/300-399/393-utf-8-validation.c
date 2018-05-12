@@ -4,8 +4,8 @@
  */
 
 #include <stdbool.h>
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 bool validUtf8(int *data, int dataSize) {
   int count = 0;

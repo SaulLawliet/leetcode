@@ -5,8 +5,8 @@
  * 这是基本操作
  */
 
-#include <string.h> /* strlen() */
-
+#include <stdlib.h> /* malloc() */
+#include <string.h> /* strlen(), memcpy() */
 #include "c/test.h"
 
 void swap(char *a, char *b) {

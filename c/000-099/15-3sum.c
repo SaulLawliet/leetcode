@@ -5,13 +5,10 @@
  * 先将数组排序, 在求解时会方便一些, 这样更容易跳过重复的数据
  */
 
-#include <stdlib.h>  /* malloc(), qsort() */
-#include "../test.h"
-#include "../data-structures/array.h"
-
-int compare_ints(const void* a, const void* b) {
-  return *(const int*)a - *(const int*)b;
-}
+#include <stdlib.h> /* qsort(), malloc() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
+#include "c/tools/compare.h"
 
 /**
  * Return an array of arrays of size *returnSize.

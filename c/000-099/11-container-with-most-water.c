@@ -6,8 +6,8 @@
  * 所以从两头往中间找最大的装水面积
  */
 
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))

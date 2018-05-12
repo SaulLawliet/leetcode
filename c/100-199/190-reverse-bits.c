@@ -4,7 +4,7 @@
  */
 
 #include <stdint.h>  /* uint32_t */
-#include "../test.h"
+#include "c/test.h"
 
 uint32_t reverseBits(uint32_t n) {
   uint32_t rt = 0;

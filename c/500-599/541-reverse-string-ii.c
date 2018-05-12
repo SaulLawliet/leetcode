@@ -5,8 +5,8 @@
  * 在 344 的基础上, 加上 k 的判断, 注意 k 和 len 的大小
  */
 
-#include <string.h> /* strlen() */
-
+#include <stdlib.h> /* malloc() */
+#include <string.h> /* strlen(), memcpy() */
 #include "c/test.h"
 
 void swap(char *a, char *b) {
@@ -16,7 +16,6 @@ void swap(char *a, char *b) {
 }
 
 #define MIN(a, b) ((a) <= (b) ? (a) : (b))
-
 char *reverseStr(char *s, int k) {
   int len = strlen(s);
   char *p1, *p2;

@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef TEST_TEST_H_
-#define TEST_TEST_H_
+#ifndef C_TEST_H_
+#define C_TEST_H_
 
 #include <stdio.h>  /* printf(), fprintf(), stderr */
 
@@ -79,4 +79,4 @@ static struct TestTemp test_temp;
     free(test_temp.s.b);                                                                           \
   } while (0)
 
-#endif /* TEST_TEST_H_ */
+#endif /* C_TEST_H_ */

@@ -5,8 +5,8 @@
  * 相比较'62', 这里增加了障碍物, 只要设置障碍物的点为0, 其他规则照旧
  */
 
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 int uniquePathsWithObstacles(int **obstacleGrid, int obstacleGridRowSize, int obstacleGridColSize) {
   //       m    n

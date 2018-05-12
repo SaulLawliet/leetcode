@@ -5,15 +5,15 @@
  * 递归解法, 参考了 OJ 上更优雅的写法
  */
 
-#include <string.h>  /* strcpy() */
-#include <stdlib.h>  /* malloc(), free() */
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdlib.h> /* malloc(), free() */
+#include <string.h> /* strncpy() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 void generate(char **rt, int *returnSize, int l, int r, char *tmp, int index) {
   if (l == 0 && r == 0) {
     tmp[index] = '\0';
-    strcpy(rt[(*returnSize)++] = malloc(sizeof(char) * (index + 1)), tmp);
+    strncpy(rt[(*returnSize)++] = malloc(index + 1), tmp, index + 1);
     return;
   }
 

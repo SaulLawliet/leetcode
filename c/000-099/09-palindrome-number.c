@@ -11,7 +11,7 @@
  */
 
 #include <stdbool.h>
-#include "../test.h"
+#include "c/test.h"
 
 bool isPalindrome(int x) {
   if (x == 0) return true;

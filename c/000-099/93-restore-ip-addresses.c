@@ -6,16 +6,19 @@
  * 递归解就可以了
  */
 
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdio.h>  /* snprintf */
+#include <stdlib.h> /* malloc(), free() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 #define MAX_SIZE 20
 
 void loop(char **rtn, int *returnSize, char *s, int *a, int i) {
   if (i > 3) {
-    if (*s == '\0')
-      sprintf((rtn[(*returnSize)++] = malloc(sizeof(char) * 16)),  /* xxx.xxx.xxx.xxx\0 */
-              "%d.%d.%d.%d", a[0], a[1], a[2], a[3]);
+    if (*s == '\0') {
+      int sz = snprintf(NULL, 0, "%d.%d.%d.%d", a[0], a[1], a[2], a[3]);
+      snprintf(rtn[(*returnSize)++] = malloc(sz + 1), sz + 1, "%d.%d.%d.%d", a[0], a[1], a[2], a[3]);
+    }
     return;
   }
   int x = 0;

@@ -7,7 +7,6 @@
 
 #include <stdlib.h> /* malloc() */
 #include <string.h> /* strncpy(), strlen(), memset() */
-
 #include "c/test.h"
 
 char *addStrings(char *num1, char *num2) {

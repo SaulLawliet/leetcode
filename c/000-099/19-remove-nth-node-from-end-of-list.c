@@ -10,7 +10,6 @@
  */
 
 #include <stdlib.h> /* free() */
-
 #include "c/data-structures/linked-list.h"
 #include "c/test.h"
 

@@ -6,7 +6,7 @@
  */
 
 #include <stdbool.h>
-#include "../test.h"
+#include "c/test.h"
 
 bool matchFirst(char *s, char *p) {
   return (*p == '.' && *s != '\0') || *s == *p;

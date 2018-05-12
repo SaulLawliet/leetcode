@@ -6,8 +6,6 @@
  * 实际上, k 可以是任意的正整数
  */
 
-#include <stdlib.h> /* NULL */
-
 #include "c/data-structures/linked-list.h"
 #include "c/test.h"
 

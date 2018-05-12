@@ -5,10 +5,10 @@
  * 题目要求时间复杂度是 O(log n), 所以二分查找
  */
 
-#include <stdlib.h>  /* malloc() */
 #include <stdbool.h>
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdlib.h> /* malloc() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 /**
  * Return an array of size *returnSize.
@@ -20,9 +20,11 @@ int* searchRange(int *nums, int numsSize, int target, int *returnSize) {
   int a = 0, b = numsSize - 1, i;
   while (a <= b) {
     i = (a + b) / 2;
-    if (nums[i] < target) a = i + 1;
-    else if (nums[i] > target) b = i - 1;
-    else {
+    if (nums[i] < target) {
+      a = i + 1;
+    } else if (nums[i] > target) {
+      b = i - 1;
+    } else {
       x = y = i;
       while (x > 0 && nums[x-1] == target) x--;
       while (y < numsSize - 1 && nums[y+1] == target) y++;

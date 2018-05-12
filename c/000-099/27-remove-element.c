@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 int removeElement(int *nums, int numsSize, int val) {
   int i = 0, j = 0;

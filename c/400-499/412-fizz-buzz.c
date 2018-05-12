@@ -4,10 +4,10 @@
  * 使用 snprintf 替代 itoa
  */
 
-#include <stdlib.h>  /* malloc(), free() */
-#include <stdio.h>   /* snprintf() */
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdio.h>  /* snprintf() */
+#include <stdlib.h> /* malloc(), free() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 /**
  * Return an array of size *returnSize.
@@ -32,7 +32,7 @@ void test(const char *expect, int n) {
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString1D(a, returnSize, ARRAY_STRING));
 }
 
-int main(void){
+int main(void) {
   test("[1,2,Fizz,4,Buzz,Fizz,7,8,Fizz,Buzz,11,Fizz,13,14,FizzBuzz,16]", 16);
 
   return testOutput();

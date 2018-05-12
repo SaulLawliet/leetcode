@@ -4,8 +4,8 @@
  */
 
 #include <stdbool.h>
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 int removeDuplicates(int *nums, int numsSize) {
   if (numsSize == 0) return 0;

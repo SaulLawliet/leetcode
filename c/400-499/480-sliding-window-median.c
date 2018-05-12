@@ -7,9 +7,11 @@
  * 重复计算中位数
  */
 
-#include <stdlib.h>  /* malloc(), qsort() */
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdlib.h> /* malloc(), qsort() */
+#include <string.h> /* memcpy() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
+#include "c/tools/compare.h"
 
 void popAndPush(int* nums, int numsSize, int pop, int push) {
   if (pop == push) return;
@@ -36,12 +38,6 @@ void popAndPush(int* nums, int numsSize, int pop, int push) {
     }
     nums[0] = push;
   }
-}
-
-int compare_ints(const void* a, const void* b) {
-  int arg1 = *(const int*)a;
-  int arg2 = *(const int*)b;
-  return (arg1 > arg2) - (arg1 < arg2);
 }
 
 /**

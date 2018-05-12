@@ -21,7 +21,7 @@
  *   1 0 0 0
  */
 
-#include "../test.h"
+#include "c/test.h"
 
 int getSum(int a, int b) {
   int tmp;

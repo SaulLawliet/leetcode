@@ -5,15 +5,16 @@
  * 因为时间的种类在1440, 而题目的数量最大是20000, 所以维护一个bool数组, 最后计算一个最小距离
  */
 
-#include <string.h>  /* memset() */
 #include <stdbool.h>
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <string.h> /* memset() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
+
+#define SIZE 24*60
 
 int findMinDifference(char **timePoints, int timePointsSize) {
-  int size = 24 * 60;
-  bool flag[size];
-  memset(flag, 0, sizeof(bool) * size);
+  bool flag[SIZE];
+  memset(flag, 0, sizeof(bool) * SIZE);
 
   for (int i = 0; i < timePointsSize; i++) {
     int index =
@@ -25,10 +26,10 @@ int findMinDifference(char **timePoints, int timePointsSize) {
     flag[index] = true;
   }
 
-  int rtn = size;
+  int rtn = SIZE;
   int first_index = -1;
   int last_index;
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < SIZE; i++) {
     if (flag[i]) {
       if (first_index < 0) {
         first_index = i;
@@ -40,7 +41,7 @@ int findMinDifference(char **timePoints, int timePointsSize) {
       last_index = i;
     }
   }
-  int v = first_index - last_index + size;
+  int v = first_index - last_index + SIZE;
   if (v < rtn) rtn = v;
   return rtn;
 }

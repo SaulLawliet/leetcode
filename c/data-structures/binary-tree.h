@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef DATA_STRUCTURES_BINARY_TREE_H_
-#define DATA_STRUCTURES_BINARY_TREE_H_
+#ifndef C_DATA_STRUCTURES_BINARY_TREE_H_
+#define C_DATA_STRUCTURES_BINARY_TREE_H_
 
 struct TreeNode {
   int val;
@@ -18,4 +18,4 @@ void treeFree(struct TreeNode *tree);
 
 int treeHeight(struct TreeNode *tree);
 
-#endif /* DATA_STRUCTURES_BINARY_TREE_H_ */
+#endif /* C_DATA_STRUCTURES_BINARY_TREE_H_ */

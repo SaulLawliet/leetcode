@@ -3,13 +3,11 @@
  * All rights reserved.
  */
 
-#include "algorithms/sort.h"
-
+#include "c/algorithms/sort.h"
 #include <stdlib.h> /* malloc() */
 #include <string.h> /* memcpy() */
-
-#include "data-structures/array.h"
-#include "test/test.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 typedef enum SORT_TYPE {
   INSERTION, MERGE, QUICK

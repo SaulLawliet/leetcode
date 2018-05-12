@@ -3,13 +3,13 @@
  * All rights reserved.
  */
 
-#include "data-structures/array.h"
+#include "c/data-structures/array.h"
 #include <assert.h> /* assert() */
 #include <stdbool.h>
 #include <stdio.h>  /* snprintf() */
 #include <stdlib.h> /* malloc(), strtol(), strtod() */
 #include <string.h> /* strncpy() */
-#include "tools/stack.h"
+#include "c/tools/stack.h"
 
 #define EXPECT(str, c)  do { assert(**str == (c)); (*str)++; } while (0)
 

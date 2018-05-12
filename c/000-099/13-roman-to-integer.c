@@ -12,7 +12,7 @@
  * CD, CM -- 400, 900
  */
 
-#include "../test.h"
+#include "c/test.h"
 
 int romanToInt(char *s) {
   int rt = 0;

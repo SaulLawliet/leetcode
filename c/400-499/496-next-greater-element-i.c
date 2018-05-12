@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 /**
  * Return an array of size *returnSize.
@@ -43,5 +43,6 @@ void test(const char* expect, const char* str1, const char* str2) {
 int main(void) {
   test("[-1,3,-1]", "[4,1,2]", "[1,3,4,2]");
   test("[3,-1]", "[2,4]", "[1,2,3,4]");
+  
   return testOutput();
 }

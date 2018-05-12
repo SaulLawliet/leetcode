@@ -6,11 +6,11 @@
  * 最后栈内都是非法括号的索引, 此时连续索引之间最大的差值就是答案.
  */
 
-#include <stdlib.h>  /* malloc(), free() */
-#include <string.h>  /* strlen() */
-#include <assert.h>  /* assert() */
+#include <assert.h> /* assert() */
 #include <stdbool.h>
-#include "../test.h"
+#include <stdlib.h> /* malloc(), free() */
+#include <string.h> /* strlen() */
+#include "c/test.h"
 
 struct StackRecord{
   int top;
@@ -53,15 +53,17 @@ int longestValidParentheses(char* s) {
 
   stack stack = createEmptyStack(len);
   for (int i = 0; i < len; i++) {
-    if (s[i] == '(') push(stack, i);
-    else {
+    if (s[i] == '(') {
+      push(stack, i);
+    } else {
       if (!isEmpty(stack) && s[top(stack)] == '(') pop(stack);
       else push(stack, i);
     }
   }
   int longest = 0;
-  if (isEmpty(stack)) longest = len;
-  else {
+  if (isEmpty(stack)) {
+    longest = len;
+  } else {
     int a = len, b;
     while (!isEmpty(stack)) {
       b = pop(stack);

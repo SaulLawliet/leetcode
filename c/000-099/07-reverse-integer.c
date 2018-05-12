@@ -5,7 +5,7 @@
  * 需要考虑 int 的边界.
  */
 
-#include "../test.h"
+#include "c/test.h"
 
 int reverse(int x) {
   int rt = 0, tmp;

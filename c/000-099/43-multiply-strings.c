@@ -10,9 +10,8 @@
  * 然后从低位往高位计算, 最后如果首位为0时, 则字符前移
  */
 
-#include <stdlib.h> /* malloc() */
-#include <string.h> /* strncpy(), strlen(), memset() */
-
+#include <stdlib.h> /* malloc(), memset() */
+#include <string.h> /* strncpy(), strlen() */
 #include "c/test.h"
 
 char *multiply(char *num1, char *num2) {

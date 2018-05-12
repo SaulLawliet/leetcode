@@ -5,10 +5,11 @@
  * 暴力计算, 比较耗时
  */
 
-#include <string.h>  /* strlen() */
 #include <stdbool.h>
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdlib.h> /* malloc() */
+#include <string.h> /* strlen() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 bool isPalindrome(const char *s1, const char *s2) {
   int l1 = strlen(s1), l2 = strlen(s2);
@@ -41,7 +42,7 @@ int **palindromePairs(char **words, int wordsSize, int **columnSizes, int *retur
   }
   *returnSize = size;
   *columnSizes = malloc(sizeof(int) * size);
-  for(i = 0; i < size; i++) (*columnSizes)[i] = 2;
+  for (i = 0; i < size; i++) (*columnSizes)[i] = 2;
   return rtn;
 }
 

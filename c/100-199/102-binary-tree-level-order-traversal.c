@@ -6,8 +6,7 @@
  */
 
 #include <math.h>   /* pow() */
-#include <stdlib.h> /* NULL, malloc() */
-
+#include <stdlib.h> /* malloc() */
 #include "c/data-structures/array.h"
 #include "c/data-structures/binary-tree.h"
 #include "c/test.h"

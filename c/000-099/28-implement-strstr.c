@@ -5,8 +5,8 @@
  * 暴力解决.
  */
 
-#include <string.h>  /* strlen(), strstr() */
-#include "../test.h"
+#include <string.h> /* strlen(), strstr() */
+#include "c/test.h"
 
 int strStr(char *haystack, char *needle) {
   int len1 = strlen(haystack),

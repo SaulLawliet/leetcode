@@ -5,9 +5,10 @@
  * 使用循环列表来避免分配临时变量
  */
 
-#include <string.h>  /* strlen() */
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdlib.h> /* malloc() */
+#include <string.h> /* strlen(), strcpy(), memset() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 /* start with '2' */
 char *buttons[] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tvu", "wxyz"};
@@ -37,7 +38,7 @@ char **letterCombinations(char *digits, int* returnSize) {
 
   char **rt = malloc(sizeof(char*) * *returnSize);
   for (int i = 0; i < *returnSize; i++)
-    memset(rt[i] = malloc(sizeof(char) * (len + 1)), '\0', len + 1);
+    memset(rt[i] = malloc(len + 1), '\0', len + 1);
 
 
   int top = startIndex, oldTop = startIndex;
@@ -45,7 +46,7 @@ char **letterCombinations(char *digits, int* returnSize) {
     int index = digits[i] - '2';
     char *b = buttons[index];
     if (i == 0) {
-      while(*b) rt[top++][0] = *b++;
+      while (*b) rt[top++][0] = *b++;
       continue;
     }
     int end = top;
@@ -53,7 +54,7 @@ char **letterCombinations(char *digits, int* returnSize) {
       for (int k = 0; k < buttonLens[index]; k++) {
         int new = top % *returnSize;
         int prefix = j % *returnSize;
-        if (new != prefix) strcpy(rt[new], rt[prefix]);
+        if (new != prefix) strncpy(rt[new], rt[prefix], len + 1);
         rt[new][i] = b[k];
         top++;
       }

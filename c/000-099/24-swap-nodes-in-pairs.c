@@ -5,8 +5,8 @@
  * 看到如此优雅的版本, 就不贴我那屎一样的代码, 虽然它也ac了...
  */
 
-#include "c/test.h"
 #include "c/data-structures/linked-list.h"
+#include "c/test.h"
 
 /**
  * Definition for singly-linked list.

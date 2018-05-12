@@ -6,9 +6,9 @@
  * 后来找了下规律，发现结果是 sqrt(n)
  */
 
-#include <math.h>  /* sqrt() */
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <math.h> /* sqrt() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 int bulbSwitch(int n) {
   return (int)sqrt(n);

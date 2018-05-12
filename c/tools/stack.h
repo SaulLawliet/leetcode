@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef TOOLS_STACK_H_
-#define TOOLS_STACK_H_
+#ifndef C_TOOLS_STACK_H_
+#define C_TOOLS_STACK_H_
 
 #include <string.h> /* memcpy() */
 
@@ -29,4 +29,4 @@ typedef struct {
 context stackMake(void);
 void *stackPush(context *c, size_t size);
 
-#endif /* TOOLS_STACK_H_ */
+#endif /* C_TOOLS_STACK_H_ */

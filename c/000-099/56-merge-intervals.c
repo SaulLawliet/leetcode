@@ -5,9 +5,9 @@
  * 排序后, 就很好处理了
  */
 
-#include <stdlib.h>  /* qsort(), malloc() */
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdlib.h> /* qsort(), malloc() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 struct Interval {
   int start;

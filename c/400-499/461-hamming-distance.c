@@ -5,7 +5,7 @@
  * 异或后计算1的个数
  */
 
-#include "../test.h"
+#include "c/test.h"
 
 int hammingDistance(int x, int y) {
   int rtn = 0;

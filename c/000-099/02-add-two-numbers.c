@@ -8,8 +8,7 @@
  *   2: 进位
  */
 
-#include <stdlib.h>  /* NULL, malloc() */
-
+#include <stdlib.h> /* malloc() */
 #include "c/data-structures/linked-list.h"
 #include "c/test.h"
 

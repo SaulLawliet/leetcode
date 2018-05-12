@@ -5,7 +5,7 @@
  * 最简单的 DP 问题, 设置好边界, 其他每个点 = 左边 + 上边
  */
 
-#include "../test.h"
+#include "c/test.h"
 
 int uniquePaths(int m, int n) {
   //       m    n

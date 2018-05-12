@@ -3,11 +3,9 @@
  * All rights reserved.
  */
 
-#include "data-structures/linked-list.h"
-
+#include "c/data-structures/linked-list.h"
 #include <stdlib.h> /* NULL, malloc(), free() */
-
-#include "data-structures/array.h"
+#include "c/data-structures/array.h"
 
 static struct ListNode *makeByIndex(arrayEntry *e, int index) {
   int size = arraySize(e);

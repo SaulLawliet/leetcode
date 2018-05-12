@@ -9,7 +9,8 @@
  */
 
 #include <stdbool.h>
-
+#include <stdlib.h> /* malloc(), free() */
+#include <string.h> /* strlen(), memcpy() */
 #include "c/data-structures/array.h"
 #include "c/test.h"
 

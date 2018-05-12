@@ -6,8 +6,8 @@
  */
 
 #include <stdbool.h>
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 void swap(int *a, int *b) {
   int tmp = *a;

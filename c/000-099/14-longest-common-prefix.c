@@ -5,10 +5,10 @@
  * 排除特殊情况后, 竖向对比, 以第一个为基准
  */
 
-#include <stdlib.h>  /* malloc() */
-#include <string.h>  /* strlen(), strncpy() */
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdlib.h> /* malloc() */
+#include <string.h> /* strlen(), strncpy() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 char *longestCommonPrefix(char **strs, int strsSize) {
   int i = 0;

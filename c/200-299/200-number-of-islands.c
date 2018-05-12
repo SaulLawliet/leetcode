@@ -5,8 +5,8 @@
  * 找到一个为 '1' 的位置，然后按4个方向开始感染
  */
 
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 void infect(char **grid, int gridRowSize, int gridColSize, int x, int y) {
   if (grid[x][y] == '1') {
@@ -44,15 +44,21 @@ void test(int expect, const char *str) {
 }
 
 int main(void) {
-  test(1, "[[1,1,1,1,0],\
-            [1,1,0,1,0],\
-            [1,1,0,0,0],\
-            [0,0,0,0,0]]");
+  test(1,
+       "["
+       "[1,1,1,1,0],"
+       "[1,1,0,1,0],"
+       "[1,1,0,0,0],"
+       "[0,0,0,0,0]"
+       "]");
 
-  test(3, "[[1,1,0,0,0],\
-            [1,1,0,0,0],\
-            [0,0,1,0,0],\
-            [0,0,0,1,1]]");
+  test(3,
+       "["
+       "[1,1,0,0,0],"
+       "[1,1,0,0,0],"
+       "[0,0,1,0,0],"
+       "[0,0,0,1,1]"
+       "]");
 
   return testOutput();
 }

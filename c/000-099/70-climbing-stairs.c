@@ -7,7 +7,7 @@
  * 后改为非递归
  */
 
-#include "../test.h"
+#include "c/test.h"
 
 int climbStairs(int n) {
   int a = 1, b = 1;

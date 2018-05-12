@@ -3,15 +3,13 @@
  * All rights reserved.
  */
 
-#include "data-structures/binary-tree.h"
-
+#include "c/data-structures/binary-tree.h"
 #include <math.h>   /* pow() */
 #include <stdio.h>  /* snprintf() */
 #include <stdlib.h> /* NULL, atoi(), malloc(), free() */
 #include <string.h> /* strcmp(), strlen(), strncpy() */
-
-#include "data-structures/array.h"
-#include "tools/queue.h"
+#include "c/data-structures/array.h"
+#include "c/tools/queue.h"
 
 #define TREE_NODE_NULL "null"
 

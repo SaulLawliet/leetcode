@@ -5,9 +5,9 @@
  * 暴力计算, 两层循环
  */
 
-#include <stdlib.h>  /* malloc(), free() */
-#include "../test.h"
-#include "../data-structures/array.h"
+#include <stdlib.h> /* malloc(), free() */
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 /**
  * Note: The returned array must be malloced, assume caller calls free().

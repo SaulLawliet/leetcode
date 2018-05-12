@@ -5,9 +5,9 @@
  * 牛顿法: 循环调用 x = (x + S/x) / 2
  */
 
-#include <stdint.h>  /* int64_t */
 #include <stdbool.h>
-#include "../test.h"
+#include <stdint.h> /* int64_t */
+#include "c/test.h"
 
 bool isPerfectSquare(int num) {
   int64_t x = num;  /* x为int时, 会溢出 */

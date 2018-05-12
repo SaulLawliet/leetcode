@@ -8,8 +8,8 @@
  */
 
 #include <stdbool.h>
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 int max(int a, int b) { return a >= b ? a : b; }
 

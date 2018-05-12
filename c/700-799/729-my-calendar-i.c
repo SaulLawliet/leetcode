@@ -7,7 +7,6 @@
 
 #include <stdbool.h>
 #include <stdlib.h> /* malloc(), free() */
-
 #include "c/data-structures/array.h"
 #include "c/test.h"
 

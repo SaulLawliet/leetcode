@@ -6,7 +6,6 @@
  */
 
 #include <stdbool.h>
-
 #include "c/data-structures/array.h"
 #include "c/test.h"
 

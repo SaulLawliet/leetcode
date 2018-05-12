@@ -12,8 +12,8 @@
  * 最后把他们累加起来
  */
 
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 int doMath(int count) {
   if (count < 2) return 0;

@@ -5,11 +5,11 @@
  * 递归解即可
  */
 
-#include <stdlib.h> /* malloc(), free(), sort() */
+#include <stdlib.h> /* malloc(), free(), qsort() */
 #include <string.h> /* memcpy() */
-
 #include "c/data-structures/array.h"
 #include "c/test.h"
+#include "c/tools/compare.h"
 
 #define MAX_ROW_SIZE 1000
 #define MAX_COL_SIZE 100
@@ -28,14 +28,6 @@ void dfs(int ***rtn, int **columnSizes, int *returnSize,
     dfs(rtn, columnSizes, returnSize,
         candidateds, candidatesSize, target - candidateds[i], nums, numsSize + 1, i);
   }
-}
-
-int compare_ints(const void *a, const void *b) {
-  int arg1 = *(const int *)a;
-  int arg2 = *(const int *)b;
-  if (arg1 < arg2) return -1;
-  if (arg1 > arg2) return 1;
-  return 0;
 }
 
 /**

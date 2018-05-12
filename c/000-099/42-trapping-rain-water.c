@@ -6,8 +6,8 @@
  * 如果遇到'坑', 就把'坑'的深度累加到结果中
  */
 
-#include "../test.h"
-#include "../data-structures/array.h"
+#include "c/data-structures/array.h"
+#include "c/test.h"
 
 int trap(int *height, int heightSize) {
   int rtn = 0,
