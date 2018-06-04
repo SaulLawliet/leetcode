@@ -99,3 +99,8 @@ int treeHeight(struct TreeNode *tree) {
   int rightHeight = treeHeight(tree->right);
   return leftHeight >= rightHeight ? leftHeight + 1 : rightHeight + 1;
 }
+
+int treeCount(struct TreeNode *tree) {
+  if (tree == NULL) return 0;
+  return 1 + treeCount(tree->left) + treeCount(tree->right);
+}

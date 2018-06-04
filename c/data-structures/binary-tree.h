@@ -17,5 +17,6 @@ char *treeToString(struct TreeNode *tree);
 void treeFree(struct TreeNode *tree);
 
 int treeHeight(struct TreeNode *tree);
+int treeCount(struct TreeNode *tree);
 
 #endif /* C_DATA_STRUCTURES_BINARY_TREE_H_ */
