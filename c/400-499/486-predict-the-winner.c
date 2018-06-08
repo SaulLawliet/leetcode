@@ -36,7 +36,7 @@ bool PredictTheWinner_v2(int *nums, int numsSize) {
 }
 
 void test(bool expect, const char* str) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
 
   EXPECT_EQ_INT(expect, PredictTheWinner_v1(arrayValue(e), arraySize(e)));
   EXPECT_EQ_INT(expect, PredictTheWinner_v2(arrayValue(e), arraySize(e)));

@@ -47,7 +47,7 @@ int findMinDifference(char **timePoints, int timePointsSize) {
 }
 
 void test(int expect, const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_STRING);
+  arrayEntry *e = arrayParse1D(str, ARRAY_STRING);
 
   EXPECT_EQ_INT(expect, findMinDifference(arrayValue(e), arraySize(e)));
 

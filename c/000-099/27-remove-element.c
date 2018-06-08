@@ -14,7 +14,7 @@ int removeElement(int *nums, int numsSize, int val) {
 }
 
 void test(const char* expect, const char* str, int val) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
   arraySetSize(e, removeElement(arrayValue(e), arraySize(e), val));
 
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString(e));

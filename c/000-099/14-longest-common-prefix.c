@@ -31,7 +31,7 @@ END: {}
 }
 
 void test(const char* expect, const char* str) {
-  arrayEntry *e = arrayParse(str, ARRAY_STRING);
+  arrayEntry *e = arrayParse1D(str, ARRAY_STRING);
 
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, longestCommonPrefix(arrayValue(e), arraySize(e)));
 

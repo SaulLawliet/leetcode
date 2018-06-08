@@ -66,7 +66,7 @@ else
         dir="$((id/100))00-$((id/100))99"
 
         if (( $id < 10 )); then id="0$id"; fi
-        file=`ls c/$dir/$id*.c`
+        file=`ls c/$dir/$id*.c 2>/dev/null`
         if [ -z $file ]; then
             # echo "No.$id not found."
             continue

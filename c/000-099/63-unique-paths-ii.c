@@ -29,7 +29,7 @@ int uniquePathsWithObstacles(int **obstacleGrid, int obstacleGridRowSize, int ob
 }
 
 void test(int expect, const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse2D(str, ARRAY_INT);
 
   EXPECT_EQ_INT(expect, uniquePathsWithObstacles(arrayValue(e), arrayRow(e), arrayCol(e)));
 

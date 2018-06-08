@@ -26,7 +26,7 @@ bool searchMatrix(int **matrix, int matrixRowSize, int matrixColSize, int target
 }
 
 void test(bool expect, const char *matrix, int target) {
-  arrayEntry *e = arrayParse(matrix, ARRAY_INT);
+  arrayEntry *e = arrayParse2D(matrix, ARRAY_INT);
 
   EXPECT_EQ_INT(expect, searchMatrix(arrayValue(e), arrayRow(e), arrayCol(e), target));
 

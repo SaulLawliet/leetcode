@@ -38,7 +38,7 @@ int* searchRange(int *nums, int numsSize, int target, int *returnSize) {
 }
 
 void test(const char *expect, const char *str, int target) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
   int returnSize;
   int* a = searchRange(arrayValue(e), arraySize(e), target, &returnSize);
 

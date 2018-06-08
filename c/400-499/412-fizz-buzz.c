@@ -6,6 +6,7 @@
 
 #include <stdio.h>  /* snprintf() */
 #include <stdlib.h> /* malloc(), free() */
+#include <string.h> /* memcpy() */
 #include "c/data-structures/array.h"
 #include "c/test.h"
 

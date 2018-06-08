@@ -51,8 +51,8 @@ double findMedianSortedArrays(int *nums1, int nums1Size,
 }
 
 void test(double expect, const char *str1, const char *str2) {
-  arrayEntry *e1 = arrayParse(str1, ARRAY_INT);
-  arrayEntry *e2 = arrayParse(str2, ARRAY_INT);
+  arrayEntry *e1 = arrayParse1D(str1, ARRAY_INT);
+  arrayEntry *e2 = arrayParse1D(str2, ARRAY_INT);
 
   EXPECT_EQ_DOUBLE(expect, findMedianSortedArrays(arrayValue(e1), arraySize(e1),
                                                   arrayValue(e2), arraySize(e2)));

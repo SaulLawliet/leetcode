@@ -23,7 +23,7 @@ char *addStrings(char *num1, char *num2) {
 
   int v, index1, index2;
   for (int i = maxLen - 1; i > 0; --i) {
-    int v = rtn[i];
+    v = rtn[i];
     if ((index1 = len1 + i - maxLen) >= 0)
       v += num1[index1] - '0';
     if ((index2 = len2 + i - maxLen) >= 0)

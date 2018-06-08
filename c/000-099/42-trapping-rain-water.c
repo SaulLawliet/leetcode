@@ -27,7 +27,7 @@ int trap(int *height, int heightSize) {
 }
 
 void test(int expect, const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
 
   EXPECT_EQ_INT(expect, trap(arrayValue(e), (arraySize(e))));
 

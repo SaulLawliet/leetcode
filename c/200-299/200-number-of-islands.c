@@ -36,7 +36,7 @@ int numIslands(char **grid, int gridRowSize, int gridColSize) {
 }
 
 void test(int expect, const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_CHAR);
+  arrayEntry *e = arrayParse2D(str, ARRAY_CHAR);
 
   EXPECT_EQ_INT(expect, numIslands(arrayValue(e), arrayRow(e), arrayCol(e)));
 

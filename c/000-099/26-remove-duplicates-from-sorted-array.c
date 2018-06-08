@@ -16,7 +16,7 @@ int removeDuplicates(int *nums, int numsSize) {
 }
 
 void test(const char *expect, const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
   arraySetSize(e, removeDuplicates(arrayValue(e), arraySize(e)));
 
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString(e));

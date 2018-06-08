@@ -60,7 +60,7 @@ bool myCalendarBook(MyCalendar *obj, int start, int end) {
 void test(const char *s) {
   MyCalendar *obj = myCalendarCreate();
 
-  arrayEntry *entry = arrayParse(s, ARRAY_INT);
+  arrayEntry *entry = arrayParse2D(s, ARRAY_INT);
   for (int i = 0; i < arrayRow(entry); ++i) {
     int *array = ((int **)arrayValue(entry))[i];
     EXPECT_EQ_INT(array[0], myCalendarBook(obj, array[1], array[2]));

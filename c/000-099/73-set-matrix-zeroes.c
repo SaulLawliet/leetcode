@@ -37,7 +37,7 @@ void setZeroes(int **matrix, int matrixRowSize, int matrixColSize) {
 }
 
 void test(const char *expect, const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse2D(str, ARRAY_INT);
   setZeroes(arrayValue(e), arrayRow(e), arrayCol(e));
 
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString(e));

@@ -39,7 +39,7 @@ int **subsets(int *nums, int numsSize, int **columnSizes, int *returnSize) {
 }
 
 void test(const char* expect, const char* str) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
   int *columnSizes;
   int returnSize;
   int **a = subsets(arrayValue(e), arraySize(e), &columnSizes, &returnSize);

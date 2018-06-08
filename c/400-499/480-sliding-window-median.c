@@ -72,7 +72,7 @@ double *medianSlidingWindow(int *nums, int numsSize, int k, int *returnSize) {
 }
 
 void test(const char* expect, const char *str, int k) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
   int returnSize;
   double *a = medianSlidingWindow(arrayValue(e), arraySize(e), k, &returnSize);
   arrayEntry *rtn = arrayFrom1D(a, returnSize, ARRAY_DOUBLE);

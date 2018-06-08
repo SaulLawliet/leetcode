@@ -50,8 +50,8 @@ struct TreeNode *buildTree(int *preorder, int preorderSize, int *inorder, int in
 }
 
 void test(const char *expect, const char *preorderStr, const char *inorderStr) {
-  arrayEntry *preorder = arrayParse(preorderStr, ARRAY_INT);
-  arrayEntry *inorder = arrayParse(inorderStr, ARRAY_INT);
+  arrayEntry *preorder = arrayParse1D(preorderStr, ARRAY_INT);
+  arrayEntry *inorder = arrayParse1D(inorderStr, ARRAY_INT);
   struct TreeNode *tree = buildTree(arrayValue(preorder), arraySize(preorder),
                                     arrayValue(inorder), arraySize(inorder));
 

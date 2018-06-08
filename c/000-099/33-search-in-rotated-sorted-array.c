@@ -31,7 +31,7 @@ int search(int *nums, int numsSize, int target) {
 }
 
 void test(const char *expect, int result, const char *str, int target) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
 
   EXPECT_EQ_INT(result, search(arrayValue(e), arraySize(e), target));
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString(e));

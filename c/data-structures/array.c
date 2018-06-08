@@ -15,15 +15,17 @@
 
 struct arrayEntry {
   arrayType type;
+  int dimensional;
   int size;
   void *v;
   int *cols;
   int precision; /* printf: float precision */
 };
 
-arrayEntry *arrayNew(arrayType type) {
+static arrayEntry *arrayNew(arrayType type, int dimensional) {
   arrayEntry *e = malloc(sizeof(arrayEntry));
   e->type = type;
+  e->dimensional = dimensional;
   e->v = NULL;
   e->size = 0;
   e->cols = NULL;
@@ -108,6 +110,7 @@ static int sizeOf(arrayType type) {
   return 0;
 }
 
+/* 弃用 */
 arrayEntry *arrayParse(const char *str, arrayType type) {
   const char *p = str;
   parseWhitespace(&p);
@@ -124,7 +127,7 @@ arrayEntry *arrayParse(const char *str, arrayType type) {
 arrayEntry *arrayParse1D(const char *str, arrayType type) {
   parseWhitespace(&str);
   context c = parseArray(&str, type, 1);
-  arrayEntry *e = arrayNew(type);
+  arrayEntry *e = arrayNew(type, 1);
   e->size = c.top / sizeOf(type);
   e->v = c.stack;
   return e;
@@ -134,7 +137,7 @@ arrayEntry *arrayParse2D(const char *str, arrayType type) {
   parseWhitespace(&str);
   context c = parseArray(&str, type, 2);
 
-  arrayEntry *e = arrayNew(type);
+  arrayEntry *e = arrayNew(type, 2);
   e->size = c.top / sizeof(context);
   e->cols = malloc(sizeof(int) * e->size);
 
@@ -175,14 +178,14 @@ void arrayFree(arrayEntry *entry) {
 }
 
 arrayEntry *arrayFrom1D(void *v, int size, arrayType type) {
-  arrayEntry *e = arrayNew(type);
+  arrayEntry *e = arrayNew(type, 1);
   e->v = v;
   e->size = size;
   return e;
 }
 
 arrayEntry *arrayFrom2D(void *v, int row, int *cols, arrayType type) {
-  arrayEntry *e = arrayNew(type);
+  arrayEntry *e = arrayNew(type, 2);
   e->v = v;
   e->size = row;
   e->cols = cols;
@@ -256,15 +259,37 @@ char *arrayToString2DSameCol(void *v, int row, int col, arrayType type) {
   return rt;
 }
 
-void *arrayValue(arrayEntry *entry) { return entry->v; }
-int arraySize(arrayEntry *entry) { return entry->size; }
-void arraySetSize(arrayEntry *entry, int size) { entry->size = size; }
+void *arrayValue(arrayEntry *entry) {
+  return entry->v;
+}
 
-void arraySetPrecision(arrayEntry *entry, int precision) { entry->precision = precision; }
+int arraySize(arrayEntry *entry) {
+  assert(entry->dimensional == 1);
+  return entry->size;
+}
 
-int arrayRow(arrayEntry *entry) { return entry->size; }
-int *arrayCols(arrayEntry *entry) { return entry->cols; }
+void arraySetSize(arrayEntry *entry, int size) {
+  assert(entry->dimensional == 1);
+  entry->size = size;
+}
+
+void arraySetPrecision(arrayEntry *entry, int precision) {
+  assert(entry->type == ARRAY_DOUBLE);
+  entry->precision = precision;
+}
+
+int arrayRow(arrayEntry *entry) {
+  assert(entry->dimensional == 2);
+  return entry->size;
+}
+
+int *arrayCols(arrayEntry *entry) {
+  assert(entry->dimensional == 2);
+  return entry->cols;
+}
+
 int arrayCol(arrayEntry *entry) {
+  assert(entry->dimensional == 2);
   if (entry->cols != NULL && entry->size > 0)
     return entry->cols[0];
   else

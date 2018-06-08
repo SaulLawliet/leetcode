@@ -47,7 +47,7 @@ int **palindromePairs(char **words, int wordsSize, int **columnSizes, int *retur
 }
 
 void test(const char *expect, const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_STRING);
+  arrayEntry *e = arrayParse1D(str, ARRAY_STRING);
   int *columnSizes;
   int returnSize;
   int **a = palindromePairs(arrayValue(e), arraySize(e), &columnSizes, &returnSize);

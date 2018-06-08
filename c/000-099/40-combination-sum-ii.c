@@ -49,7 +49,7 @@ int **combinationSum2(int *candidates, int candidatesSize, int target, int **col
 }
 
 void test(const char *expect, const char *str, int target) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
   int *columnSizes;
   int returnSize;
   int **a = combinationSum2(arrayValue(e), arraySize(e), target, &columnSizes, &returnSize);

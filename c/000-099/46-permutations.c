@@ -46,7 +46,7 @@ int **permute(int *nums, int numsSize, int *returnSize) {
 }
 
 void test(const char* expect, const char* str) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
   int returnSize;
   int **a = permute(arrayValue(e), arraySize(e), &returnSize);
 

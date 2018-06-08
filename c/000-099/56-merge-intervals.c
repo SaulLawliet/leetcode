@@ -68,7 +68,7 @@ int **intervalToArray(struct Interval *intervals, int size) {
 }
 
 void test(const char* expect, const char* str) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse2D(str, ARRAY_INT);
   struct Interval *intervals = arrayToInterval(arrayValue(e), arrayRow(e));
   int returnSize;
   struct Interval *rtn = merge(intervals, arrayRow(e), &returnSize);

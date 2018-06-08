@@ -5,6 +5,7 @@
  * 经过了 21 和 24 之后, 算是学会了 'pointer-pointer' 的写法
  */
 
+#include <stdlib.h> /* free() */
 #include "c/data-structures/linked-list.h"
 #include "c/test.h"
 
@@ -29,6 +30,7 @@ struct ListNode *deleteDuplicates(struct ListNode *head) {
 
 void test(const char *expect, const char *s) {
   struct ListNode* list = deleteDuplicates(linkedlistParse(s));
+  
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, linkedlistToString(list));
 
   linkedlistFree(list);

@@ -24,7 +24,7 @@ int searchInsert(int *nums, int numsSize, int target) {
 }
 
 void test(int expect, const char *nums, int target) {
-  arrayEntry *e = arrayParse(nums, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(nums, ARRAY_INT);
 
   EXPECT_EQ_INT(expect, searchInsert(arrayValue(e), arraySize(e), target));
 

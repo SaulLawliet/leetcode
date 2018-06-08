@@ -18,7 +18,7 @@ static struct ListNode *makeByIndex(arrayEntry *e, int index) {
 }
 
 struct ListNode *linkedlistParse(const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
   struct ListNode *list = makeByIndex(e, 0);
   arrayFree(e);
   return list;

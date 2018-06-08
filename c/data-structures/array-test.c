@@ -8,9 +8,20 @@
 
 int type;
 int precision = 0;
+int dimensional;
 
 void testArrayRoundTrip(const char *str) {
-  arrayEntry *e = arrayParse(str, type);
+  arrayEntry *e;
+  switch (dimensional) {
+    case 1:
+      e = arrayParse1D(str, type);
+      break;
+    case 2:
+      e = arrayParse2D(str, type);
+      break;
+    default:
+      return;
+  }
   if (type == ARRAY_DOUBLE) arraySetPrecision(e, precision);
 
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(str, arrayToString(e));
@@ -20,6 +31,8 @@ void testArrayRoundTrip(const char *str) {
 
 int main(void) {
   /* 1 dimensional */
+  dimensional = 1;
+
   type = ARRAY_INT;
   testArrayRoundTrip("[]");
   testArrayRoundTrip("[-3,-2,-1,0,1,2,3]");
@@ -43,6 +56,8 @@ int main(void) {
   testArrayRoundTrip("[h e l l o,w  o  rld]");
 
   /* 2 dimensional */
+  dimensional = 2;
+
   type = ARRAY_INT;
   testArrayRoundTrip("[[]]");
   testArrayRoundTrip("[[1,2],[3,4,5]]");

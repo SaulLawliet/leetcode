@@ -102,7 +102,7 @@ void test(const char *expect, const char *dictStr, const char *str) {
   char *sentence = malloc(sizeof(char) * (len + 1));
   memcpy(sentence, str, len);
   sentence[len] = '\0';
-  arrayEntry *e = arrayParse(dictStr, ARRAY_STRING);
+  arrayEntry *e = arrayParse1D(dictStr, ARRAY_STRING);
 
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, replaceWords(arrayValue(e), arraySize(e), sentence));
 

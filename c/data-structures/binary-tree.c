@@ -45,7 +45,7 @@ static struct TreeNode *buildByArray(char **a, int size) {
 }
 
 struct TreeNode *treeParse(const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_STRING);
+  arrayEntry *e = arrayParse1D(str, ARRAY_STRING);
   struct TreeNode *tree = buildByArray(arrayValue(e), arraySize(e));
   arrayFree(e);
   return tree;

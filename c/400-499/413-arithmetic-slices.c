@@ -39,7 +39,7 @@ int numberOfArithmeticSlices(int *A, int ASize) {
 }
 
 void test(int expect, const char *str) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
 
   EXPECT_EQ_INT(expect, numberOfArithmeticSlices(arrayValue(e), arraySize(e)));
 

@@ -3,6 +3,7 @@
  * All rights reserved.
  */
 
+#include <stdlib.h> /* malloc() */
 #include "c/data-structures/array.h"
 #include "c/test.h"
 
@@ -29,8 +30,8 @@ int *nextGreaterElement(int *findNums, int findNumsSize, int *nums, int numsSize
 }
 
 void test(const char* expect, const char* str1, const char* str2) {
-  arrayEntry *e1 = arrayParse(str1, ARRAY_INT);
-  arrayEntry *e2 = arrayParse(str2, ARRAY_INT);
+  arrayEntry *e1 = arrayParse1D(str1, ARRAY_INT);
+  arrayEntry *e2 = arrayParse1D(str2, ARRAY_INT);
   int returnSize;
   int *a = nextGreaterElement(arrayValue(e1), arraySize(e1), arrayValue(e2), arraySize(e2), &returnSize);
 

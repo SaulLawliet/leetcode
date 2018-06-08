@@ -15,8 +15,8 @@ typedef enum {
   ARRAY_STRING,
 } arrayType;
 
-arrayEntry *arrayNew(arrayType type);
-arrayEntry *arrayParse(const char *str, arrayType type);
+/* 弃用! 调用方最好直接指定维度 */
+/* arrayEntry *arrayParse(const char *str, arrayType type); */
 arrayEntry *arrayParse1D(const char *str, arrayType type);
 arrayEntry *arrayParse2D(const char *str, arrayType type);
 

@@ -47,7 +47,7 @@ int combinationSum4_v2(int *nums, int numsSize, int target) {
 }
 
 void test(int expect, const char *str, int target) {
-  arrayEntry *e = arrayParse(str, ARRAY_INT);
+  arrayEntry *e = arrayParse1D(str, ARRAY_INT);
 
   EXPECT_EQ_INT(expect, combinationSum4_v1(arrayValue(e), arraySize(e), target));
   EXPECT_EQ_INT(expect, combinationSum4_v2(arrayValue(e), arraySize(e), target));
