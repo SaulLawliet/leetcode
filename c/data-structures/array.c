@@ -100,7 +100,7 @@ static context parseArray(const char **str, arrayType type, int dimensional) {
   return c;
 }
 
-static int sizeOf(arrayType type) {
+static int typeSizeof(arrayType type) {
   switch (type) {
     case ARRAY_CHAR: return sizeof(char);
     case ARRAY_INT: return sizeof(int);
@@ -128,7 +128,7 @@ arrayEntry *arrayParse1D(const char *str, arrayType type) {
   parseWhitespace(&str);
   context c = parseArray(&str, type, 1);
   arrayEntry *e = arrayNew(type, 1);
-  e->size = c.top / sizeOf(type);
+  e->size = c.top / typeSizeof(type);
   e->v = c.stack;
   return e;
 }
@@ -144,7 +144,7 @@ arrayEntry *arrayParse2D(const char *str, arrayType type) {
   void **v = malloc(sizeof(void *) * e->size);
   for (int i = 0; i < e->size; ++i) {
     v[i] = ((context *)c.stack)[i].stack;
-    e->cols[i] = ((context *)c.stack)[i].top / sizeOf(type);
+    e->cols[i] = ((context *)c.stack)[i].top / typeSizeof(type);
   }
   e->v = v;
 
@@ -158,21 +158,24 @@ static void free2D(void **v, int size) {
 }
 
 void arrayFree(arrayEntry *entry) {
-  if (entry->cols == NULL) {
-    if (entry->type == ARRAY_STRING)
-      free2D((void **)entry->v, entry->size);
-    else
-      free(entry->v);
-  } else {
-    if (entry->type == ARRAY_STRING) {
-      for (int i = 0; i < entry->size; ++i)
-        free2D(((void **)entry->v)[i], entry->cols[i]);
-      free(entry->v);
-    } else {
-      free2D((void **)entry->v, entry->size);
-    }
+  switch (entry->dimensional) {
+    case 1:
+      if (entry->type == ARRAY_STRING)
+        free2D((void **)entry->v, entry->size);
+      else
+        free(entry->v);
+      break;
+    case 2:
+      if (entry->type == ARRAY_STRING) {
+        for (int i = 0; i < entry->size; ++i)
+          free2D(((void **)entry->v)[i], entry->cols[i]);
+        free(entry->v);
+      } else {
+        free2D((void **)entry->v, entry->size);
+      }
 
-    free(entry->cols);
+      free(entry->cols);
+      break;
   }
   free(entry);
 }
@@ -223,15 +226,18 @@ void toString(context *c, char *v, int size, arrayType type, int precision) {
 
 char *arrayToString(arrayEntry *entry) {
   context c = stackMake();
-  if (entry->cols == NULL) {
-    toString(&c, entry->v, entry->size, entry->type, entry->precision);
-  } else {
-    PUTC(&c, '[');
-    for (int i = 0; i < entry->size; ++i) {
-      if (i > 0) PUTC(&c, ',');
-      toString(&c, ((void **)entry->v)[i], entry->cols[i], entry->type, entry->precision);
-    }
-    PUTC(&c, ']');
+  switch (entry->dimensional) {
+    case 1:
+      toString(&c, entry->v, entry->size, entry->type, entry->precision);
+      break;
+    case 2:
+      PUTC(&c, '[');
+      for (int i = 0; i < entry->size; ++i) {
+        if (i > 0) PUTC(&c, ',');
+        toString(&c, ((void **)entry->v)[i], entry->cols[i], entry->type, entry->precision);
+      }
+      PUTC(&c, ']');
+      break;
   }
 
   PUTC(&c, '\0');
