@@ -25,8 +25,8 @@
  *   5: [5,0] [7,0] [5,2] [6,1] [4,4] [7,1]
  */
 
-#include <stdlib.h> /* malloc() */
-#include <string.h> /* memset() */
+#include <stdlib.h> /* qsort(), malloc() */
+#include <string.h> /* memset(), memcpy() */
 #include "c/data-structures/array.h"
 #include "c/test.h"
 
