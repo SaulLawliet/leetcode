@@ -18,6 +18,7 @@ struct arrayEntry {
   int dimensional;
   int size;
   void *v;
+  int col;
   int *cols;
   int precision; /* printf: float precision */
 };
@@ -28,6 +29,7 @@ static arrayEntry *arrayNew(arrayType type, int dimensional) {
   e->dimensional = dimensional;
   e->v = NULL;
   e->size = 0;
+  e->col = 0;
   e->cols = NULL;
   e->precision = 0;
   return e;
@@ -168,7 +170,7 @@ void arrayFree(arrayEntry *entry) {
     case 2:
       if (entry->type == ARRAY_STRING) {
         for (int i = 0; i < entry->size; ++i)
-          free2D(((void **)entry->v)[i], entry->cols[i]);
+          free2D(((void **)entry->v)[i], entry->cols != NULL ? entry->cols[i] : entry->col);
         free(entry->v);
       } else {
         free2D((void **)entry->v, entry->size);
@@ -196,9 +198,11 @@ arrayEntry *arrayFrom2D(void *v, int row, int *cols, arrayType type) {
 }
 
 arrayEntry *arrayFrom2DSameCol(void *v, int row, int col, arrayType type) {
-  int *cols = malloc(sizeof(int) * row);
-  for (int i = 0; i < row; ++i) cols[i] = col;
-  return arrayFrom2D(v, row, cols, type);
+  arrayEntry *e = arrayNew(type, 2);
+  e->v = v;
+  e->size = row;
+  e->col = col;
+  return e;
 }
 
 void toString(context *c, char *v, int size, arrayType type, int precision) {
@@ -234,7 +238,8 @@ char *arrayToString(arrayEntry *entry) {
       PUTC(&c, '[');
       for (int i = 0; i < entry->size; ++i) {
         if (i > 0) PUTC(&c, ',');
-        toString(&c, ((void **)entry->v)[i], entry->cols[i], entry->type, entry->precision);
+        toString(&c, ((void **)entry->v)[i], entry->cols != NULL ? entry->cols[i] : entry->col,
+                 entry->type, entry->precision);
       }
       PUTC(&c, ']');
       break;
@@ -291,6 +296,7 @@ int arrayRow(arrayEntry *entry) {
 
 int *arrayCols(arrayEntry *entry) {
   assert(entry->dimensional == 2);
+  assert(entry->cols != NULL);
   return entry->cols;
 }
 
@@ -299,5 +305,5 @@ int arrayCol(arrayEntry *entry) {
   if (entry->cols != NULL && entry->size > 0)
     return entry->cols[0];
   else
-    return 0;
+    return entry->col;
 }
