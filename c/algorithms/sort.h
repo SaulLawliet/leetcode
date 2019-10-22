@@ -3,8 +3,8 @@
  * All rights reserved.
  */
 
-#ifndef ALGORITHMS_SORT_H_
-#define ALGORITHMS_SORT_H_
+#ifndef C_ALGORITHMS_SORT_H_
+#define C_ALGORITHMS_SORT_H_
 
 /* 插入排序 */
 void sortInsertion(int *a, int len);
@@ -15,4 +15,4 @@ void sortMerge(int *a, int len);
 /* 快速排序 */
 void sortQuick(int *a, int len);
 
-#endif /* ALGORITHMS_SORT_H_ */
+#endif /* C_ALGORITHMS_SORT_H_ */
