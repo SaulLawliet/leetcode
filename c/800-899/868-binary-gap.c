@@ -15,7 +15,7 @@ int binaryGap(int N) {
     k++;
     if (N & 1) {
       if (find) {
-        if (k-index > rt) rt = k-index;
+        if (k - index > rt) rt = k - index;
       } else {
         find = true;
       }
@@ -27,15 +27,15 @@ int binaryGap(int N) {
   return rt;
 }
 
-void test(int N, int except) {
-  EXPECT_EQ_INT(binaryGap(N), except);
+void test(int except, int N) {
+  EXPECT_EQ_INT(except, binaryGap(N));
 }
 
 int main(void) {
-  test(22, 2);
-  test(5, 2);
-  test(6, 1);
-  test(8, 0);
+  test(2, 22);
+  test(2, 5);
+  test(1, 6);
+  test(0, 8);
 
   testOutput();
 }
