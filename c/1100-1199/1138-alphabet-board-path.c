@@ -38,8 +38,8 @@ char *alphabetBoardPath(char *target) {
   return path;
 }
 
-void test(const char *except, char *target) {
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(except, alphabetBoardPath(target));
+void test(const char *expect, char *target) {
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, alphabetBoardPath(target));
 }
 
 int main(void) {
