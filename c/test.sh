@@ -1,76 +1,77 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 readlink="readlink"
-if [[ `uname` == "Darwin" ]]; then
-    type greadlink >/dev/null 2>&1 || {
-        echo >&2 "You need to install greadlink. (brew install coreutils)"
-        echo >&2 "See https://stackoverflow.com/a/4031502"
-        exit 1;
-    }
-    readlink="greadlink"
+if [[ $(uname) == "Darwin" ]]; then
+  type greadlink >/dev/null 2>&1 || {
+    echo >&2 "You need to install greadlink. (brew install coreutils)"
+    echo >&2 "See https://stackoverflow.com/a/4031502"
+    exit 1;
+  }
+  readlink="greadlink"
 fi
+
+# 进入脚本目录
+cd "$(dirname "$($readlink -f "$0")")/.." || exit 1
 
 usage() {
-    echo "You must specify numbers."
-    echo "Or use '-t' to run library's test."
-    echo ""
-    echo "Also you can add '-' to enable memcheck."
-    exit 1
+  printf "Complie and run solution.\n"
+  printf "Usage:\n"
+  printf "  %s [OPTION]... <NUMBER>\n" "$0"
+  printf "  %s [OPTION]... <COMMAND>\n" "$0"
+  printf "\n"
+
+  printf "OPTION:\n"
+  printf "  -m\tEnable memcheck.(use valgrind)\n"
+  printf "\n"
+
+  printf "COMMAND:\n"
+  printf "  all\tRun all solutions.\n"
+  printf "  test\tRun library's test.\n"
+  exit 1
 }
-
-cd $(dirname $($readlink -f $0))/..
-
-open_test=0
-ids=()
-for value in $@; do
-    case $value in
-        "-t")
-            open_test=1 # run library's test
-            ;;
-        "-")
-            type valgrind >/dev/null 2>&1 || { echo >&2 "You need to install valgrind."; exit 1; }
-            valgrind="valgrind";
-            ;;
-        [0-9]*)
-            ids+=$value
-            ;;
-        *)
-            usage
-    esac
-done
-
-if (( !$open_test && ${#ids[@]} == 0 )); then
-    usage
-fi
-
-export C_INCLUDE_PATH=$C_INCLUDE_PATH:`pwd`/..
-lib=`ls c/[a-z]*/*.c |grep -v test.c`
 
 run() {
-    echo $file
-    excute=${file:0:${#file}-2}
-    gcc -std=c99 -Wall $file $lib -lm -o $excute
-    if [[ !$? ]]; then
-        $valgrind $excute
-        rm $excute
+  C_INCLUDE_PATH=$C_INCLUDE_PATH:$(pwd)/..
+  export C_INCLUDE_PATH
+  lib=$(ls c/[a-z]*/*.c |grep -v test.c)
+
+  for file in $1; do
+    [ -f "$file" ] || (printf "NO.%d not found.\n" "$id" && exit 1)
+
+    printf '%s\n' "$file"
+    excute=${file%.c}
+    if gcc -std=c99 -Wall -o "$excute" "$file" $lib -lm; then
+      if $valgrind "$excute"; then
+        rm "$excute"
+        continue
+      fi
     fi
+    exit 1
+  done
+  exit 0
 }
 
-if (( $open_test )); then
-    files=`ls c/[a-z]*/*-test.c`
-    for file in ${files[@]}; do
-        run
-    done
-else
-    for id in ${ids[@]}; do
-        dir="$((id/100))00-$((id/100))99"
+main() {
+  for arg in "$@"; do
+    case $arg in
+      "-m")
+        type valgrind >/dev/null 2>&1 || { echo >&2 "You need to install valgrind."; exit 1; }
+        valgrind="valgrind";
+        ;;
+      "all")
+        run "c/[0-9]*/*.c"
+        ;;
+      "test")
+        run "c/[a-z]*/*-test.c"
+        ;;
+      [0-9]*)
+        id=$(printf "%02d" "$arg")
+        run "c/[0-9]*/$id-*.c"
+        ;;
+    esac
+  done
 
-        if (( $id < 10 )); then id="0$id"; fi
-        file=`ls c/$dir/$id*.c 2>/dev/null`
-        if [ -z $file ]; then
-            # echo "No.$id not found."
-            continue
-        fi
-        run
-    done
-fi
+  usage
+}
+
+main "$@"
