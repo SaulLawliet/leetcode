@@ -73,5 +73,5 @@ int main(void) {
   test("[[eat,tea,ate],[tan,nat],[bat]]",
        "[eat,tea,tan,ate,nat,bat]");
 
-  testOutput();
+  return testOutput();
 }

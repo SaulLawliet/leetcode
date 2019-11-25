@@ -25,8 +25,8 @@ int countSegments(char *s) {
   return rt;
 }
 
-void test(int except, char *s) {
-  EXPECT_EQ_INT(except, countSegments(s));
+void test(int expect, char *s) {
+  EXPECT_EQ_INT(expect, countSegments(s));
 }
 
 int main(void) {
@@ -34,5 +34,5 @@ int main(void) {
   test(0, "");
   test(0, "                ");
 
-  testOutput();
+  return testOutput();
 }

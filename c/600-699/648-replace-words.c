@@ -122,5 +122,5 @@ int main(void) {
        "[a, aa, aaa, aaaa]",
        "a aa a aaaa aaa aaa aaa aaaaaa bbb baba ababa");
 
-  testOutput();
+  return testOutput();
 }

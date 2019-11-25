@@ -35,5 +35,5 @@ int main(void) {
   test(1, 2, 2);
   test(1, 4, 5);
 
-  testOutput();
+  return testOutput();
 }

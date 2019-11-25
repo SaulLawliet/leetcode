@@ -76,5 +76,5 @@ void test(const char *expect, const char *s) {
 int main(void) {
   test("[1,3,2]", "[1,null,2,3]");
 
-  testOutput();
+  return testOutput();
 }

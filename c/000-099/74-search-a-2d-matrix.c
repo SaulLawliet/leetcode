@@ -49,5 +49,5 @@ int main(void) {
        "]",
        13);
 
-  testOutput();
+  return testOutput();
 }

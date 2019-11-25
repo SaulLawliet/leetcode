@@ -46,5 +46,5 @@ int main(void) {
   test("[1,null,2,3]");
   test("[5,4,7,3,null,2,null,-1,null,9]");
 
-  testOutput();
+  return testOutput();
 }

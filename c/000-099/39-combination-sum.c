@@ -61,5 +61,5 @@ void test(const char *expect, const char *str, int target) {
 int main(void) {
   test("[[2,2,3],[7]]", "[2, 3, 6, 7]", 7);
 
-  testOutput();
+  return testOutput();
 }

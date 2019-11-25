@@ -52,5 +52,5 @@ int main(void) {
   test(board, true, "SEE");
   test(board, false, "ABCB");
 
-  testOutput();
+  return testOutput();
 }

@@ -46,5 +46,5 @@ int main(void) {
   test("DDR!UURRR!!DDD!", "leet");
   test("RR!DDRR!UUL!R!", "code");
 
-  testOutput();
+  return testOutput();
 }

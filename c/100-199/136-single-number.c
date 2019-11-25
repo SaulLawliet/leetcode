@@ -26,5 +26,5 @@ void test(int expect, const char *str) {
 int main(void) {
   test(100, "[300, 200, 100, 200, 300]");
 
-  testOutput();
+  return testOutput();
 }

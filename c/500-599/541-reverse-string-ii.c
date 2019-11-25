@@ -40,5 +40,5 @@ void test(const char *expect, const char *str, int k) {
 int main(void) {
   test("bacdfeg", "abcdefg", 2);
 
-  testOutput();
+  return testOutput();
 }

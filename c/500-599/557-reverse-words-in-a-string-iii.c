@@ -40,5 +40,5 @@ int main(void) {
   test("s'teL ekat edoCteeL tsetnoc",
        "Let's take LeetCode contest");
 
-  testOutput();
+  return testOutput();
 }

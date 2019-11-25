@@ -58,5 +58,5 @@ int main(void) {
   test("[[1,2,6],[1,3,5],[2,3,4]]", 3, 9);
   test("[]", 2, 18);
 
-  testOutput();
+  return testOutput();
 }

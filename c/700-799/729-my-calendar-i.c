@@ -73,5 +73,5 @@ void test(const char *s) {
 int main(void) {
   test("[[1, 10, 20], [0, 15, 25], [1, 20, 30]]");
 
-  testOutput();
+  return testOutput();
 }

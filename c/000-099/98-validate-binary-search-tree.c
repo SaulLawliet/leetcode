@@ -37,5 +37,5 @@ int main(void) {
   test(true, "[-2147483648,null,2147483647]");
   test(false, "[1,2]");
 
-  testOutput();
+  return testOutput();
 }

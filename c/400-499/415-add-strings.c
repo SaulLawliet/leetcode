@@ -48,5 +48,5 @@ int main(void) {
   test("2", "2", "0");
   test("1008", "999", "9");
 
-  testOutput();
+  return testOutput();
 }

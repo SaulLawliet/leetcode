@@ -40,5 +40,5 @@ void test(const char *expect, const char *str) {
 int main(void) {
   test("[0,0,1,1,2,2]", "[2,0,2,1,1,0]");
 
-  testOutput();
+  return testOutput();
 }

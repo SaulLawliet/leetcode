@@ -42,5 +42,5 @@ int main(void) {
        "[4,2,1]"
        "]");
 
-  testOutput();
+  return testOutput();
 }

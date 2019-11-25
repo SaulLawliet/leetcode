@@ -37,5 +37,5 @@ int main(void) {
   test(4, "[1,3,5,6]", 7);
   test(0, "[1,3,5,6]", 0);
 
-  testOutput();
+  return testOutput();
 }

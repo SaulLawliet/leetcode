@@ -35,5 +35,5 @@ void test(const char *expect, const char *str) {
 int main(void) {
   test("olleh", "hello");
 
-  testOutput();
+  return testOutput();
 }

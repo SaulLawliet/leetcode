@@ -27,8 +27,8 @@ int binaryGap(int N) {
   return rt;
 }
 
-void test(int except, int N) {
-  EXPECT_EQ_INT(except, binaryGap(N));
+void test(int expect, int N) {
+  EXPECT_EQ_INT(expect, binaryGap(N));
 }
 
 int main(void) {
@@ -37,5 +37,5 @@ int main(void) {
   test(1, 6);
   test(0, 8);
 
-  testOutput();
+  return testOutput();
 }

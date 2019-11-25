@@ -59,5 +59,5 @@ int main(void) {
   test(7, "[1, 2, 3]", 4);
   test(181997601, "[1, 2, 3]", 32);
 
-  testOutput();
+  return testOutput();
 }

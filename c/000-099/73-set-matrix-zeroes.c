@@ -48,5 +48,5 @@ void test(const char *expect, const char *str) {
 int main(void) {
   test("[[0,0,0],[0,0,0],[0,8,0]]", "[[0,2,3],[4,5,0],[7,8,9]]");
 
-  testOutput();
+  return testOutput();
 }

@@ -71,5 +71,5 @@ int main(void) {
        "[4,1,2,3]",
        "[1,2,3,4]");
 
-  testOutput();
+  return testOutput();
 }

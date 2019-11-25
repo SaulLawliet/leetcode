@@ -64,11 +64,11 @@ bool isValidSudoku_v2(char **board, int boardSize, int *boardColSize) {
   return true;
 }
 
-void test(bool except, char *board) {
+void test(bool expect, char *board) {
   arrayEntry *e = arrayParse2D(board, ARRAY_CHAR);
 
-  EXPECT_EQ_INT(except, isValidSudoku_v1(arrayValue(e), arrayRow(e), arrayCols(e)));
-  EXPECT_EQ_INT(except, isValidSudoku_v2(arrayValue(e), arrayRow(e), arrayCols(e)));
+  EXPECT_EQ_INT(expect, isValidSudoku_v1(arrayValue(e), arrayRow(e), arrayCols(e)));
+  EXPECT_EQ_INT(expect, isValidSudoku_v2(arrayValue(e), arrayRow(e), arrayCols(e)));
 
   arrayFree(e);
 }
@@ -100,5 +100,5 @@ int main(void) {
       [., ., ., ., 8, ., ., 7, 9] \
       ]");
 
-  testOutput();
+  return testOutput();
 }
