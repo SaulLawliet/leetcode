@@ -16,8 +16,7 @@ cd "$(dirname "$($readlink -f "$0")")/.." || exit 1
 usage() {
   printf "Complie and run solution.\n"
   printf "Usage:\n"
-  printf "  %s [OPTION]... <NUMBER>\n" "$0"
-  printf "  %s [OPTION]... <COMMAND>\n" "$0"
+  printf "  %s [OPTION]... <COMMAND|number>...\n" $0
   printf "\n"
 
   printf "OPTION:\n"
@@ -48,10 +47,11 @@ run() {
     fi
     exit 1
   done
-  exit 0
 }
 
 main() {
+  if [[ $# -lt 1 ]]; then usage; fi
+
   for arg in "$@"; do
     case $arg in
       "-m")
@@ -68,10 +68,10 @@ main() {
         id=$(printf "%02d" "$arg")
         run "c/[0-9]*/$id-*.c"
         ;;
+      *)
+        usage
     esac
   done
-
-  usage
 }
 
 main "$@"
