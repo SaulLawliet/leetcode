@@ -6,12 +6,12 @@
 
 ## 脚本使用说明
 ``` sh
-# 执行第1个问题
+# 执行第1题
 c/test.sh 1
-
-# 执行全部问题
+# 执行前10题
+c/test.sh $(seq 10)
+# 执行全部题
 c/test.sh all
-
 # 执行库文件的测试
 c/test.sh test
 
