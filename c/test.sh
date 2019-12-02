@@ -35,7 +35,7 @@ run() {
   lib=$(ls c/[a-z]*/*.c |grep -v test.c)
 
   for file in $1; do
-    [ -f "$file" ] || (printf "NO.%d not found.\n" "$id" && exit 1)
+    [ -f "$file" ] || { printf "NO.%d not found.\n" "$id"; exit 1; }
 
     printf '%s\n' "$file"
     excute=${file%.c}
