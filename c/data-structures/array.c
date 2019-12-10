@@ -42,16 +42,16 @@ static void parseWhitespace(const char **str) {
 }
 
 static void parseChar(const char **str, context *c) {
-  PUTC(c, **str);
+  PUSHC(c, **str);
   (*str)++;
 }
 
 static void parseInt(const char **str, context *c) {
-  PUTI(c, strtol(*str, (char **)str, 10));
+  PUSHI(c, strtol(*str, (char **)str, 10));
 }
 
 static void parseDouble(const char **str, context *c) {
-  PUTD(c, strtod(*str, (char **)str));
+  PUSHD(c, strtod(*str, (char **)str));
 }
 
 static void parseString(const char **str, context *c) {
@@ -63,7 +63,7 @@ static void parseString(const char **str, context *c) {
   char *buf = malloc(sizeof(char) * (len + 1));
   strncpy(buf, *str, len);
   buf[len] = '\0';
-  PUTCP(c, buf);
+  PUSHCP(c, buf);
 
   *str = p;
 }
@@ -76,7 +76,7 @@ static context parseArray(const char **str, arrayType type, int dimensional) {
   if (**str != ']') {
     for (;;) {
       if (dimensional > 1) {
-        PUT(&c, parseArray(str, type, dimensional - 1));
+        PUSH(&c, parseArray(str, type, dimensional - 1));
       } else {
         switch (type) {
           case ARRAY_CHAR: parseChar(str, &c); break;
@@ -206,12 +206,12 @@ arrayEntry *arrayFrom2DSameCol(void *v, int row, int col, arrayType type) {
 }
 
 void toString(context *c, char *v, int size, arrayType type, int precision) {
-  PUTC(c, '[');
+  PUSHC(c, '[');
   for (int i = 0; i < size; ++i) {
-    if (i > 0) PUTC(c, ',');
+    if (i > 0) PUSHC(c, ',');
     switch (type) {
       case ARRAY_CHAR:
-        PUTC(c, v[i]);
+        PUSHC(c, v[i]);
         break;
       case ARRAY_INT:
         c->top -= 32 - snprintf(stackPush(c, 32), 32, "%d", ((int *)v)[i]);
@@ -221,11 +221,11 @@ void toString(context *c, char *v, int size, arrayType type, int precision) {
         c->top -= 32 - snprintf(stackPush(c, 32), 32, "%.*f", precision, ((double *)v)[i]);
         break;
       case ARRAY_STRING:
-        PUTS(c, ((char **)v)[i], strlen(((char **)v)[i]));
+        PUSHS(c, ((char **)v)[i], strlen(((char **)v)[i]));
         break;
     }
   }
-  PUTC(c, ']');
+  PUSHC(c, ']');
 }
 
 char *arrayToString(arrayEntry *entry) {
@@ -235,17 +235,17 @@ char *arrayToString(arrayEntry *entry) {
       toString(&c, entry->v, entry->size, entry->type, entry->precision);
       break;
     case 2:
-      PUTC(&c, '[');
+      PUSHC(&c, '[');
       for (int i = 0; i < entry->size; ++i) {
-        if (i > 0) PUTC(&c, ',');
+        if (i > 0) PUSHC(&c, ',');
         toString(&c, ((void **)entry->v)[i], entry->cols != NULL ? entry->cols[i] : entry->col,
                  entry->type, entry->precision);
       }
-      PUTC(&c, ']');
+      PUSHC(&c, ']');
       break;
   }
 
-  PUTC(&c, '\0');
+  PUSHC(&c, '\0');
   return c.stack;
 }
 

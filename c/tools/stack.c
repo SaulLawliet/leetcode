@@ -15,7 +15,6 @@ context stackMake(void) {
 }
 
 void *stackPush(context *c, size_t size) {
-  void *ret;
   assert(size > 0);
   if (c->top + size >= c->size) {
     if (c->size == 0) c->size = STACK_INIT_SIZE;
@@ -24,7 +23,13 @@ void *stackPush(context *c, size_t size) {
     }
     c->stack = (char *)realloc(c->stack, c->size);
   }
-  ret = c->stack + c->top;
+  
   c->top += size;
-  return ret;
+  return c->stack + c->top - size;
+}
+
+void *stackPop(context *c, size_t size) {
+  assert(size > 0);
+  c->top -= size;
+  return c->stack + c->top;
 }
