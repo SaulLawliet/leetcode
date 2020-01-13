@@ -12,7 +12,7 @@
 
 bool hasAlternatingBits(int n) {
   n ^= n >> 1;
-  return n == INT_MAX || !(n & n + 1);
+  return n == INT_MAX || !(n & (n + 1));
 }
 
 void test(bool expect, int n) {
