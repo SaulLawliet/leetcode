@@ -20,7 +20,7 @@ usage() {
   printf "\n"
 
   printf "OPTION:\n"
-  printf "  -m\tEnable memcheck.(use valgrind)\n"
+  printf "  -m\tEnable memcheck. (use valgrind)\n"
   printf "\n"
 
   printf "COMMAND:\n"
@@ -53,11 +53,14 @@ main() {
   if [[ $# -lt 1 ]]; then usage; fi
 
   for arg in "$@"; do
+    if [[ $arg == "-m" ]]; then
+      type valgrind >/dev/null 2>&1 || { echo >&2 "You need to install valgrind."; exit 1; }
+      valgrind="valgrind";
+    fi
+  done
+
+  for arg in "$@"; do
     case $arg in
-      "-m")
-        type valgrind >/dev/null 2>&1 || { echo >&2 "You need to install valgrind."; exit 1; }
-        valgrind="valgrind";
-        ;;
       "all")
         run "c/[0-9]*/*.c"
         ;;
@@ -67,6 +70,8 @@ main() {
       [0-9]*)
         id=$(printf "%02d" "$arg")
         run "c/[0-9]*/$id-*.c"
+        ;;
+      [-]*)
         ;;
       *)
         usage
