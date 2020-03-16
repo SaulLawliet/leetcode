@@ -57,7 +57,12 @@ static void parseDouble(const char **str, context *c) {
 static void parseString(const char **str, context *c) {
   const char *p = *str;
   int len = 0;
-  while (*p != ',' && *p != ']' && *p != '\0') { p++; len++; }
+  int depth = 0; /* 遇到'[', 深度+1, 遇到']', 深度-1 */
+  while ((depth > 0 || (*p != ',' && *p != ']')) && *p != '\0') {
+    if (*p == '[') depth++;
+    if (*p == ']') depth--;
+    p++; len++;
+  }
   while (len > 0 && *(p - 1) == ' ') { p--; len--; }
 
   char *buf = malloc(sizeof(char) * (len + 1));
