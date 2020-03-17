@@ -39,13 +39,10 @@ run() {
 
     printf '%s\n' "$file"
     excute=${file%.c}
-    if gcc -std=c99 -Wall -o "$excute" "$file" $lib -lm; then
-      if $valgrind "$excute"; then
-        rm "$excute"
-        continue
-      fi
-    fi
-    exit 1
+
+    if ! gcc -std=c99 -Wall -o "$excute" "$file" $lib -lm; then exit 1; fi
+    if ! $valgrind "$excute"; then fail_count=$((fail_count+1)); fi
+    rm "$excute"
   done
 }
 
@@ -77,6 +74,8 @@ main() {
         usage
     esac
   done
+
+  exit $fail_count
 }
 
 main "$@"
