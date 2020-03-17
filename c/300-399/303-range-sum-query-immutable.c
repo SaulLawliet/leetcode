@@ -6,7 +6,7 @@
  * 后续修改成缓存一下当前的数组的和, 取值的时候相减即是答案.
  */
 
-#include <stdlib.h> /* malloc(), free() */
+#include <stdlib.h> /* malloc(), free(), atoi() */
 #include <string.h> /* strcmp() */
 #include "c/data-structures/array.h"
 #include "c/test.h"
@@ -59,8 +59,10 @@ void test(char *expectStr, char *commandStr, char *argStr) {
     char *args = ((char **)arrayValue(argEntry))[i];
 
     if (strcmp(command, "NumArray") == 0) {
-      arrayEntry *e = arrayParse2D(args, ARRAY_INT);
-      obj = numArrayCreate(((int **)arrayValue(e))[0], arrayCols(e)[0]);
+      arrayEntry *e = arrayParse1D(args, ARRAY_STRING);
+      arrayEntry *e2 = arrayParse1D(((char **)arrayValue(e))[0], ARRAY_INT);
+      obj = numArrayCreate(arrayValue(e2), arraySize(e2));
+      arrayFree(e2);
       arrayFree(e);
     } else if (strcmp(command, "sumRange") == 0) {
       int expect = atoi(((char **)arrayValue(expectEntry))[i]);
