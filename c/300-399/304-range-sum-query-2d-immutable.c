@@ -7,8 +7,8 @@
 
 #include <stdlib.h> /* malloc(), free(), atoi() */
 #include <string.h> /* strcmp() */
-#include "c/test.h"
 #include "c/data-structures/array.h"
+#include "c/test.h"
 
 typedef struct {
   int **sum;
@@ -33,7 +33,7 @@ NumMatrix *numMatrixCreate(int **matrix, int matrixSize, int *matrixColSize) {
 
   for (int i = 1; i <= matrixSize; i++) {
     for (int j = 1; j <= matrixCol; j++) {
-      obj->sum[i][j] = matrix[i - 1][j - 1] + obj->sum[i - 1][j] + obj->sum[i][j - 1] - obj->sum[i - 1][j - 1];
+      obj->sum[i][j] = matrix[i-1][j-1] + obj->sum[i-1][j] + obj->sum[i][j-1] - obj->sum[i-1][j-1];
     }
   }
 
@@ -42,7 +42,7 @@ NumMatrix *numMatrixCreate(int **matrix, int matrixSize, int *matrixColSize) {
 
 int numMatrixSumRegion(NumMatrix *obj, int row1, int col1, int row2, int col2) {
   if (obj == NULL) return 0;
-  return obj->sum[row2 + 1][col2 + 1] - obj->sum[row1][col2 + 1] - obj->sum[row2 + 1][col1] + obj->sum[row1][col1];
+  return obj->sum[row2+1][col2+1] - obj->sum[row1][col2+1] - obj->sum[row2+1][col1] + obj->sum[row1][col1];
 }
 
 void numMatrixFree(NumMatrix *obj) {
