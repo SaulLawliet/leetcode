@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 #include <stdlib.h> /* malloc(), free() */
+#include <string.h> /* strcmp() */
 #include "c/data-structures/array.h"
 #include "c/test.h"
 
@@ -57,21 +58,39 @@ bool myCalendarBook(MyCalendar *obj, int start, int end) {
  * myCalendarFree(obj);
  */
 
-void test(const char *s) {
-  MyCalendar *obj = myCalendarCreate();
+void test(char *expectStr, char *commandStr, char *argStr) {
+  arrayEntry *expectEntry = arrayParse1D(expectStr, ARRAY_STRING);
+  arrayEntry *commandEntry = arrayParse1D(commandStr, ARRAY_STRING);
+  arrayEntry *argEntry = arrayParse1D(argStr, ARRAY_STRING);
 
-  arrayEntry *entry = arrayParse2D(s, ARRAY_INT);
-  for (int i = 0; i < arrayRow(entry); ++i) {
-    int *array = ((int **)arrayValue(entry))[i];
-    EXPECT_EQ_INT(array[0], myCalendarBook(obj, array[1], array[2]));
+  MyCalendar *obj;
+
+  for (int i = 0; i < arraySize(commandEntry); i++) {
+    char *command = ((char **)arrayValue(commandEntry))[i];
+    char *args = ((char **)arrayValue(argEntry))[i];
+
+    if (strcmp(command, "MyCalendar") == 0) {
+      obj = myCalendarCreate();
+    } else if (strcmp(command, "book") == 0) {
+      bool expect = strcmp("true", ((char **)arrayValue(expectEntry))[i]) == 0;
+      arrayEntry *e = arrayParse1D(args, ARRAY_INT);
+      int *arr = (int *)arrayValue(e);
+      EXPECT_EQ_INT(expect, myCalendarBook(obj, arr[0], arr[1]));
+      arrayFree(e);
+    }
   }
 
   myCalendarFree(obj);
-  arrayFree(entry);
+
+  arrayFree(argEntry);
+  arrayFree(commandEntry);
+  arrayFree(expectEntry);
 }
 
 int main(void) {
-  test("[[1, 10, 20], [0, 15, 25], [1, 20, 30]]");
+  test("[null,true,false,true]",
+       "[MyCalendar,book,book,book]",
+       "[[],[10,20],[15,25],[20,30]]");
 
   return testOutput();
 }
