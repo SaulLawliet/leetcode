@@ -2,12 +2,11 @@
  * Copyright (C) 2020, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
  *
- * 设置好边界, 画圈即可.
+ * 设置好边界, 循环画4条线, 从左到右, 从上到下, 从右到左, 从下到上.
  * 结束循环的条件, 通过数组长度判断比较简单.
  */
 
 #include <stdlib.h> /* malloc() */
-#include <string.h>
 #include "c/data-structures/array.h"
 #include "c/test.h"
 
