@@ -26,6 +26,7 @@ usage() {
   printf "COMMAND:\n"
   printf "  all\tRun all solutions.\n"
   printf "  test\tRun library's test.\n"
+  printf "  count\tCount the number of solved.\n"
   exit 1
 }
 
@@ -63,6 +64,9 @@ main() {
         ;;
       "test")
         run "c/[a-z]*/*-test.c"
+        ;;
+      "count")
+        printf "\e[38;5;2mSolved: %s\e[0m\n" "$(find c/[0-9]*/*.c |wc -l)"
         ;;
       [0-9]*)
         id=$(printf "%02d" "$arg")
