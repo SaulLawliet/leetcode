@@ -28,7 +28,7 @@ void permutations(int **rt, int *rtSize, int *nums, int start, int length) {
     for (int i = start; i != length; i++) {
       swap(&nums[start], &nums[i]);
       permutations(rt, rtSize, nums, start+1, length);
-      swap(&nums[start], &nums[i]);
+      swap(&nums[start], &nums[i]); /* 没有这一行也是正确的, 有了这一行是为了生成的数据是按照书写顺序 */
     }
   }
 }
