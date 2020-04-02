@@ -8,13 +8,11 @@
 #include "c/test.h"
 
 int hammingDistance(int x, int y) {
-  int rtn = 0;
-  x ^= y;
-  while (x) {
-    rtn += x & 1;
-    x >>= 1;
+  int count = 0;
+  for (x ^= y; x; x >>= 1) {
+    count += x & 1;
   }
-  return rtn;
+  return count;
 }
 
 void test(int expect, int x, int y) {
