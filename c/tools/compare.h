@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018, Saul Lawliet <october dot sunbathe at gmail dot com>
+ * Copyright (C) 2018-2020, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
  */
 
@@ -12,6 +12,10 @@ int compare_ints(const void *a, const void *b) {
   if (arg1 < arg2) return -1;
   if (arg1 > arg2) return 1;
   return 0;
+}
+
+int compare_ints_desc(const void *a, const void *b) {
+  return compare_ints(a, b) * -1;
 }
 
 #endif /* C_TOOLS_COMPARE_H_ */
