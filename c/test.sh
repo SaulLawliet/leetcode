@@ -75,7 +75,8 @@ main() {
       [-]*)
         ;;
       *)
-        usage
+        run "c/000/$arg*.c"
+        ;;
     esac
   done
 
