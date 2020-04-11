@@ -7,6 +7,8 @@
 #define C_TEST_H_
 
 #include <stdio.h>  /* printf(), fprintf(), stderr */
+#include <stdlib.h> /* free() */
+#include <string.h> /* strcmp() */
 
 static int test_main_ret = 0;
 static int test_count = 0;
@@ -20,10 +22,18 @@ int testOutput(void) {
 
 struct TestTemp {
   union {
-    struct { int a, b; } i;
-    struct { double a, b; } d;
-    struct { char *a, *b; } s;
-    struct { const char *a, *b; } cs;
+    struct {
+      int a, b;
+    } i;
+    struct {
+      double a, b;
+    } d;
+    struct {
+      char *a, *b;
+    } s;
+    struct {
+      const char *a, *b;
+    } cs;
   };
 };
 static struct TestTemp test_temp;

@@ -62,7 +62,7 @@ main() {
       "all")
         run "c/[0-9]*/*.c"
         ;;
-      "test")
+      "lib")
         run "c/[a-z]*/*-test.c"
         ;;
       "count")
