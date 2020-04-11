@@ -47,7 +47,7 @@ void test(bool expect, int n) {
 }
 
 int main(void) {
-  test(true, 2);
+  test(false, 2);
   test(true, 19);
 
   return testOutput();
