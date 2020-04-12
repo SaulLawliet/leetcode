@@ -61,6 +61,7 @@ int main(void) {
   type = ARRAY_INT;
   testArrayRoundTrip("[[]]");
   testArrayRoundTrip("[[1,2],[3,4,5]]");
+  testArrayRoundTrip("[[],[],[],[],[-3],[],[0],[-2]]");
 
   type = ARRAY_DOUBLE;
   testArrayRoundTrip("[[]]");

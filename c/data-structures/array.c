@@ -78,7 +78,9 @@ static context parseArray(const char **str, arrayType type, int dimensional) {
   parseWhitespace(str);
 
   context c = stackMake();
-  if (**str != ']') {
+  if (**str == ']') {
+    (*str)++;
+  } else {
     for (;;) {
       if (dimensional > 1) {
         PUSH(&c, parseArray(str, type, dimensional - 1));
