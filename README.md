@@ -1,6 +1,7 @@
 # [LeetCode OJ](https://leetcode.com/)
 
-- 为了巩固 C 语言, 所以暂时只用 C 解题
+- 定期刷题, 为了保持思维的活跃
+- 只用 C 解题, 手写数据结构和对内存的管理
 - 每个 solution 都包含单元测试
 - 最后, 特别感谢 [miloyip/json-tutorial](https://github.com/miloyip/json-tutorial)
 
