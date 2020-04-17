@@ -13,10 +13,14 @@
 #include "c/data-structures/linked-list.h"
 #include "c/test.h"
 
+int MOD = 1e9 + 7;
 int PRIME_NUMBERS[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101};
-int hashCode(char *str) {
-  int hash = 1;
-  while (*str) hash *= PRIME_NUMBERS[*str++ - 'a'];
+int64_t hashCode(char *str) {
+  int64_t hash = 1;
+  while (*str) {
+    hash *= PRIME_NUMBERS[*str++ - 'a'];
+    if (hash > MOD) hash %= MOD;
+  }
   return hash;
 }
 
@@ -25,15 +29,15 @@ int hashCode(char *str) {
  * The sizes of the arrays are returned as *columnSizes array.
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
-char ***groupAnagrams(char **strs, int strsSize, int **columnSizes, int *returnSize) {
+char ***groupAnagrams(char **strs, int strsSize, int *returnSize, int **returnColumnSizes) {
   *returnSize = 0;
-  *columnSizes = malloc(sizeof(int) * strsSize);
+  *returnColumnSizes = malloc(sizeof(int) * strsSize);
 
   char ***rtn = malloc(sizeof(char **) * strsSize);
-  int *hashTable = malloc(sizeof(int) * strsSize);
+  int64_t *hashTable = malloc(sizeof(int64_t) * strsSize);
 
   for (int i = 0; i < strsSize; ++i) {
-    int hash = hashCode(strs[i]), row = -1;
+    int64_t hash = hashCode(strs[i]), row = -1;
 
     for (int j = 0; j < *returnSize; ++j)
       if (hashTable[j] == hash) {
@@ -45,12 +49,12 @@ char ***groupAnagrams(char **strs, int strsSize, int **columnSizes, int *returnS
       /* first */
       row = (*returnSize)++;
       rtn[row] = malloc(sizeof(char *) * strsSize);
-      (*columnSizes)[row] = 0;
+      (*returnColumnSizes)[row] = 0;
       hashTable[row] = hash;
     }
 
     int len = strlen(strs[i]) + 1,
-        col = (*columnSizes)[row]++;
+        col = (*returnColumnSizes)[row]++;
     memcpy(rtn[row][col] = malloc(len), strs[i], len);
   }
 
@@ -62,7 +66,7 @@ void test(const char *expect, const char *s) {
   arrayEntry *e = arrayParse1D(s, ARRAY_STRING);
   int returnSize;
   int *columnSizes;
-  char ***rtn = groupAnagrams(arrayValue(e), arraySize(e), &columnSizes, &returnSize);
+  char ***rtn = groupAnagrams(arrayValue(e), arraySize(e), &returnSize, &columnSizes);
 
   EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, arrayToString2D(rtn, returnSize, columnSizes, ARRAY_STRING));
 

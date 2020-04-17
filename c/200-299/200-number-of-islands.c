@@ -12,23 +12,23 @@ void infect(char **grid, int gridRowSize, int gridColSize, int x, int y) {
   if (grid[x][y] == '1') {
     grid[x][y] = '0';
     if (x > 0)
-      infect(grid, gridRowSize, gridColSize, x-1, y);
+      infect(grid, gridRowSize, gridColSize, x - 1, y);
     if (x < gridRowSize - 1)
-      infect(grid, gridRowSize, gridColSize, x+1, y);
+      infect(grid, gridRowSize, gridColSize, x + 1, y);
     if (y > 0)
-      infect(grid, gridRowSize, gridColSize, x, y-1);
+      infect(grid, gridRowSize, gridColSize, x, y - 1);
     if (y < gridColSize - 1)
-      infect(grid, gridRowSize, gridColSize, x, y+1);
+      infect(grid, gridRowSize, gridColSize, x, y + 1);
   }
 }
 
-int numIslands(char **grid, int gridRowSize, int gridColSize) {
+int numIslands(char **grid, int gridSize, int *gridColSize) {
   int rtn = 0;
-  for (int i = 0; i < gridRowSize; ++i) {
-    for (int j = 0; j < gridColSize; ++j) {
+  for (int i = 0; i < gridSize; ++i) {
+    for (int j = 0; j < gridColSize[i]; ++j) {
       if (grid[i][j] == '1') {
         ++rtn;
-        infect(grid, gridRowSize, gridColSize, i, j);
+        infect(grid, gridSize, gridColSize[i], i, j);
       }
     }
   }
@@ -38,7 +38,7 @@ int numIslands(char **grid, int gridRowSize, int gridColSize) {
 void test(int expect, const char *str) {
   arrayEntry *e = arrayParse2D(str, ARRAY_CHAR);
 
-  EXPECT_EQ_INT(expect, numIslands(arrayValue(e), arrayRow(e), arrayCol(e)));
+  EXPECT_EQ_INT(expect, numIslands(arrayValue(e), arrayRow(e), arrayCols(e)));
 
   arrayFree(e);
 }
