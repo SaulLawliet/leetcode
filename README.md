@@ -21,6 +21,15 @@ c/test.sh -m 1
 c/test.sh -m all
 c/test.sh -m lib
 ```
+注意, 有一些没有编号的题放在 `c/000/` 目录下
+```sh
+# 用法: c/test.sh <文件名前缀> 
+# 原理: ls "c/000/$1*.c"
+# 例如: c/000/perform-string-shifts.c
+c/test.sh perform-string-shift
+# 或
+c/test.sh perform
+```
 
 ## 其他
 
