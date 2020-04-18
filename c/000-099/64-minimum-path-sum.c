@@ -9,27 +9,28 @@
 #include "c/data-structures/array.h"
 #include "c/test.h"
 
-int minPathSum(int **grid, int gridRowSize, int gridColSize) {
-  int dp[gridRowSize][gridColSize], i, j;
+int minPathSum(int **grid, int gridSize, int *gridColSize) {
+  int row = gridSize, col = *gridColSize, i, j;
+  int dp[row][col];
 
   /* 初始化边界 */
   dp[0][0] = grid[0][0];
-  for (i = 1; i < gridRowSize; ++i)
+  for (i = 1; i < row; ++i)
     dp[i][0] = grid[i][0] + dp[i - 1][0];
-  for (j = 1; j < gridColSize; ++j)
+  for (j = 1; j < col; ++j)
     dp[0][j] = grid[0][j] + dp[0][j - 1];
 
-  for (i = 1; i < gridRowSize; ++i)
-    for (j = 1; j < gridColSize; ++j)
+  for (i = 1; i < row; ++i)
+    for (j = 1; j < col; ++j)
       dp[i][j] = grid[i][j] + (dp[i - 1][j] <= dp[i][j - 1] ? dp[i - 1][j] : dp[i][j - 1]);
 
-  return dp[gridRowSize - 1][gridColSize - 1];
+  return dp[row - 1][col - 1];
 }
 
 void test(int expect, const char *s) {
   arrayEntry *e = arrayParse2D(s, ARRAY_INT);
 
-  EXPECT_EQ_INT(expect, minPathSum(arrayValue(e), arrayRow(e), arrayCol(e)));
+  EXPECT_EQ_INT(expect, minPathSum(arrayValue(e), arrayRow(e), arrayCols(e)));
 
   arrayFree(e);
 }
