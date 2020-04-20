@@ -13,7 +13,7 @@
 
 #define TREE_NODE_NULL "null"
 
-struct TreeNode *makeTreeNode(int val) {
+struct TreeNode *treeNewNode(int val) {
   struct TreeNode *node = malloc(sizeof(struct TreeNode));
   node->val = val;
   node->left = node->right = NULL;
@@ -30,14 +30,14 @@ static struct TreeNode *buildByArray(char **a, int size) {
   /** 存储按层级遍历的节点 */
   struct Queue *queue = queueMake();
 
-  struct TreeNode *tree = makeTreeNode(atoi(str));
+  struct TreeNode *tree = treeNewNode(atoi(str));
   queueOffer(queue, tree);
 
   while (index < size) {
     struct TreeNode *node = queuePoll(queue);
     for (int i = 0; i < 2; ++i)
       if (index < size && strcmp((str = a[index++]), TREE_NODE_NULL) != 0)
-        queueOffer(queue, i == 0 ? (node->left = makeTreeNode(atoi(str))) : (node->right = makeTreeNode(atoi(str))));
+        queueOffer(queue, i == 0 ? (node->left = treeNewNode(atoi(str))) : (node->right = treeNewNode(atoi(str))));
   }
 
   queueFree(queue);

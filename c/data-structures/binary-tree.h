@@ -12,6 +12,7 @@ struct TreeNode {
   struct TreeNode *right;
 };
 
+struct TreeNode *treeNewNode(int val);
 struct TreeNode *treeParse(const char *str);
 char *treeToString(struct TreeNode *tree);
 void treeFree(struct TreeNode *tree);
