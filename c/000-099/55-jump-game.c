@@ -6,13 +6,13 @@
  */
 
 #include <stdbool.h>
-#include "c/test.h"
 #include "c/data-structures/array.h"
+#include "c/test.h"
 
 bool canJump(int *nums, int numsSize) {
   int flag = 0;
-  for (int i = numsSize-2; i >= 0; i--) {
-    flag = nums[i] <= flag ? flag+1 : 0;
+  for (int i = numsSize - 2; i >= 0; i--) {
+    flag = nums[i] <= flag ? flag + 1 : 0;
   }
 
   return flag == 0;

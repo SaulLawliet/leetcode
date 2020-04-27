@@ -11,10 +11,10 @@
 
 #define MIN(a, b) ((a) <= (b) ? (a) : (b))
 #define MAX(a, b) ((a) >= (b) ? (a) : (b))
-int maximalSquare(char **matrix, int matrixRowSize, int matrixColSize) {
+int maximalSquare(char **matrix, int matrixSize, int *matrixColSize) {
   int rtn = '0';
-  for (int i = 0; i < matrixRowSize; ++i) {
-    for (int j = 0; j < matrixColSize; ++j) {
+  for (int i = 0; i < matrixSize; ++i) {
+    for (int j = 0; j < matrixColSize[0]; ++j) {
       if (matrix[i][j] != '0') {
         if (i > 0 && j > 0)
           matrix[i][j] = MIN(MIN(matrix[i-1][j], matrix[i][j-1]), matrix[i-1][j-1]) + 1;
@@ -30,7 +30,7 @@ int maximalSquare(char **matrix, int matrixRowSize, int matrixColSize) {
 void test(int expect, const char *str) {
   arrayEntry *e = arrayParse2D(str, ARRAY_CHAR);
 
-  EXPECT_EQ_INT(expect, maximalSquare(arrayValue(e), arrayRow(e), arrayCol(e)));
+  EXPECT_EQ_INT(expect, maximalSquare(arrayValue(e), arrayRow(e), arrayCols(e)));
 
   arrayFree(e);
 }
