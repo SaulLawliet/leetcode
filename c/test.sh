@@ -44,6 +44,7 @@ run() {
     if ! gcc -std=c99 -Wall -o "$excute" "$file" $lib -lm; then exit 1; fi
     if ! $valgrind "$excute"; then fail_count=$((fail_count+1)); fi
     rm "$excute"
+    rm -rf "$excute.DSYM" # https://github.com/LouisBrunner/valgrind-macos/ 会增加的文件
   done
 }
 
