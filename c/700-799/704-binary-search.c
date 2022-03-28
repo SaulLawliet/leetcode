@@ -2,6 +2,9 @@
  * Copyright (C) 2022, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
  *
+ * https://leetcode.com/problems/binary-search/
+ * Q: 就是二分查找
+ *
  * 好久没写二分查找了, 虽然道理都懂, 但写起来却需要借助测试用例
  */
 
@@ -9,15 +12,15 @@
 #include "c/test.h"
 
 int search(int *nums, int numsSize, int target) {
-  int p = 0, q = numsSize;
-  while (p < q) {
-    int m = (q + p) / 2;
-    if (target == nums[m]) {
+  int l = 0, h = numsSize - 1;
+  while (l <= h) {
+    int m = (l + h) / 2;
+    if (nums[m] == target) {
       return m;
-    } else if (target < nums[m]) {
-      q = m;
+    } else if (nums[m] < target) {
+      l = m + 1;
     } else {
-      p = m + 1;
+      h = m - 1;
     }
   }
   return -1;
