@@ -49,10 +49,10 @@ int search(int *nums, int numsSize, int target) {
   return -1;
 }
 
-void test(int except, const char *nums, int target) {
+void test(int expect, const char *nums, int target) {
   arrayEntry *e = arrayParse1D(nums, ARRAY_INT);
 
-  EXPECT_EQ_INT(except, search(arrayValue(e), arraySize(e), target));
+  EXPECT_EQ_INT(expect, search(arrayValue(e), arraySize(e), target));
 
   arrayFree(e);
 }
