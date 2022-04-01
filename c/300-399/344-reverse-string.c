@@ -2,7 +2,10 @@
  * Copyright (C) 2017, Saul Lawliet <october dot sunbathe at gmail dot com>
  * All rights reserved.
  *
- * 这是基本操作
+ * https://leetcode.com/problems/reverse-string/
+ * 翻转字符串, 原地修改, 不占用空间
+ * 
+ * 非常基本操作
  */
 
 #include <stdlib.h> /* malloc() */
@@ -15,12 +18,11 @@ void swap(char *a, char *b) {
   *b = tmp;
 }
 
-char *reverseString(char *s) {
-  char *p1 = s,
-       *p2 = s + strlen(s) - 1;
-  while (p1 < p2)
-    swap(p1++, p2--);
-  return s;
+void reverseString(char* s, int sSize) {
+  int p = 0, q = sSize - 1;
+  while (p < q) {
+    swap(&s[p++], &s[q--]);
+  }
 }
 
 void test(const char *expect, const char *str) {
@@ -28,8 +30,10 @@ void test(const char *expect, const char *str) {
   char *s = malloc(sizeof(char) * (len + 1));
   memcpy(s, str, len + 1);
   s[len] = '\0';
+  
+  reverseString(s, len);
 
-  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, reverseString(s));
+  EXPECT_EQ_STRING_AND_FREE_ACTUAL(expect, s);
 }
 
 int main(void) {
