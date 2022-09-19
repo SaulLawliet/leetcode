@@ -9,10 +9,11 @@
  * 下个文件再从头开始...
  */
 
+#include <stdint.h>
 #include "c/data-structures/array.h"
 #include "c/test.h"
 
-struct Cell{
+struct Cell {
   int v;  // value
   int p;  // [p, q]
   int q;
@@ -35,8 +36,8 @@ int maximumScore(int *nums, int numsSize, int *multipliers, int multipliersSize)
 
   int max = INT32_MIN;
   for (int i = 0; i < 1 << multipliersSize; i++) {
-    if (table[multipliersSize-1][i].v > max) {
-      max = table[multipliersSize-1][i].v;
+    if (table[multipliersSize - 1][i].v > max) {
+      max = table[multipliersSize - 1][i].v;
     }
   }
 
