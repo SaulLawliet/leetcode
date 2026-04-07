@@ -16,7 +16,7 @@ cd "$(dirname "$($readlink -f "$0")")/.." || exit 1
 usage() {
   printf "Complie and run solution.\n"
   printf "Usage:\n"
-  printf "  %s [OPTION]... <COMMAND|number>...\n" $0
+  printf "  %s [OPTION]... <COMMAND|number>...\n" "$0"
   printf "\n"
 
   printf "OPTION:\n"
@@ -25,7 +25,7 @@ usage() {
 
   printf "COMMAND:\n"
   printf "  all\tRun all solutions.\n"
-  printf "  test\tRun library's test.\n"
+  printf "  lib\tRun library's test.\n"
   printf "  count\tCount the number of solved.\n"
   exit 1
 }
@@ -33,7 +33,7 @@ usage() {
 run() {
   C_INCLUDE_PATH=$C_INCLUDE_PATH:$(pwd)/..
   export C_INCLUDE_PATH
-  lib=$(ls c/[a-z]*/*.c |grep -v test.c)
+  lib=$(find c/[a-z]* -name "*.c" ! -name "*test.c")
 
   for file in $1; do
     [ -f "$file" ] || { printf "NO.%d not found.\n" "$id"; exit 1; }
@@ -41,6 +41,7 @@ run() {
     printf '%s\n' "$file"
     excute=${file%.c}
 
+    # shellcheck disable=SC2086
     if ! gcc -std=c99 -Wall -o "$excute" "$file" $lib -lm; then exit 1; fi
     if ! $valgrind "$excute"; then fail_count=$((fail_count+1)); fi
     rm "$excute"
@@ -81,7 +82,7 @@ main() {
     esac
   done
 
-  exit $fail_count
+  exit "${fail_count:-0}"
 }
 
 main "$@"
